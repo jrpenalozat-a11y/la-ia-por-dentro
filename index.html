@@ -258,6 +258,9 @@ button:active{transform:scale(.98)}
 /* ---------- término en inglés (chip mono) en glosario/flashcard ---------- */
 .tech{font-family:'JetBrains Mono';font-size:.7rem;color:var(--muted);display:inline-block}
 .gitem .tech{padding:2px 7px;border-radius:6px;background:color-mix(in srgb,var(--cc,var(--blue)) 12%,transparent);font-size:.66rem}
+.say{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;cursor:pointer;background:color-mix(in srgb,var(--cc,var(--blue)) 18%,transparent);font-size:.72rem;margin-left:5px;vertical-align:middle;transition:filter .15s,transform .15s}
+.say:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.say:active{transform:scale(.9)}
 
 /* ---------- botón «Profundizar» (fuente por concepto) ---------- */
 .srcbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;margin:2px 0 8px;padding:11px 14px;border-radius:12px;font-size:.84rem;font-weight:700;text-decoration:none;color:var(--cc,var(--blue));border:1px dashed var(--cc,var(--blue));background:color-mix(in srgb,var(--cc,var(--blue)) 8%,transparent);transition:all .2s}
@@ -289,7 +292,7 @@ button:active{transform:scale(.98)}
   <h1>La IA por Dentro</h1>
   <p class="sub">El siguiente nivel para entender la <b>inteligencia artificial</b> y la <b>programación</b> por dentro. Deja de ver la IA como una caja negra. ☕</p>
   <div class="feats">
-    <span>🤖 8 módulos</span><span>🧩 48 conceptos</span><span>🇬🇧 Términos en inglés</span><span>🔗 Fuentes serias</span><span>🎨 Arte e IA</span><span>📴 Offline</span>
+    <span>🤖 12 módulos</span><span>🧩 72 conceptos</span><span>🇬🇧 Inglés + audio</span><span>🔗 Fuentes serias</span><span>🚀 Del código a producción</span><span>📴 Offline</span>
   </div>
   <button class="go" data-a="enter">🚀 Entrar a la academia</button>
 </div>
@@ -628,6 +631,149 @@ const DATA = { categorias: [
     comoFunciona:"En la práctica significa: no imitar el estilo o la voz de un artista vivo sin permiso; declarar cuándo una obra usó IA; respetar las licencias y derechos del material de entrenamiento; y usar la IA para potenciar a equipos humanos, no para eliminarlos sin más. Muchas plataformas suman filtros, marcas de agua o créditos de procedencia para apoyar estas prácticas.",
     ejemplo:"Las huelgas de guionistas y actores de Hollywood (2023) negociaron justamente esto: consentimiento y pago por el uso de su imagen o voz con IA. Sellos y artistas exigen no entrenar con su obra sin licencia, y algunas plataformas ya etiquetan el contenido generado.",
     paraQueSirve:"Usar la IA con responsabilidad protege el ecosistema creativo del que tú también formas parte y cuida tu reputación. Saber dónde están los límites éticos y legales te permite innovar con tranquilidad, sin pasar a llevar a otros creadores ni exponerte a problemas." }
+]},
+
+/* ===== MÓDULO 9 · TU TALLER LOCAL (el PC antes de internet) ===== */
+{ id:"taller-local", titulo:"Tu Taller Local", icono:"🖥️", colorAcento:"#14b8a6",
+  desc:"Lo que pasa en tu propio computador antes de subir nada a internet.",
+  conceptos:[
+  { termino:"La Terminal (Línea de Comandos)",
+    queEs:"Es la ventana donde le das órdenes al computador escribiendo texto, en vez de hacer clic. En Windows suele ser PowerShell; en Mac y Linux, Bash o Zsh. Es la herramienta base de todo desarrollo.",
+    comoFunciona:"Escribes un comando (una instrucción corta) y el computador lo ejecuta y responde en texto: listar archivos, crear carpetas, instalar programas, arrancar tu app. No es magia ni «hackeo»: es hablarle a la máquina en su forma más directa, sin la capa de botones.",
+    ejemplo:"Comandos como `cd` (entrar a una carpeta), `npm install` (instalar dependencias) o `git push` (subir tu código) se escriben en la terminal. Casi toda guía técnica te pedirá «abre una terminal y escribe…».",
+    paraQueSirve:"Entender la terminal te quita el miedo a las guías técnicas y te da control real: muchas tareas son más rápidas escribiendo un comando que buscando el botón. Es el punto de partida para crear y publicar cualquier app." },
+  { termino:"El Editor de Código (VS Code)",
+    queEs:"Es el programa donde se escribe y organiza el código, con ayudas que lo hacen más fácil: colores, autocompletado, detección de errores y terminal integrada. VS Code es el más popular hoy.",
+    comoFunciona:"Abres la carpeta de tu proyecto y ves todos los archivos a la izquierda. Mientras escribes, resalta la sintaxis, sugiere lo que sigue y subraya errores antes de ejecutar. Se amplía con «extensiones» (incluidos asistentes de IA) y trae terminal y control de Git incorporados.",
+    ejemplo:"Un desarrollador abre su proyecto en VS Code, edita un archivo, ve en rojo una coma que falta, abre la terminal integrada y corre la app, todo sin salir de la ventana. Asistentes como Copilot o Claude Code viven aquí.",
+    paraQueSirve:"Es el «taller» donde ocurre el trabajo. Conocerlo te ayuda a entender dónde y cómo se escribe el software, y por qué un buen editor (con IA incluida) multiplica la productividad." },
+  { termino:"Runtime y Entorno (Node.js, Python)",
+    queEs:"Un runtime es el programa que ejecuta tu código en una máquina. Para que un proyecto corra, tu computador necesita el runtime correcto instalado: Node.js para JavaScript, el intérprete de Python para Python, etc.",
+    comoFunciona:"El código fuente por sí solo no hace nada; necesita algo que lo «lea y ejecute». Ese es el runtime. Instalas la versión adecuada en tu PC y, a partir de ahí, puedes correr el proyecto localmente. Un mismo código puede comportarse distinto si el runtime o su versión cambian (de ahí los famosos «en mi máquina sí funcionaba»).",
+    ejemplo:"Para correr una app web moderna instalas Node.js; para un script de datos o IA, Python. Las guías suelen decir «requiere Node 18+» o «Python 3.10»: están hablando del runtime y su versión.",
+    paraQueSirve:"Entender el runtime explica por qué hay que «instalar cosas» antes de correr un proyecto, y por qué a veces algo funciona en un computador y no en otro. Es la base del entorno de desarrollo." },
+  { termino:"Dependencias y Paquetes (npm, pip)",
+    queEs:"Las dependencias son piezas de código hechas por otros (librerías) que tu proyecto reutiliza en vez de programar todo de cero. Los gestores de paquetes (npm para JavaScript, pip para Python) las descargan e instalan por ti.",
+    comoFunciona:"Tu proyecto declara qué librerías necesita en un archivo (por ejemplo `package.json`). Al ejecutar `npm install`, el gestor baja esas piezas y sus propias dependencias, armando una carpeta con todo lo necesario. Así no reinventas la rueda: usas código probado por millones.",
+    ejemplo:"¿Necesitas gráficos, manejo de fechas o conexión a una IA? Instalas la librería correspondiente con un comando y la usas. Una app moderna típica se apoya en decenas o cientos de paquetes.",
+    paraQueSirve:"Explica cómo se construye software tan rápido hoy: ensamblando piezas existentes. También por qué importan las versiones y la seguridad (una dependencia con un fallo afecta a tu app). Es el «Lego» del desarrollo real." },
+  { termino:"Servidor Local / Vista Local (localhost)",
+    queEs:"Es correr tu app en tu propio computador para verla y probarla antes de publicarla en internet. Se accede en una dirección especial, `localhost`, que significa «esta misma máquina».",
+    comoFunciona:"Arrancas un «servidor de desarrollo» con un comando; ese servidor sirve tu app en una dirección como `localhost:3000`, que solo tú ves en tu navegador. Muchos entornos recargan la página sola al guardar cambios (hot reload), para iterar rápido. Nada de esto está en internet todavía: es tu laboratorio privado.",
+    ejemplo:"Mientras construíamos estas academias, cada una se veía en `localhost:5181` o `localhost:5182` antes de subirla a Vercel. Probar en local te deja experimentar y romper cosas sin que nadie más lo vea.",
+    paraQueSirve:"Es donde ocurre el 90% del trabajo: ves los cambios al instante, sin esperar despliegues ni gastar en servidores. Entender «local vs producción» es clave para no confundir lo que ves tú con lo que ven los usuarios." },
+  { termino:"Variables de Entorno (.env)",
+    queEs:"Son valores de configuración que viven fuera del código, normalmente en un archivo `.env`: claves de API, contraseñas, direcciones de servicios. Permiten cambiar el comportamiento sin tocar el código y sin exponer secretos.",
+    comoFunciona:"En vez de escribir tu clave secreta dentro del código (donde podría filtrarse al subirlo a GitHub), la pones en un archivo `.env` que NO se sube al repositorio. La app la lee al arrancar. Cada entorno (tu PC, producción) puede tener sus propios valores.",
+    ejemplo:"La clave para conectar tu app a un modelo de IA va en una variable de entorno, no en el código. Plataformas como Vercel tienen un panel para cargar esas variables de forma segura en producción.",
+    paraQueSirve:"Es higiene básica de seguridad y configuración: separar los secretos del código evita filtraciones (una de las causas más comunes de hackeos) y permite que la misma app funcione distinto en local y en producción." }
+]},
+
+/* ===== MÓDULO 10 · VERSIONAR Y COLABORAR ===== */
+{ id:"versionar", titulo:"Versionar y Colaborar", icono:"🗂️", colorAcento:"#0ea5e9",
+  desc:"Cómo se guarda, sincroniza y revisa el código cuando trabajan varias personas.",
+  conceptos:[
+  { termino:"Commit",
+    queEs:"Un commit es una «foto» guardada de tu proyecto en un momento dado, con un mensaje que describe qué cambiaste. Es la unidad básica del historial de versiones.",
+    comoFunciona:"Cuando terminas un avance, eliges qué archivos incluir y haces commit con un mensaje («arreglé el botón de pago»). Git guarda ese estado para siempre y lo encadena al anterior, formando una línea de tiempo a la que puedes volver. No borra lo viejo: acumula versiones.",
+    ejemplo:"Un equipo hace decenas de commits al día; si algo se rompe, revisan el historial y vuelven al último commit que funcionaba en segundos. Cada commit es como un «punto de guardado» en un videojuego.",
+    paraQueSirve:"Es tu red de seguridad: nada se pierde y todo es reversible. Buenos commits (pequeños y bien descritos) hacen que entender y arreglar un proyecto sea muchísimo más fácil, incluso para ti mismo en el futuro." },
+  { termino:"Push & Pull",
+    queEs:"Push es subir tus commits desde tu PC al repositorio en la nube; pull es bajar los cambios que otros (o tú desde otro equipo) subieron. Son la sincronización entre tu máquina y el remoto.",
+    comoFunciona:"Trabajas y haces commits en local; cuando quieres compartir o respaldar, haces `push` y tus commits viajan al servidor (GitHub). Antes de empezar a trabajar, haces `pull` para traer lo más reciente y no quedar desfasado. Es como sincronizar una carpeta compartida, pero con todo el historial.",
+    ejemplo:"Tú haces push de tu avance; tu compañero hace pull y ya tiene tu trabajo. En estas academias, cada `git push` mandó los cambios a GitHub, y de ahí Vercel los desplegó solo.",
+    paraQueSirve:"Es lo que hace posible el trabajo en equipo y el respaldo en la nube. Entender push y pull aclara cómo el código viaja de tu PC al mundo y por qué a veces hay que «traer cambios» antes de subir los tuyos." },
+  { termino:"Repositorio Remoto (GitHub)",
+    queEs:"Es la copia de tu proyecto alojada en la nube, con todo su historial, a la que el equipo se conecta. GitHub es la plataforma más popular; GitLab y Bitbucket son alternativas.",
+    comoFunciona:"Tu repositorio local (en tu PC) se vincula a uno remoto. Todos empujan (push) y traen (pull) desde ese punto central, que actúa como la «fuente de la verdad». Además ofrece web para revisar código, reportar problemas (issues) y automatizar tareas.",
+    ejemplo:"GitHub aloja gran parte del software del mundo, abierto y privado. Es también el portafolio público de millones de programadores y la base sobre la que se conectan plataformas como Vercel.",
+    paraQueSirve:"Es el centro de la colaboración moderna y el respaldo de tu trabajo. Saber qué es te explica por qué «subir a GitHub» es el paso previo a publicar, y por qué hay alternativas según privacidad, precio o ecosistema." },
+  { termino:"Ramas (Branches)",
+    queEs:"Una rama es una línea de trabajo paralela donde puedes experimentar o desarrollar una función sin tocar la versión estable. Luego se fusiona de vuelta cuando está lista.",
+    comoFunciona:"Partes una rama desde la versión principal (main), haces tus commits ahí y la versión estable sigue intacta. Puedes tener muchas ramas a la vez (una por función o por persona). Si el experimento falla, descartas la rama y no pasó nada.",
+    ejemplo:"Un equipo desarrolla «nuevo checkout» en una rama mientras la app en producción sigue corriendo desde main. Cuando el checkout está probado, se integra. Así varios trabajan a la vez sin pisarse.",
+    paraQueSirve:"Las ramas permiten avanzar sin miedo: experimentas, desarrollas en paralelo y proteges lo que ya funciona. Es la base del trabajo en equipo ordenado y del desarrollo sin romper producción." },
+  { termino:"Pull Request",
+    queEs:"Un Pull Request (PR) es una propuesta para fusionar los cambios de una rama a la principal, abierta a revisión antes de aceptarse. Es el mecanismo central de revisión de código en equipo.",
+    comoFunciona:"Terminas tu trabajo en una rama y abres un PR: el equipo ve exactamente qué líneas cambiaron, comenta, pide ajustes y aprueba. Suelen correrse pruebas automáticas sobre el PR. Solo cuando pasa revisión y pruebas, se fusiona. Es control de calidad antes de tocar lo estable.",
+    ejemplo:"En proyectos open source, cualquiera propone una mejora vía PR y los mantenedores la revisan. En empresas, ningún cambio entra a producción sin un PR aprobado por otra persona.",
+    paraQueSirve:"Es donde se cuida la calidad y se aprende en equipo. Entender los PR explica cómo se colabora en software serio: no es «subir y listo», sino proponer, revisar y mejorar." },
+  { termino:"Merge y Conflictos",
+    queEs:"Merge (fusionar) es combinar el trabajo de dos ramas en una. Un conflicto ocurre cuando dos personas cambiaron la misma línea de forma distinta y Git no sabe cuál conservar: hay que decidirlo a mano.",
+    comoFunciona:"Cuando fusionas, Git junta automáticamente casi todo. Si dos cambios chocan en el mismo lugar, marca un «conflicto» y te muestra ambas versiones para que elijas o combines. Resolverlo es parte normal del trabajo en equipo, no un error grave.",
+    ejemplo:"Tú y un compañero editaron la misma función; al fusionar, Git pregunta cuál versión vale. Abres el archivo, ves las dos opciones marcadas y dejas la correcta. Listo.",
+    paraQueSirve:"Entender merge y conflictos quita el susto a una situación cotidiana del trabajo colaborativo. Es la prueba de que varias personas pueden tocar el mismo proyecto a la vez de forma ordenada." }
+]},
+/* ===== MÓDULO 11 · PLATAFORMAS, HOSTING Y COSTOS ===== */
+{ id:"plataformas-hosting", titulo:"Plataformas, Hosting y Costos", icono:"☁️", colorAcento:"#f97316",
+  desc:"El ecosistema donde vive y se publica el código: quién es quién, gratis y de pago.",
+  conceptos:[
+  { termino:"Dónde Vive el Código (GitHub / GitLab / Bitbucket)",
+    queEs:"Son las plataformas que alojan tus repositorios en la nube. GitHub es la más popular; GitLab destaca en automatización integrada; Bitbucket se integra con el ecosistema de Atlassian (Jira).",
+    comoFunciona:"Subes tu repositorio y la plataforma lo guarda con todo su historial, ofrece web para revisar código, gestionar PRs e issues, y conectar herramientas (como el deploy automático). Casi todas tienen plan gratuito generoso (repos públicos y privados) y planes pagos para equipos grandes.",
+    ejemplo:"Un proyecto open source vive en GitHub; una empresa que ya usa Jira y Confluence quizá prefiera Bitbucket; un equipo que quiere CI/CD muy integrado puede elegir GitLab. Las tres hacen lo esencial.",
+    paraQueSirve:"Saber que GitHub no es la única opción te da criterio: eliges según privacidad, precio, integraciones y a qué ecosistema perteneces. Es el primer eslabón de publicar cualquier cosa." },
+  { termino:"Hosting de Webs (Vercel, Netlify, Cloudflare)",
+    queEs:"Son plataformas que toman tu sitio o app web desde un repositorio y lo publican en internet, normalmente conectándose a GitHub para desplegar solo con cada push. Ideales para webs y apps de frontend.",
+    comoFunciona:"Conectas tu repo, la plataforma construye el proyecto y lo sirve en una URL con HTTPS, distribuido por una red global (CDN) para que cargue rápido en todo el mundo. Cada vez que haces push, se redespliega solo. La mayoría tiene un plan gratuito suficiente para proyectos personales.",
+    ejemplo:"Estas dos academias están publicadas en Vercel, conectadas a GitHub. Netlify, Cloudflare Pages y GitHub Pages hacen lo mismo, cada una con sus matices, límites y precios.",
+    paraQueSirve:"Es la forma más rápida y barata (a menudo gratis) de poner una web online hoy. Conocer las alternativas te deja elegir por precio, velocidad, límites del plan gratis y facilidad de uso." },
+  { termino:"Plataformas Full-Stack (Render, Railway, Fly.io)",
+    queEs:"Son plataformas para apps que necesitan más que un frontend: un servidor corriendo todo el tiempo, una base de datos, tareas en segundo plano. Un escalón más que el hosting de webs estáticas.",
+    comoFunciona:"Despliegan tu backend (el servidor y la lógica) y suelen ofrecer bases de datos administradas, todo conectado a tu repo. Apuntan a ser más simples que las grandes nubes: menos configuración, despliegue casi de un clic. Tienen capa gratuita limitada y planes que crecen con el uso.",
+    ejemplo:"Una app con login, base de datos y API propia podría vivir en Render o Railway sin la complejidad de AWS. Fly.io destaca por correr tu app cerca de los usuarios en varias regiones del mundo.",
+    paraQueSirve:"Cubren el punto medio entre «una web estática» y «la nube empresarial completa». Saber que existen te evita pensar que solo hay Vercel (para webs) o AWS (complejo): hay opciones intermedias y amables." },
+  { termino:"Las Grandes Nubes (AWS, Google Cloud, Azure)",
+    queEs:"Son las plataformas de infraestructura más grandes del mundo: ofrecen servidores, bases de datos, almacenamiento, IA y cientos de servicios a demanda. Potentes y flexibles, pero complejas.",
+    comoFunciona:"En vez de un producto cerrado, te dan «piezas» (cómputo, almacenamiento, redes, modelos de IA) que combinas a tu medida y pagas por uso. Casi todo internet corre sobre ellas, incluidas las plataformas más simples (Vercel y compañía suelen apoyarse en AWS por detrás). Tienen capas gratuitas, pero los costos pueden dispararse si no se controlan.",
+    ejemplo:"Netflix, bancos y gobiernos corren sobre AWS, Azure o Google Cloud. Una startup grande migra a ellas cuando necesita un control y una escala que las plataformas simples no dan.",
+    paraQueSirve:"Entender que existe esta «capa profunda» te da el mapa completo: las herramientas fáciles que usas suelen vivir encima de estas nubes. Es el destino cuando un proyecto crece mucho, con su poder y su complejidad." },
+  { termino:"Backend como Servicio · BaaS (Supabase, Firebase)",
+    queEs:"Son servicios que te dan listo lo que normalmente habría que programar en el backend: base de datos, login de usuarios, almacenamiento de archivos y APIs automáticas. Tú te concentras en tu app.",
+    comoFunciona:"En lugar de montar y mantener un servidor y una base de datos, te conectas a la plataforma desde tu app y usas sus funciones (guardar datos, autenticar usuarios) con poco código. Firebase es de Google; Supabase es la alternativa open source. Ambas tienen plan gratuito para empezar.",
+    ejemplo:"Una app de notas con cuentas de usuario y sincronización puede construirse en días usando Supabase o Firebase, sin programar un backend desde cero. Muchos productos hechos «con IA» se apoyan en uno de estos.",
+    paraQueSirve:"Bajan enormemente la barrera para crear apps completas: con un frontend y un BaaS, una persona sola hace lo que antes requería un equipo. Clave en el ecosistema de creación rápida (y con IA) de hoy." },
+  { termino:"Gratis vs Pago (Free Tier)",
+    queEs:"Casi todas estas plataformas ofrecen un nivel gratuito («free tier») con límites, y planes pagos que crecen con el uso. Entender qué es gratis y cuándo empiezas a pagar es clave para no llevarte sorpresas.",
+    comoFunciona:"El plan gratis suele alcanzar de sobra para proyectos personales, prototipos y tráfico bajo. Pagas cuando superas ciertos límites (visitas, almacenamiento, cómputo, usuarios) o quieres funciones de equipo y soporte. El modelo típico es «empieza gratis, paga al escalar»: por suscripción o por uso.",
+    ejemplo:"Publicar estas academias en Vercel es gratis porque son estáticas y de tráfico moderado. Una app con miles de usuarios activos y base de datos grande terminaría en un plan pago. Ojo con los servicios de pago por uso: sin límites configurados, una factura puede crecer rápido.",
+    paraQueSirve:"Te permite construir y publicar hoy sin gastar, y planificar costos antes de crecer. Saber leer los límites del plan gratis y poner topes de gasto es una habilidad práctica que evita facturas sorpresa." }
+]},
+
+/* ===== MÓDULO 12 · DESPLEGAR Y OPERAR ===== */
+{ id:"desplegar", titulo:"Desplegar y Operar", icono:"🚀", colorAcento:"#84cc16",
+  desc:"El tramo final: del código construido a una app viva, y cómo mantenerla en pie.",
+  conceptos:[
+  { termino:"Build / Compilación",
+    queEs:"El build es el paso que transforma tu código fuente (pensado para humanos) en la versión optimizada que se ejecuta en producción: archivos más pequeños, rápidos y listos para servir.",
+    comoFunciona:"Muchas apps no se publican tal cual se escriben: una herramienta «construye» el proyecto —junta archivos, optimiza, traduce a versiones compatibles— y produce una carpeta final lista para desplegar. Las plataformas de hosting suelen hacer el build por ti en cada push.",
+    ejemplo:"Una app moderna pasa de cientos de archivos legibles a unos pocos comprimidos para que cargue rápido. (Estas PWAs son tan simples que casi no necesitan build, pero la mayoría de las apps sí.)",
+    paraQueSirve:"Explica por qué a veces «funciona en local pero el build falla», y por qué el código que escribes no es exactamente el que llega al usuario. Es un paso clave entre desarrollar y publicar." },
+  { termino:"Entornos (Dev, Staging, Producción)",
+    queEs:"Son las distintas «copias» de tu app según para qué se usan: desarrollo (tu PC), staging (un ensayo idéntico a producción para probar) y producción (la que usan los usuarios reales).",
+    comoFunciona:"Trabajas en desarrollo; cuando algo está listo, lo pruebas en staging, un entorno que imita producción pero sin usuarios reales; si todo va bien, recién pasa a producción. Cada entorno suele tener su propia configuración y datos, para no experimentar nunca sobre lo que la gente está usando.",
+    ejemplo:"Un banco jamás prueba una función nueva directo en producción: la valida en staging primero. Así, si algo falla, no afecta a clientes reales.",
+    paraQueSirve:"Es la diferencia entre «romper tu laboratorio» y «romperle la app a miles de personas». Entender los entornos explica cómo se publica con seguridad y por qué existe ese paso intermedio de pruebas." },
+  { termino:"Deploy / Despliegue",
+    queEs:"El deploy es el acto de publicar tu app: tomar la versión construida y ponerla a funcionar en un servidor accesible por internet para los usuarios. Es el momento «sale en vivo».",
+    comoFunciona:"Tras el build, la plataforma sube los archivos a sus servidores, los activa y enruta tu dominio hacia ellos. Hoy suele ser automático: haces push, se construye y se despliega en segundos, con la versión anterior lista por si hay que volver atrás. Antes esto era manual y arriesgado; ahora es casi un clic.",
+    ejemplo:"Cada vez que hicimos `git push` en estas academias, Vercel desplegó la nueva versión sola. «Subir a producción» y «hacer deploy» son lo mismo.",
+    paraQueSirve:"Es el paso final que convierte tu trabajo en algo que la gente puede usar. Entenderlo cierra el círculo «del código a internet» y te deja dialogar sobre lanzamientos sin perderte." },
+  { termino:"Dominios y DNS",
+    queEs:"El dominio es la dirección legible de tu sitio (tuapp.com). El DNS es el «directorio telefónico» de internet que traduce ese nombre a la dirección numérica del servidor donde vive tu app.",
+    comoFunciona:"Compras un dominio en un registrador y configuras sus registros DNS para que apunten a tu servidor o plataforma de hosting. Cuando alguien escribe tu dominio, el DNS lo resuelve hacia el lugar correcto en milisegundos. Los cambios de DNS pueden tardar un rato en propagarse por todo el mundo.",
+    ejemplo:"Estas apps usan dominios gratis de Vercel (terminados en `.vercel.app`); conectarles un dominio propio (`miacademia.com`) es configurar unos registros DNS. El correo, las webs y casi todo en internet dependen del DNS.",
+    paraQueSirve:"Entender dominios y DNS explica cómo tu app pasa de una URL larga a una dirección propia y memorable, y por qué a veces un sitio nuevo «tarda en aparecer»: el DNS se está propagando." },
+  { termino:"CI/CD",
+    queEs:"CI/CD es la práctica de automatizar las pruebas y la publicación del software. CI (integración continua) revisa cada cambio automáticamente; CD (entrega/despliegue continuo) lo publica solo si todo pasa.",
+    comoFunciona:"Cada vez que alguien sube código, un sistema automático lo construye, corre las pruebas y, si todo está bien, lo despliega, sin pasos manuales. Si algo falla, se frena y avisa antes de llegar a los usuarios. Es una cinta transportadora que lleva el código del repositorio a producción con controles de calidad en el camino.",
+    ejemplo:"La conexión GitHub→Vercel que armamos es una forma simple de CD: push y se publica. Equipos grandes suman pruebas automáticas, análisis de seguridad y despliegues por etapas en ese mismo flujo.",
+    paraQueSirve:"CI/CD es lo que permite publicar muchas veces al día con confianza. Entenderlo explica cómo las apps modernas mejoran tan seguido sin romperse, y por qué «automatizar el camino a producción» es tan valioso." },
+  { termino:"Monitoreo, Logs y Rollback",
+    queEs:"Son las herramientas para saber qué pasa con tu app ya publicada: monitoreo (¿está funcionando y rápida?), logs (registros de lo que ocurre y de los errores) y rollback (volver a la versión anterior si algo se rompe).",
+    comoFunciona:"La plataforma registra cada petición y error en logs que puedes revisar; el monitoreo te alerta si la app se cae o se pone lenta; y si un despliegue salió malo, el rollback restaura en segundos la versión anterior que sí funcionaba. Es el «tablero de control» de producción.",
+    ejemplo:"Una tienda nota por el monitoreo que las compras fallan tras un despliegue; revisa los logs, encuentra el error y hace rollback a la versión previa mientras lo arregla, minimizando el daño.",
+    paraQueSirve:"Publicar no es el final: hay que operar la app en vivo. Entender monitoreo, logs y rollback explica cómo se mantienen los servicios funcionando y se reacciona rápido cuando algo falla, sin pánico." }
 ]}
 ]};
 
@@ -690,6 +836,10 @@ const MEDALS = [
   { id:"frontera",emoji:"🛰️", nombre:"Pionero de la Frontera",desc:"Módulo «La Frontera»",             cond:s=>s.modsDone.includes("la-frontera") },
   { id:"filosofo",emoji:"🧭", nombre:"Filósofo de la IA",     desc:"Módulo «Visiones y Filosofías»",   cond:s=>s.modsDone.includes("visiones") },
   { id:"artista", emoji:"🎨", nombre:"Artista Aumentado",     desc:"Módulo «Arte y Creatividad»",      cond:s=>s.modsDone.includes("arte-creatividad") },
+  { id:"taller",  emoji:"🖥️", nombre:"Maestro del Taller",    desc:"Módulo «Tu Taller Local»",         cond:s=>s.modsDone.includes("taller-local") },
+  { id:"versionador",emoji:"🗂️",nombre:"Guardián de Versiones",desc:"Módulo «Versionar y Colaborar»",   cond:s=>s.modsDone.includes("versionar") },
+  { id:"plataf",  emoji:"☁️", nombre:"Cazador de Plataformas",desc:"Módulo «Plataformas y Hosting»",   cond:s=>s.modsDone.includes("plataformas-hosting") },
+  { id:"lanzador",emoji:"🚀", nombre:"Lanzador a Producción", desc:"Módulo «Desplegar y Operar»",      cond:s=>s.modsDone.includes("desplegar") },
   { id:"maestria",emoji:"👑", nombre:"Maestría total",       desc:"100% de la academia",              cond:s=>s.learned>=s.total }
 ];
 
@@ -752,7 +902,31 @@ const FUENTES = {
   "IA en las Artes Visuales (Diseño)":{ url:"https://jalammar.github.io/illustrated-stable-diffusion/", n:"The Illustrated Stable Diffusion" },
   "La IA como Instrumento (no Autor)":{ url:"https://aiartists.org", n:"AIArtists.org" },
   "El Sello del Creador (Autoría)":{ url:"https://www.copyright.gov/ai/", n:"IA y autoría (US Copyright Office)" },
-  "Uso Responsable en el Arte":{ url:"https://contentauthenticity.org", n:"Content Authenticity Initiative" }
+  "Uso Responsable en el Arte":{ url:"https://contentauthenticity.org", n:"Content Authenticity Initiative" },
+  "La Terminal (Línea de Comandos)":{ url:"https://www.freecodecamp.org/news/command-line-for-beginners/", n:"La terminal para principiantes (freeCodeCamp)" },
+  "El Editor de Código (VS Code)":{ url:"https://code.visualstudio.com/docs", n:"Documentación de VS Code" },
+  "Runtime y Entorno (Node.js, Python)":{ url:"https://nodejs.org/en/learn", n:"Aprende Node.js (oficial)" },
+  "Dependencias y Paquetes (npm, pip)":{ url:"https://docs.npmjs.com/about-npm", n:"Qué es npm (oficial)" },
+  "Servidor Local / Vista Local (localhost)":{ url:"https://developer.mozilla.org/es/docs/Learn_web_development/Howto/Tools_and_setup/set_up_a_local_testing_server", n:"Servidor local de pruebas (MDN)" },
+  "Variables de Entorno (.env)":{ url:"https://12factor.net/config", n:"Configuración (The Twelve-Factor App)" },
+  "Commit":{ url:"https://docs.github.com/en/get-started/using-git/about-git", n:"Sobre Git (GitHub Docs)" },
+  "Push & Pull":{ url:"https://www.atlassian.com/git/tutorials/syncing", n:"Sincronizar con Git (Atlassian)" },
+  "Repositorio Remoto (GitHub)":{ url:"https://docs.github.com/en/repositories", n:"Repositorios (GitHub Docs)" },
+  "Ramas (Branches)":{ url:"https://www.atlassian.com/git/tutorials/using-branches", n:"Ramas de Git (Atlassian)" },
+  "Pull Request":{ url:"https://docs.github.com/en/pull-requests", n:"Pull Requests (GitHub Docs)" },
+  "Merge y Conflictos":{ url:"https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts", n:"Conflictos de merge (Atlassian)" },
+  "Dónde Vive el Código (GitHub / GitLab / Bitbucket)":{ url:"https://docs.github.com/en/get-started", n:"Empezar con GitHub (Docs)" },
+  "Hosting de Webs (Vercel, Netlify, Cloudflare)":{ url:"https://vercel.com/docs/getting-started-with-vercel", n:"Empezar con Vercel (Docs)" },
+  "Plataformas Full-Stack (Render, Railway, Fly.io)":{ url:"https://render.com/docs", n:"Documentación de Render" },
+  "Las Grandes Nubes (AWS, Google Cloud, Azure)":{ url:"https://aws.amazon.com/what-is-cloud-computing/", n:"Qué es la nube (AWS)" },
+  "Backend como Servicio · BaaS (Supabase, Firebase)":{ url:"https://supabase.com/docs", n:"Documentación de Supabase" },
+  "Gratis vs Pago (Free Tier)":{ url:"https://vercel.com/pricing", n:"Precios de Vercel (ejemplo de free tier)" },
+  "Build / Compilación":{ url:"https://vitejs.dev/guide/", n:"Vite (build moderno)" },
+  "Entornos (Dev, Staging, Producción)":{ url:"https://www.atlassian.com/continuous-delivery", n:"Continuous Delivery (Atlassian)" },
+  "Deploy / Despliegue":{ url:"https://vercel.com/docs/deployments/overview", n:"Despliegues en Vercel (Docs)" },
+  "Dominios y DNS":{ url:"https://www.cloudflare.com/learning/dns/what-is-dns/", n:"Qué es el DNS (Cloudflare)" },
+  "CI/CD":{ url:"https://docs.github.com/en/actions/about-github-actions/understanding-github-actions", n:"CI/CD con GitHub Actions (Docs)" },
+  "Monitoreo, Logs y Rollback":{ url:"https://opentelemetry.io/docs/what-is-opentelemetry/", n:"Qué es la observabilidad (OpenTelemetry)" }
 };
 
 /* ============================================================
@@ -796,6 +970,17 @@ const RECURSOS = [
     { n:"Content Authenticity Initiative", url:"https://contentauthenticity.org", d:"Estándar para acreditar autoría y procedencia del contenido." },
     { n:"Magenta (Google)", url:"https://magenta.tensorflow.org", d:"Investigación abierta de IA para música y arte." },
     { n:"AIArtists.org", url:"https://aiartists.org", d:"Comunidad, herramientas y ética del arte con IA." }
+  ]},
+  { titulo:"Plataformas para crear y publicar", icono:"☁️", items:[
+    { n:"GitHub", url:"https://github.com", d:"Donde vive y se versiona el código del mundo (gratis y de pago)." },
+    { n:"Vercel", url:"https://vercel.com", d:"Publicar webs y apps frontend con deploy automático desde GitHub." },
+    { n:"Netlify", url:"https://www.netlify.com", d:"Alternativa a Vercel para hosting de sitios y apps." },
+    { n:"Cloudflare Pages", url:"https://pages.cloudflare.com", d:"Hosting global y gratuito sobre la red de Cloudflare." },
+    { n:"Render", url:"https://render.com", d:"Plataforma full-stack: backend, bases de datos y más, simple." },
+    { n:"Railway", url:"https://railway.app", d:"Desplegar apps y bases de datos con poca configuración." },
+    { n:"Supabase", url:"https://supabase.com", d:"Backend como servicio open source: base de datos + login + APIs." },
+    { n:"Firebase (Google)", url:"https://firebase.google.com", d:"Backend como servicio de Google para apps web y móviles." },
+    { n:"AWS · Free Tier", url:"https://aws.amazon.com/free/", d:"La nube más grande; capa gratuita para empezar a explorar." }
   ]}
 ];
 
@@ -851,7 +1036,31 @@ const EN_TERM = {
   "IA en las Artes Visuales (Diseño)":"AI in Visual Arts",
   "La IA como Instrumento (no Autor)":"AI as Instrument",
   "El Sello del Creador (Autoría)":"The Creator's Signature",
-  "Uso Responsable en el Arte":"Responsible Creative Use"
+  "Uso Responsable en el Arte":"Responsible Creative Use",
+  "La Terminal (Línea de Comandos)":"Terminal / Command Line",
+  "El Editor de Código (VS Code)":"Code Editor (VS Code)",
+  "Runtime y Entorno (Node.js, Python)":"Runtime & Environment",
+  "Dependencias y Paquetes (npm, pip)":"Dependencies & Package Managers",
+  "Servidor Local / Vista Local (localhost)":"Local Server (localhost)",
+  "Variables de Entorno (.env)":"Environment Variables",
+  "Commit":"Commit",
+  "Push & Pull":"Push & Pull",
+  "Repositorio Remoto (GitHub)":"Remote Repository",
+  "Ramas (Branches)":"Branches",
+  "Pull Request":"Pull Request (PR)",
+  "Merge y Conflictos":"Merge & Conflicts",
+  "Dónde Vive el Código (GitHub / GitLab / Bitbucket)":"Code Hosting (GitHub / GitLab)",
+  "Hosting de Webs (Vercel, Netlify, Cloudflare)":"Web Hosting",
+  "Plataformas Full-Stack (Render, Railway, Fly.io)":"Full-Stack Platforms",
+  "Las Grandes Nubes (AWS, Google Cloud, Azure)":"The Big Clouds",
+  "Backend como Servicio · BaaS (Supabase, Firebase)":"Backend-as-a-Service (BaaS)",
+  "Gratis vs Pago (Free Tier)":"Free Tier vs Paid",
+  "Build / Compilación":"Build",
+  "Entornos (Dev, Staging, Producción)":"Environments (Dev / Staging / Prod)",
+  "Deploy / Despliegue":"Deploy / Deployment",
+  "Dominios y DNS":"Domains & DNS",
+  "CI/CD":"Continuous Integration / Delivery",
+  "Monitoreo, Logs y Rollback":"Monitoring, Logs & Rollback"
 };
 
 /* ============================================================
@@ -899,7 +1108,11 @@ function splitTerm(t){ const m=String(t).match(/^(.*?)\s*\((.+)\)\s*$/); return 
 /* título en español (sin paréntesis) + término en inglés (siempre visible) */
 const tEs = t => String(t).replace(/\s*\([^)]*\)/g,"").replace(/\s+/g," ").trim();
 const tEn = c => (c.en || splitTerm(c.termino).tech || "").trim();
-function engChip(c){ const es=tEs(c.termino), en=tEn(c); return (en && en.toLowerCase()!==es.toLowerCase()) ? `<span class="tech mono">🇬🇧 ${esc(en)}</span>` : ""; }
+function engChip(c){
+  const es=tEs(c.termino), en=tEn(c);
+  if(!en || en.toLowerCase()===es.toLowerCase()) return "";
+  return `<span class="tech mono">🇬🇧 ${esc(en)}</span><span class="say" data-a="speak" data-t="${esc(en)}" role="button" tabindex="0" title="Escuchar en inglés">🔊</span>`;
+}
 
 /* ---------- sonido (Web Audio) ---------- */
 let soundOn = localStorage.getItem("iadSound")!=="0";
@@ -919,6 +1132,21 @@ const tick   = ()=>tone(720,0.05,0,"triangle",0.05);
 const ding   = ()=>{ tone(620,0.11,0,"sine",0.11); tone(930,0.2,0.08,"sine",0.11); };
 const buzz   = ()=>tone(150,0.2,0,"square",0.07);
 const fanfare= ()=>[523,659,784,1047].forEach((f,i)=>tone(f,0.26,i*0.12,"triangle",0.12));
+
+/* ---------- voz en inglés (Web Speech API) para el término técnico ---------- */
+let voices=[];
+function loadVoices(){ try{ voices=window.speechSynthesis.getVoices()||[]; }catch(e){ voices=[]; } }
+if("speechSynthesis" in window){ loadVoices(); window.speechSynthesis.onvoiceschanged=loadVoices; }
+function speak(text){
+  if(!("speechSynthesis" in window)){ toast("🔇 Tu navegador no permite la voz"); return; }
+  if(!voices.length) loadVoices();
+  const v=voices.find(x=>/^en/i.test(x.lang));
+  if(!v){ toast("🔇 Instala una voz en inglés en tu dispositivo para escuchar la pronunciación"); return; }
+  const clean=String(text).replace(/\(.*?\)/g,"").replace(/[·—&\/]/g," ").trim();
+  const u=new SpeechSynthesisUtterance(clean);
+  u.voice=v; u.lang=v.lang; u.rate=0.9;
+  window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+}
 
 /* ============================================================
    RENDER
@@ -1255,6 +1483,7 @@ document.addEventListener("click",e=>{
   if(act==="fc-prev"){ state.fcIdx=Math.max(0,state.fcIdx-1); state.fcFlip=false; tick(); render(); }
   if(act==="fc-shuffle"){ state.fcOrder=[]; state.fcIdx=0; state.fcFlip=false; tick(); render(); }
 
+  if(act==="speak"){ e.stopPropagation(); speak(el.dataset.t); return; }
   if(act==="gi"){ el.classList.toggle("open"); tick(); }
   if(act==="gmod"){ state.gmod=el.dataset.id; tick(); render(); }
 
