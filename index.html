@@ -68,6 +68,15 @@ button:active{transform:scale(.98)}
 .actions{display:flex;gap:8px}
 .icbtn{width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:18px;display:grid;place-items:center;box-shadow:var(--shadow2);transition:transform .15s}
 .icbtn:hover{transform:translateY(-2px)}
+.installbtn{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:12px;background:var(--grad);color:#fff;font-weight:700;font-size:.82rem;box-shadow:var(--shadow2);white-space:nowrap;transition:transform .15s,filter .15s}
+.installbtn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+@media(max-width:430px){
+  .brand p{display:none}
+  .brand h1{font-size:.96rem;line-height:1.15}
+  .actions{gap:6px}
+  .icbtn{width:38px;height:38px;font-size:16px}
+  .installbtn{height:38px;font-size:.76rem;padding:0 11px;gap:5px}
+}
 
 /* ---------- banner motivacional ---------- */
 .motiv{
@@ -294,7 +303,7 @@ button:active{transform:scale(.98)}
   <div class="actions">
     <button class="icbtn" id="btnSound" data-a="sound" title="Sonido">🔊</button>
     <button class="icbtn" id="btnDark" data-a="dark" title="Tema">☀️</button>
-    <button class="icbtn" id="btnInstall" data-a="install" title="Instalar app" hidden>📲</button>
+    <button class="installbtn" id="btnInstall" data-a="install" title="Descargar / instalar la app" hidden>⬇️ Descargar</button>
   </div>
 </header>
 
@@ -1285,12 +1294,12 @@ let defPrompt=null;
 const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
 const standalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone;
 window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); defPrompt=e; if(!standalone) $("#btnInstall").hidden=false; });
-if(isIOS && !standalone) $("#btnInstall").hidden=false;
+if(!standalone) $("#btnInstall").hidden=false;   // mostrar siempre que no esté ya instalada
 window.addEventListener("appinstalled",()=>{ $("#btnInstall").hidden=true; toast("✅ ¡App instalada!"); });
 function doInstall(){
-  if(defPrompt){ defPrompt.prompt(); defPrompt=null; }
-  else if(isIOS) toast("📲 En Safari: Compartir → «Añadir a pantalla de inicio»");
-  else toast("📲 En el menú del navegador busca «Instalar aplicación»");
+  if(defPrompt){ defPrompt.prompt(); defPrompt=null; return; }   // instalación nativa de 1 toque (Android/Chrome)
+  if(isIOS){ toast("📲 Toca Compartir ⬆️ (abajo) y elige «Agregar a pantalla de inicio»"); return; }
+  toast("📲 Abre el menú del navegador (⋮ o ⋯) y elige «Instalar app»");
 }
 
 if(!sessionStorage.getItem("iadSplash")) $("#splash").hidden=false;
