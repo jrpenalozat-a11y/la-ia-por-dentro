@@ -1,0 +1,1337 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La IA por Dentro — Academia intermedia de IA y código</title>
+<meta name="description" content="El siguiente nivel para entender la IA y la programación por dentro. Tono claro y didáctico, conceptos técnicos reales.">
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   LA IA POR DENTRO — tokens de diseño
+   :root = modo claro · body.dark = modo noche (por defecto)
+   Paleta pizarra: #0f172a / #1e293b / #334155 + azul + esmeralda
+   ============================================================ */
+:root{
+  --bg:#eef2f9; --bg2:#ffffff; --card:#ffffff;
+  --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --blue:#2563eb; --green:#059669;
+  --good:#059669; --warn:#d97706; --bad:#e11d48;
+  --grad:linear-gradient(135deg,#3b82f6,#10b981);
+  --shadow:0 10px 30px rgba(15,23,42,.10);
+  --shadow2:0 4px 14px rgba(15,23,42,.07);
+}
+body.dark{
+  --bg:#0f172a; --bg2:#0b1120; --card:#1e293b;
+  --ink:#e2e8f0; --muted:#94a3b8; --line:#334155;
+  --blue:#3b82f6; --green:#10b981;
+  --good:#10b981; --warn:#f59e0b; --bad:#f43f5e;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --shadow2:0 4px 14px rgba(0,0,0,.32);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  min-height:100vh;transition:background .3s,color .3s;
+  background-image:radial-gradient(1100px 480px at 82% -8%, rgba(59,130,246,.13), transparent 60%),
+                   radial-gradient(900px 420px at -8% 28%, rgba(16,185,129,.10), transparent 60%);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{font-family:'Sora',sans-serif}
+code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button:active{transform:scale(.98)}
+.wrap{max-width:780px;margin:0 auto;padding:0 14px 60px}
+
+/* ---------- encabezado ---------- */
+.top{
+  position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:10px 16px;background:color-mix(in srgb,var(--bg) 84%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.logo{
+  width:42px;height:42px;border-radius:13px;background:var(--grad);display:grid;place-items:center;
+  font-family:'JetBrains Mono';font-weight:700;font-size:17px;color:#fff;box-shadow:var(--shadow2);flex:none;animation:pop .5s ease;
+}
+.brand h1{font-size:1.04rem;line-height:1.1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand p{font-size:.66rem;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.actions{display:flex;gap:8px}
+.icbtn{width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:18px;display:grid;place-items:center;box-shadow:var(--shadow2);transition:transform .15s}
+.icbtn:hover{transform:translateY(-2px)}
+
+/* ---------- banner motivacional ---------- */
+.motiv{
+  display:block;width:100%;text-align:left;margin:14px 0 4px;padding:13px 16px;border-radius:14px;
+  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--blue);
+  font-size:.88rem;color:var(--muted);box-shadow:var(--shadow2);transition:opacity .3s;line-height:1.5;
+}
+.motiv.out{opacity:0}
+
+/* ---------- pestañas de navegación ---------- */
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:12px 0 18px}
+.tabs button{
+  padding:10px 3px;border-radius:13px;background:var(--card);border:1px solid var(--line);
+  font-size:.7rem;font-weight:600;color:var(--muted);box-shadow:var(--shadow2);transition:all .2s;
+  display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.1;
+}
+.tabs button .ti{font-size:16px}
+.tabs button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(59,130,246,.32)}
+
+.view{animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.14)}100%{transform:scale(1)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ---------- portada ---------- */
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{display:flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:.8rem;font-weight:600;box-shadow:var(--shadow2)}
+.intro{font-size:.9rem;color:var(--muted);line-height:1.6;margin-bottom:16px;padding:0 2px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+.modcard{
+  position:relative;text-align:left;padding:18px 16px;border-radius:18px;background:var(--card);
+  border:1px solid var(--line);box-shadow:var(--shadow2);transition:transform .18s,box-shadow .18s;overflow:hidden;
+}
+.modcard:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.modcard::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--cc,var(--blue))}
+.modcard .mhead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.modcard .em{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;flex:none;background:color-mix(in srgb,var(--cc,var(--blue)) 16%,transparent)}
+.modcard h3{font-size:1rem;line-height:1.2}
+.modcard .n{font-size:.72rem;color:var(--muted)}
+.modcard .mdesc{font-size:.8rem;color:var(--muted);line-height:1.45;margin-bottom:11px}
+.mini{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.mini>i{display:block;height:100%;border-radius:99px;background:var(--cc,var(--blue));transition:width .4s}
+.modcard .done{position:absolute;top:12px;right:12px;font-size:16px;animation:pop .4s ease}
+
+/* ---------- detalle de módulo ---------- */
+.back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:11px;margin-bottom:12px;background:var(--card);border:1px solid var(--line);font-size:.82rem;font-weight:600;box-shadow:var(--shadow2)}
+.cathead{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.cathead .em{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:28px;flex:none;background:color-mix(in srgb,var(--cc,var(--blue)) 18%,transparent)}
+.cathead h2{font-size:1.22rem}
+.cathead p{font-size:.8rem;color:var(--muted);line-height:1.4}
+.subtabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.subtabs button{padding:10px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:.85rem;color:var(--muted)}
+.subtabs button.on{background:var(--cc,var(--blue));color:#fff;border-color:transparent}
+
+/* ---------- tarjeta de concepto ---------- */
+.concept{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow2)}
+.concept header{display:flex;align-items:flex-start;gap:11px;margin-bottom:13px}
+.concept .num{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none;font-family:'Sora';font-weight:700;font-size:.8rem;color:#fff;background:var(--cc,var(--blue))}
+.concept .thd{flex:1;min-width:0}
+.concept h3{font-size:1.04rem;line-height:1.25}
+.concept .tech{font-family:'JetBrains Mono';font-size:.72rem;color:var(--muted);margin-top:3px;display:inline-block;padding:2px 7px;border-radius:6px;background:color-mix(in srgb,var(--cc,var(--blue)) 12%,transparent)}
+.concept .ok{font-size:20px;flex:none}
+.block{padding:11px 13px;border-radius:12px;margin-bottom:8px;background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line)}
+.block b{display:flex;align-items:center;gap:6px;font-size:.69rem;letter-spacing:.04em;text-transform:uppercase;color:var(--cc,var(--blue));margin-bottom:5px;font-weight:700}
+.block p{font-size:.9rem;line-height:1.6}
+.learnbtn{width:100%;margin-top:6px;padding:12px;border-radius:13px;font-weight:700;font-size:.9rem;border:2px solid var(--cc,var(--blue));color:var(--cc,var(--blue));background:transparent;transition:all .2s}
+.learnbtn.on{background:var(--good);border-color:var(--good);color:#fff}
+
+/* ---------- flashcards ---------- */
+.fcwrap{perspective:1200px;margin-bottom:14px}
+.fc{position:relative;height:340px;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.1,.2,1)}
+.fcwrap.flip .fc{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.face.bk{transform:rotateY(180deg);justify-content:flex-start;text-align:left;align-items:stretch;overflow:auto}
+.face .bigem{font-size:48px;animation:floatY 3.2s ease-in-out infinite}
+.face h3{font-size:1.3rem;line-height:1.3}
+.face .tech{font-family:'JetBrains Mono';font-size:.8rem;color:var(--muted)}
+.face .hint{font-size:.75rem;color:var(--muted)}
+.fcnav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.fcnav button{padding:11px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:.85rem;box-shadow:var(--shadow2)}
+.fcpos{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:8px}
+
+/* ---------- glosario ---------- */
+.search{width:100%;padding:13px 16px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:inherit;font-size:.95rem;margin-bottom:14px;box-shadow:var(--shadow2);outline:none}
+.search:focus{border-color:var(--blue)}
+.gchips{display:flex;gap:7px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px;scrollbar-width:none}
+.gchips::-webkit-scrollbar{display:none}
+.gchips button{flex:none;padding:7px 12px;border-radius:99px;font-size:.72rem;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--muted)}
+.gchips button.on{background:var(--grad);color:#fff;border-color:transparent}
+.gitem{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px 15px;margin-bottom:9px;box-shadow:var(--shadow2);transition:transform .15s}
+.gitem:hover{transform:translateX(3px)}
+.gitem .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gitem h4{font-size:.94rem}
+.gtag{font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:99px;color:#fff;background:var(--cc,var(--blue))}
+.gitem .def{font-size:.83rem;color:var(--muted);margin-top:5px;line-height:1.5}
+.gitem .more{display:none;margin-top:8px}
+.gitem.open .more{display:block;animation:fadeUp .25s ease}
+
+/* ---------- evaluación ---------- */
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.qhead .score{font-size:.82rem;font-weight:600;color:var(--muted)}
+.reset{padding:8px 13px;border-radius:11px;font-size:.76rem;font-weight:600;background:var(--card);border:1px solid var(--line)}
+.qbar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:16px}
+.qbar>i{display:block;height:100%;background:var(--grad);border-radius:99px;transition:width .4s}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow2);margin-bottom:12px}
+.qcard .qtag{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.qcard .qtext{font-size:1rem;line-height:1.6;font-weight:500}
+.opt{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:13px 14px;border-radius:14px;background:var(--card);border:2px solid var(--line);margin-bottom:9px;font-size:.9rem;font-weight:600;box-shadow:var(--shadow2);transition:all .2s}
+.opt:hover{border-color:var(--blue)}
+.opt .lt{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;flex:none;font-family:'Sora';font-weight:700;font-size:.78rem;background:var(--line)}
+.opt.good{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--card))}
+.opt.good .lt{background:var(--good);color:#fff}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card));animation:shake .35s}
+.opt.bad .lt{background:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.nextbtn{width:100%;padding:14px;border-radius:14px;background:var(--grad);color:#fff;font-weight:700;font-size:.95rem;box-shadow:0 8px 22px rgba(59,130,246,.32);margin-top:4px;animation:fadeUp .3s ease}
+.qfeed{font-size:.86rem;line-height:1.55;padding:12px 14px;border-radius:12px;margin-bottom:10px;animation:fadeUp .3s ease}
+.qfeed.ok{background:color-mix(in srgb,var(--good) 13%,transparent);color:var(--good);font-weight:600}
+.qfeed.no{background:color-mix(in srgb,var(--bad) 11%,transparent)}
+.qfeed.no b{color:var(--ink)}
+
+/* ---------- mi progreso ---------- */
+.ringbox{display:flex;align-items:center;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow2);margin-bottom:14px}
+.ring{width:148px;height:148px;border-radius:50%;display:grid;place-items:center;flex:none;transition:background .5s}
+.ring>div{width:110px;height:110px;border-radius:50%;background:var(--card);display:grid;place-items:center;text-align:center}
+.ring b{font-family:'Sora';font-size:1.7rem;display:block}
+.ring span{font-size:.64rem;color:var(--muted);font-weight:600}
+.ringinfo{flex:1}
+.ringinfo h3{font-size:1.04rem;margin-bottom:6px}
+.ringinfo p{font-size:.8rem;color:var(--muted);line-height:1.55}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow2);margin-bottom:14px}
+.pcard h3{font-size:.95rem;margin-bottom:12px}
+.brow{margin-bottom:11px}
+.brow .lab{display:flex;justify-content:space-between;font-size:.78rem;font-weight:600;margin-bottom:5px}
+.brow .lab span:last-child{color:var(--muted)}
+.bar{height:9px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;transition:width .5s}
+.medals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:560px){.medals{grid-template-columns:repeat(4,1fr)}}
+.medal{text-align:center;padding:13px 6px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 55%,transparent)}
+.medal .be{font-size:25px;display:block;margin-bottom:5px}
+.medal b{font-size:.67rem;display:block;line-height:1.2}
+.medal small{font-size:.6rem;color:var(--muted);display:block;margin-top:3px;line-height:1.25}
+.medal.lock{opacity:.4;filter:grayscale(1)}
+.medal.unlock{border-color:var(--blue);box-shadow:0 0 14px rgba(59,130,246,.22)}
+
+/* ---------- celebración ---------- */
+#cele{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:rgba(2,6,20,.8);backdrop-filter:blur(6px);padding:20px}
+#cele[hidden]{display:none}
+.celebox{position:relative;z-index:2;max-width:420px;width:100%;text-align:center;padding:34px 24px;border-radius:24px;background:var(--card);border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.5);animation:pop .5s ease}
+.celebox .ce{font-size:58px;display:block;margin-bottom:8px;animation:floatY 2.4s ease-in-out infinite}
+.celebox h2{font-size:1.3rem;margin-bottom:8px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.celebox p{font-size:.92rem;line-height:1.55;color:var(--muted);margin-bottom:18px}
+.celebox button{width:100%;padding:14px;border-radius:13px;background:var(--grad);color:#fff;font-weight:700;font-size:.95rem}
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.confetti i{position:absolute;top:-4vh;width:9px;height:14px;border-radius:2px;opacity:.95;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(112vh) rotate(720deg);opacity:.6}}
+
+/* ---------- splash ---------- */
+#splash{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:28px;overflow:hidden;
+  background:radial-gradient(900px 600px at 72% 12%, rgba(59,130,246,.28), transparent 60%),radial-gradient(700px 500px at 12% 82%, rgba(16,185,129,.24), transparent 60%), #0b1120;color:#e2e8f0}
+#splash[hidden]{display:none}
+#splash .slogo{width:90px;height:90px;border-radius:24px;background:var(--grad);display:grid;place-items:center;font-family:'JetBrains Mono';font-weight:700;font-size:34px;color:#fff;box-shadow:0 16px 50px rgba(59,130,246,.45);animation:pop .6s ease}
+#splash h1{font-size:1.95rem;background:linear-gradient(135deg,#93c5fd,#6ee7b7);-webkit-background-clip:text;background-clip:text;color:transparent}
+#splash .sub{max-width:440px;font-size:.95rem;line-height:1.6;color:#94a3b8}
+#splash .feats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:470px}
+#splash .feats span{font-size:.73rem;font-weight:600;padding:7px 12px;border-radius:99px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+#splash .go{margin-top:8px;padding:15px 32px;border-radius:15px;background:var(--grad);color:#fff;font-weight:700;font-size:1rem;font-family:'Sora';box-shadow:0 12px 36px rgba(16,185,129,.35)}
+.floaty{position:absolute;font-family:'JetBrains Mono';font-size:22px;opacity:.16;animation:floatY 4s ease-in-out infinite;pointer-events:none;color:#93c5fd}
+
+/* ---------- toast y pie ---------- */
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);z-index:95;max-width:90vw;padding:12px 18px;border-radius:13px;background:var(--ink);color:var(--bg2);font-size:.84rem;font-weight:600;box-shadow:var(--shadow);opacity:0;transition:all .35s;pointer-events:none;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.foot{text-align:center;font-size:.72rem;color:var(--muted);margin-top:34px;line-height:1.6}
+.empty{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 10px}
+
+/* ---------- término en inglés (chip mono) en glosario/flashcard ---------- */
+.tech{font-family:'JetBrains Mono';font-size:.7rem;color:var(--muted);display:inline-block}
+.gitem .tech{padding:2px 7px;border-radius:6px;background:color-mix(in srgb,var(--cc,var(--blue)) 12%,transparent);font-size:.66rem}
+
+/* ---------- botón «Profundizar» (fuente por concepto) ---------- */
+.srcbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;margin:2px 0 8px;padding:11px 14px;border-radius:12px;font-size:.84rem;font-weight:700;text-decoration:none;color:var(--cc,var(--blue));border:1px dashed var(--cc,var(--blue));background:color-mix(in srgb,var(--cc,var(--blue)) 8%,transparent);transition:all .2s}
+.srcbtn:hover{background:color-mix(in srgb,var(--cc,var(--blue)) 16%,transparent)}
+
+/* ---------- centro «para profundizar» ---------- */
+.reshub{display:flex;align-items:center;gap:13px;width:100%;text-align:left;margin-top:12px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow2);transition:transform .18s,box-shadow .18s}
+.reshub:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.reshub .em{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;flex:none;background:var(--grad);color:#fff}
+.reshub h3{font-size:1rem}
+.reshub p{font-size:.8rem;color:var(--muted);line-height:1.4;margin-top:2px}
+.reshub .rl-go{margin-left:auto;font-size:1.3rem;color:var(--muted)}
+.reslink{display:block;text-decoration:none;color:inherit;padding:12px 13px;border-radius:12px;border:1px solid var(--line);margin-bottom:8px;background:color-mix(in srgb,var(--bg) 50%,transparent);transition:all .18s}
+.reslink:hover{border-color:var(--blue);transform:translateX(3px)}
+.reslink .rl-h{font-weight:700;font-size:.9rem;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.reslink .rl-go{color:var(--muted);font-size:.9rem}
+.reslink .rl-d{font-size:.78rem;color:var(--muted);margin-top:3px;line-height:1.45}
+</style>
+</head>
+<body class="dark">
+
+<!-- ===== Splash ===== -->
+<div id="splash" hidden>
+  <span class="floaty" style="top:13%;left:12%">&lt;/&gt;</span>
+  <span class="floaty" style="top:20%;right:13%;animation-delay:.8s">{ }</span>
+  <span class="floaty" style="bottom:22%;left:16%;animation-delay:1.5s">01</span>
+  <span class="floaty" style="bottom:15%;right:14%;animation-delay:.4s">AI</span>
+  <div class="slogo">&lt;/&gt;</div>
+  <h1>La IA por Dentro</h1>
+  <p class="sub">El siguiente nivel para entender la <b>inteligencia artificial</b> y la <b>programación</b> por dentro. Deja de ver la IA como una caja negra. ☕</p>
+  <div class="feats">
+    <span>🤖 8 módulos</span><span>🧩 48 conceptos</span><span>🇬🇧 Términos en inglés</span><span>🔗 Fuentes serias</span><span>🎨 Arte e IA</span><span>📴 Offline</span>
+  </div>
+  <button class="go" data-a="enter">🚀 Entrar a la academia</button>
+</div>
+
+<!-- ===== Encabezado ===== -->
+<header class="top">
+  <div class="brand">
+    <div class="logo">&lt;/&gt;</div>
+    <div><h1>La IA por Dentro</h1><p>Academia intermedia</p></div>
+  </div>
+  <div class="actions">
+    <button class="icbtn" id="btnSound" data-a="sound" title="Sonido">🔊</button>
+    <button class="icbtn" id="btnDark" data-a="dark" title="Tema">☀️</button>
+    <button class="icbtn" id="btnInstall" data-a="install" title="Instalar app" hidden>📲</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <button id="motiv" class="motiv" data-a="motive"></button>
+
+  <nav class="tabs" id="nav">
+    <button data-a="nav" data-v="home"><span class="ti">🏠</span>Consola</button>
+    <button data-a="nav" data-v="practice"><span class="ti">🔬</span>Práctica</button>
+    <button data-a="nav" data-v="gloss"><span class="ti">📚</span>Glosario</button>
+    <button data-a="nav" data-v="quiz"><span class="ti">🧠</span>Desafío</button>
+    <button data-a="nav" data-v="progress"><span class="ti">📊</span>Progreso</button>
+  </nav>
+
+  <main id="app"></main>
+
+  <footer class="foot">La IA por Dentro · academia intermedia · funciona sin internet una vez cargada<br>¿Recién empiezas? Mira primero la app hermana <b>IA para Mortales</b>.</footer>
+</div>
+
+<!-- ===== Celebración ===== -->
+<div id="cele" hidden>
+  <div class="confetti" id="confetti"></div>
+  <div class="celebox">
+    <span class="ce" id="celeEmoji">🎉</span>
+    <h2 id="celeTitle"></h2>
+    <p id="celeText"></p>
+    <button data-a="cele-ok">Seguir aprendiendo →</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   DATA — para ampliar, solo agrega objetos aquí.
+   Concepto: { termino, queEs, comoFunciona, ejemplo, paraQueSirve }
+   Módulo:   { id, titulo, icono, colorAcento, desc, conceptos[] }
+   ============================================================ */
+const DATA = { categorias: [
+/* ===== MÓDULO 1 · ANATOMÍA DE UN LLM ===== */
+{ id:"anatomia-llm", titulo:"Anatomía de un LLM", icono:"🤖", colorAcento:"#3b82f6",
+  desc:"Las piezas que componen un gran modelo de lenguaje por dentro.",
+  conceptos:[
+  { termino:"Ventana de Contexto (Context Window)",
+    queEs:"Es el límite máximo de información (texto, código o archivos) que un modelo puede tener «a la vista» mientras genera una respuesta. Se mide en tokens e incluye tanto lo que tú escribes como lo que el modelo responde.",
+    comoFunciona:"Funciona como la memoria de trabajo del modelo: todo lo de la conversación se acumula en esa ventana. Cuando el total supera el límite, el sistema descarta lo más antiguo (o lo resume) para hacer espacio. Por eso, en chats muy largos, el modelo «olvida» lo del principio: literalmente salió de su ventana.",
+    ejemplo:"Cuando subes un PDF de 50 páginas a Claude o Gemini y pides un resumen, el documento entero debe caber en la ventana para que el modelo lo lea de una pasada. Los modelos actuales manejan ventanas de cientos de miles de tokens, equivalentes a libros completos.",
+    paraQueSirve:"Saber cuánto cabe te ayuda a diseñar interacciones que no pierdan el hilo y a controlar costos: en las APIs se cobra por token procesado, así que mientras más contexto arrastras en cada llamada, más pagas. Aprender a resumir el contexto es una habilidad de eficiencia real." },
+  { termino:"Tokens",
+    queEs:"Un token es la unidad mínima en que el modelo divide el texto para procesarlo. No son exactamente palabras: pueden ser palabras cortas, fragmentos de palabra, signos o espacios. Como referencia, en español 1 token ≈ 3-4 caracteres y 1.000 tokens ≈ 750 palabras.",
+    comoFunciona:"Antes de «entender» nada, tu texto pasa por un tokenizador que lo corta en piezas y las convierte en números: el modelo siempre trabaja con números, nunca con letras. Tanto tu mensaje (input) como la respuesta (output) cuentan como tokens, y normalmente el output se cobra más caro que el input.",
+    ejemplo:"Una empresa con un chatbot de soporte estima sus costos así: si cada conversación usa ~1.500 tokens de entrada y ~500 de salida, y la API cobra US$3 por millón de entrada y US$15 por millón de salida, puede calcular casi al centavo cuánto le cuesta atender a 10.000 clientes al mes.",
+    paraQueSirve:"Pensar en tokens es pensar en presupuesto. Te permite estimar costos antes de lanzar un producto, elegir el modelo adecuado (los más potentes cuestan más por token) y optimizar prompts para gastar menos sin perder calidad. Es la diferencia entre un proyecto rentable y uno que se dispara en la factura." },
+  { termino:"Parámetros del Modelo",
+    queEs:"Los parámetros son los valores internos ajustables que el modelo aprende durante el entrenamiento; son, en esencia, el «conocimiento» almacenado. Cuando escuchas «modelo de 70B», significa 70 mil millones de parámetros.",
+    comoFunciona:"Cada parámetro es como una perilla numérica que regula cuánta importancia se da a cierta conexión dentro de la red neuronal. Durante el entrenamiento, el modelo ajusta millones (o miles de millones) de estas perillas poco a poco hasta que sus predicciones aciertan. Una vez entrenado, esos valores quedan fijos: ahí vive lo aprendido.",
+    ejemplo:"Los modelos vienen en «tallas»: uno de 8B puede correr en un computador potente o un teléfono, mientras que uno de 400B necesita servidores con GPUs caras. Por eso las empresas ofrecen versiones pequeñas (rápidas y baratas) y grandes (más capaces y costosas) de la misma familia.",
+    paraQueSirve:"Entender los parámetros te permite elegir con criterio: más grande no siempre es mejor. Un modelo pequeño bien afinado puede superar a uno gigante en una tarea específica, costando una fracción. Saberlo evita pagar de más por capacidad que no necesitas." },
+  { termino:"Embeddings (Vectores de significado)",
+    queEs:"Un embedding es la representación de una palabra, frase o documento como una lista de números (un vector) que captura su significado. Conceptos parecidos terminan con vectores numéricamente cercanos.",
+    comoFunciona:"El modelo coloca cada idea en un «mapa» de muchas dimensiones, donde la distancia mide similitud de significado. «Perro» y «gato» quedan cerca; «perro» y «factura», lejos. Para comparar dos textos no se comparan letras: se compara la distancia entre sus vectores. Así «auto» y «vehículo» se reconocen como parecidos aunque no compartan ni una letra.",
+    ejemplo:"Es la base de la búsqueda semántica y de los sistemas RAG. Cuando buscas «zapatillas para correr» y la tienda te muestra «running shoes», o cuando un asistente encuentra el párrafo justo de tu manual aunque uses otras palabras, hay embeddings comparando significados por detrás.",
+    paraQueSirve:"Los embeddings son el corazón de cualquier sistema que «entienda» lo que el usuario quiso decir: buscadores inteligentes, recomendadores, detección de duplicados y RAG. Comprenderlos te abre la puerta a construir aplicaciones de IA que van mucho más allá del chat." },
+  { termino:"Temperatura y Top-P",
+    queEs:"Son dos perillas que controlan cuán creativa o predecible es la respuesta. La temperatura regula el nivel de «riesgo» al elegir la siguiente palabra; Top-P (muestreo por núcleo) limita el conjunto de palabras candidatas a las más probables.",
+    comoFunciona:"En cada paso, el modelo calcula la probabilidad de muchas palabras posibles. Con temperatura baja (cerca de 0) casi siempre elige la más probable: respuestas seguras y repetibles. Con temperatura alta explora opciones menos probables: más variedad, pero más riesgo de incoherencia. Top-P es complementario: considera solo las palabras que suman, por ejemplo, el 90% de probabilidad, y descarta la cola improbable.",
+    ejemplo:"Para extraer datos de una factura o responder algo legal, conviene temperatura baja (precisión, cero invención). Para generar nombres de marca, eslóganes o ideas de contenido, una temperatura más alta produce alternativas frescas. Muchos «playgrounds» de API exponen ambas perillas.",
+    paraQueSirve:"Dominar estas perillas te da control fino sobre el modelo sin reentrenarlo. Sabrás por qué a veces una IA responde plana y otras delira, y podrás calibrarla según la tarea: rigurosa para datos, creativa para ideas. Es ajuste de comportamiento gratis y al instante." },
+  { termino:"Modelos de Código Abierto (Open Source) vs Cerrados",
+    queEs:"Los modelos abiertos publican sus pesos para que cualquiera los descargue, ejecute y modifique (Llama, Mistral, DeepSeek). Los cerrados se usan solo a través de la API de la empresa, sin acceso a su interior (GPT, Claude, Gemini).",
+    comoFunciona:"Con un modelo abierto puedes correrlo en tu propia infraestructura, afinarlo con tus datos y mantener todo dentro de tu organización; a cambio, asumes el costo de servidores y mantenimiento. Con uno cerrado te conectas por API: la empresa gestiona la infraestructura y te entrega modelos de punta listos para usar, pero tus datos viajan a sus servidores y dependes de su precio y reglas.",
+    ejemplo:"Una clínica con datos sensibles podría desplegar un modelo abierto en sus propios servidores para que la información nunca salga del edificio. Una startup que quiere lanzar rápido y sin equipo de infraestructura suele preferir una API cerrada de primer nivel y pagar por uso.",
+    paraQueSirve:"Esta decisión define costo, privacidad, control y velocidad de tu proyecto. Saber cuándo conviene cada uno —abierto para control y privacidad, cerrado para potencia inmediata sin operar infraestructura— es una de las decisiones de arquitectura más importantes al construir con IA." }
+]},
+
+/* ===== MÓDULO 2 · CÓMO APRENDE LA IA ===== */
+{ id:"como-aprende", titulo:"Cómo Aprende la IA", icono:"🧠", colorAcento:"#10b981",
+  desc:"El proceso por el cual un modelo pasa de no saber nada a ser útil.",
+  conceptos:[
+  { termino:"Entrenamiento vs Inferencia",
+    queEs:"Son las dos fases de vida de un modelo. El entrenamiento es el proceso (largo y costoso) donde el modelo aprende ajustando sus parámetros con enormes cantidades de datos. La inferencia es el uso ya entrenado: cada vez que le preguntas y responde.",
+    comoFunciona:"Durante el entrenamiento, el modelo ve millones de ejemplos, predice, mide su error y corrige sus parámetros una y otra vez; ocurre una sola vez (con actualizaciones ocasionales) y consume meses de cómputo en GPUs. En inferencia, los parámetros están congelados: el modelo solo aplica lo aprendido, en milisegundos o segundos.",
+    ejemplo:"Entrenar un modelo grande puede costar millones de dólares y semanas de cálculo en miles de GPUs. Pero responderte a ti (inferencia) cuesta una fracción mínima. Por eso un modelo «no sabe» lo que pasó tras su fecha de entrenamiento: aprendió hasta ahí, y lo nuevo hay que dárselo en el prompt.",
+    paraQueSirve:"Distinguir ambas fases aclara mitos («la IA aprende de todo lo que le digo al instante» — en general, no) y explica los costos: entrenar es la gran inversión; servir respuestas es el gasto recurrente. Es clave para entender por qué existen modelos con «fecha de corte» de conocimiento." },
+  { termino:"Fine-Tuning (Ajuste Fino)",
+    queEs:"Es tomar un modelo ya entrenado y darle un entrenamiento adicional, más corto, con datos específicos de un dominio o estilo, para especializarlo sin construirlo desde cero.",
+    comoFunciona:"Partes de un modelo base que ya «sabe» lenguaje y le muestras cientos o miles de ejemplos de tu caso concreto (por ejemplo, pares pregunta-respuesta de tu empresa). El modelo ajusta ligeramente sus parámetros para adoptar ese vocabulario, tono o formato. Es mucho más barato y rápido que entrenar de cero, porque reaprovecha lo que el base ya domina.",
+    ejemplo:"Un estudio jurídico afina un modelo con miles de contratos para que hable con precisión legal y conozca sus plantillas. Una marca lo afina con su guía de estilo para que todos los textos suenen igual. Hoy, muchas veces se logra un efecto parecido —más barato aún— solo con buenos prompts o con RAG.",
+    paraQueSirve:"Saber cuándo afinar (y cuándo no) ahorra tiempo y dinero. El fine-tuning brilla para fijar estilo y formato consistentes; pero si necesitas que el modelo conozca datos actualizados, casi siempre conviene RAG. Conocer la diferencia evita sobre-ingeniería." },
+  { termino:"Overfitting y Underfitting (Sobreajuste)",
+    queEs:"Son los dos errores clásicos al entrenar. Overfitting (sobreajuste): el modelo memoriza los ejemplos al pie de la letra y falla con datos nuevos. Underfitting (subajuste): el modelo es demasiado simple y no capta ni los patrones básicos.",
+    comoFunciona:"Imagina a alguien estudiando para un examen. Si memoriza las respuestas exactas de la guía sin entender (overfitting), saca 10 en la guía pero se hunde con preguntas distintas. Si apenas estudió (underfitting), le va mal en todo. El punto óptimo es generalizar: aprender el patrón, no el ejemplo. Por eso se evalúa al modelo con datos que nunca vio.",
+    ejemplo:"Un modelo que predice fraude entrenado solo con casos de un banco podría «memorizar» detalles de ese banco y fallar en otro (overfitting). Los equipos lo detectan cuando el rendimiento es excelente en entrenamiento pero pobre en datos reales, y lo corrigen con más datos variados o regularización.",
+    paraQueSirve:"Es el concepto que explica por qué una IA «que funcionaba perfecto en pruebas» falla en producción. Entenderlo te hace desconfiar de métricas demasiado bonitas y exigir que cualquier modelo se evalúe con datos realistas antes de confiar en él." },
+  { termino:"Datos de Sesgo (Bias en el dataset)",
+    queEs:"Es la distorsión que aparece cuando los datos de entrenamiento reflejan prejuicios, desbalances o vacíos del mundo real, y el modelo los aprende y reproduce a escala.",
+    comoFunciona:"El modelo no tiene opiniones: imita patrones de sus datos. Si en los datos históricos ciertos grupos están subrepresentados o asociados injustamente a algo, el modelo absorberá esa correlación y la aplicará con eficiencia estadística, amplificándola. El sesgo entra por los datos, por cómo se etiquetan y por qué se decidió medir.",
+    ejemplo:"Un sistema de selección de personal entrenado con contrataciones históricas mayoritariamente masculinas aprendió a penalizar CVs de mujeres, porque «así había sido antes». El modelo no quería discriminar: replicó el patrón injusto de sus datos.",
+    paraQueSirve:"Reconocer el sesgo es esencial cuando la IA decide sobre personas: créditos, empleo, salud, justicia. Saber que el problema suele estar en los datos (no en una «maldad» del modelo) te permite exigir auditorías, datos representativos y revisión humana donde de verdad importa." },
+  { termino:"Descenso del Gradiente (Gradient Descent)",
+    queEs:"Es el método con el que el modelo corrige sus errores durante el entrenamiento. Es la «brújula» que le indica, en cada paso, en qué dirección ajustar sus parámetros para equivocarse un poco menos.",
+    comoFunciona:"Imagina bajar una montaña con niebla buscando el punto más bajo (el menor error). En cada paso miras la pendiente bajo tus pies y das un pasito hacia abajo. El gradiente es esa pendiente: le dice al modelo hacia dónde mover cada parámetro para reducir el error. Repetido millones de veces, con pasos de cierto tamaño (la «tasa de aprendizaje»), el modelo desciende hasta una buena solución.",
+    ejemplo:"Es el motor silencioso detrás de todo entrenamiento moderno, desde reconocer caras hasta entrenar un LLM. Cuando lees que un modelo «convergió», significa que el descenso del gradiente llegó a un punto donde el error ya casi no baja.",
+    paraQueSirve:"No necesitas las matemáticas para captar la idea clave: la IA aprende por ensayo y error guiado, corrigiendo de a poco. Entenderlo desmitifica el «aprendizaje» de las máquinas: no hay comprensión mágica, hay optimización paso a paso." },
+  { termino:"Funciones de Pérdida (Loss Functions)",
+    queEs:"Es la fórmula que mide qué tan equivocada está la predicción del modelo respecto a la respuesta correcta. Un número alto significa mucho error; cero significaría acierto perfecto.",
+    comoFunciona:"En cada ejemplo, el modelo predice, la función de pérdida compara esa predicción con la verdad y entrega un puntaje de error. Todo el entrenamiento consiste en minimizar ese puntaje: el descenso del gradiente usa la pérdida como objetivo a reducir. Distintas tareas usan distintas funciones (una para clasificar, otra para predecir números), y elegir bien la pérdida define qué aprende el modelo.",
+    ejemplo:"Si un modelo de clima predice 25°C y la temperatura real fue 30°C, la función de pérdida traduce ese desfase en un número que el modelo intenta achicar afinando sus parámetros. La elección de la pérdida puede hacer que priorice no equivocarse «por mucho» o no equivocarse «seguido».",
+    paraQueSirve:"La función de pérdida es la «definición de éxito» del modelo: aprende exactamente lo que mides. Si la defines mal, optimizará lo equivocado (como maximizar clics y volverse sensacionalista). Conecta directo con el alineamiento: cuidado con lo que premias." }
+]},
+/* ===== MÓDULO 3 · EL ECOSISTEMA TÉCNICO ===== */
+{ id:"ecosistema", titulo:"El Ecosistema Técnico", icono:"🛠️", colorAcento:"#8b5cf6",
+  desc:"Las piezas que rodean al modelo y lo convierten en una aplicación real.",
+  conceptos:[
+  { termino:"APIs (Application Programming Interface) por dentro",
+    queEs:"Una API es un contrato que permite que dos programas se comuniquen: define qué puedes pedir, cómo pedirlo y qué recibirás de vuelta. Es la «ventanilla de atención» de un servicio para otros programas.",
+    comoFunciona:"Tu aplicación envía una petición (request) a una dirección (endpoint) con ciertos datos y una llave de acceso (API key) que te identifica y autoriza. El servidor procesa y devuelve una respuesta (response), casi siempre en formato JSON. Todo viaja por internet usando reglas estándar (HTTP). La API key también sirve para medir tu uso y cobrarte.",
+    ejemplo:"Una tienda no construye su propio modelo de IA: llama por API a uno de Anthropic u OpenAI, le manda el mensaje del cliente y recibe la respuesta para mostrarla en su chat. Lo mismo ocurre al integrar pagos, mapas o envíos: casi toda app moderna es un ensamble de APIs.",
+    paraQueSirve:"Las APIs explican cómo la IA (y casi todo servicio) aparece «dentro» de mil aplicaciones sin que cada una reinvente la rueda. Entenderlas te permite imaginar integraciones, estimar costos por uso y dialogar con equipos técnicos sin perderte." },
+  { termino:"Bases de Datos Vectoriales",
+    queEs:"Son bases de datos diseñadas para guardar y buscar embeddings (vectores de significado) de forma eficiente. En vez de buscar coincidencias exactas, encuentran lo más parecido en significado.",
+    comoFunciona:"Conviertes tus documentos en vectores y los almacenas. Cuando llega una consulta, también se convierte en vector y la base devuelve los registros cuyos vectores estén más «cerca» en ese mapa de significados, en milisegundos, aunque tengas millones de elementos. Usan índices especiales (como HNSW) para no comparar contra todo uno por uno.",
+    ejemplo:"Pinecone, Weaviate, Chroma o pgvector son ejemplos. Un asistente que responde sobre la documentación interna de tu empresa guarda esos documentos en una base vectorial y, ante cada pregunta, recupera los fragmentos más relevantes para responder con fundamento.",
+    paraQueSirve:"Son la columna vertebral de la búsqueda semántica y de RAG. Si quieres que una IA responda usando tus propios datos (manuales, políticas, catálogos) sin reentrenarla, una base vectorial es la pieza que lo hace posible. Conocimiento clave para construir IA útil de verdad." },
+  { termino:"Agentes Autónomos",
+    queEs:"Un agente es un sistema de IA que no solo responde, sino que persigue un objetivo ejecutando varios pasos y usando herramientas (buscar en la web, leer archivos, llamar APIs, escribir código), decidiendo sobre la marcha qué hacer.",
+    comoFunciona:"El modelo recibe una meta y un conjunto de herramientas. Entra en un ciclo: piensa qué paso dar, ejecuta una herramienta, observa el resultado, vuelve a pensar y repite hasta lograr el objetivo o rendirse. La diferencia con un chatbot es que el agente actúa en el mundo, no solo conversa.",
+    ejemplo:"Le pides «investiga tres proveedores, compara precios y arma una tabla»: el agente navega, extrae datos, los organiza y entrega el informe. Asistentes de programación que crean archivos, ejecutan pruebas y corrigen errores por su cuenta son agentes en acción.",
+    paraQueSirve:"Los agentes son el salto de «IA que conversa» a «IA que hace». Entender su ciclo te prepara para la próxima ola de productividad y para sus riesgos: un agente con malas instrucciones o sin supervisión puede actuar rápido en la dirección equivocada." },
+  { termino:"Orquestadores de Datos (LangChain / LlamaIndex)",
+    queEs:"Son herramientas (frameworks) que ayudan a conectar y coordinar las piezas de una aplicación de IA: el modelo, las fuentes de datos, la memoria, las herramientas y la lógica de los pasos. Actúan como el «director de orquesta».",
+    comoFunciona:"En lugar de programar a mano cada conexión (llamar al modelo, buscar en la base vectorial, formatear el prompt, encadenar pasos), el orquestador ofrece bloques listos que se ensamblan. Tú defines el flujo —«recupera contexto, arma el prompt, llama al modelo, valida la salida»— y el framework gestiona los detalles repetitivos.",
+    ejemplo:"LangChain y LlamaIndex son los más conocidos. Con ellos, un equipo arma un asistente con RAG en días en vez de semanas: el orquestador ya trae integraciones con bases vectoriales, modelos y cargadores de documentos.",
+    paraQueSirve:"Saber que existen estas capas de «pegamento» aclara cómo se construyen las apps de IA serias por dentro. Aunque no programes, entender el rol del orquestador te permite hablar con equipos técnicos y dimensionar qué tan complejo es un proyecto." },
+  { termino:"Arquitectura RAG (Generación Aumentada por Recuperación)",
+    queEs:"RAG (Retrieval-Augmented Generation) es una técnica que le da al modelo información externa y actualizada en el momento de responder, en lugar de depender solo de lo que memorizó al entrenarse.",
+    comoFunciona:"Ante una pregunta, el sistema primero recupera los fragmentos más relevantes desde una base de conocimiento (a menudo vectorial), los inserta en el prompt como contexto y luego pide al modelo que responda basándose en ellos. Así combina la fluidez del modelo con datos frescos y verificables, y reduce las alucinaciones porque el modelo «tiene la fuente a la vista».",
+    ejemplo:"Es la arquitectura más usada en asistentes empresariales: un banco conecta su modelo a sus políticas internas para que el chatbot responda con la normativa vigente y cite el documento. NotebookLM, que responde solo sobre los archivos que subes, es RAG en estado puro.",
+    paraQueSirve:"RAG es hoy la forma más práctica y económica de tener una IA que conoce TUS datos y se mantiene actualizada sin reentrenar. Entenderlo te da la receta para pasar de un chatbot genérico a uno que de verdad sirve a tu negocio." },
+  { termino:"Modelos MoE (Mixture of Experts / Mezcla de Expertos)",
+    queEs:"Es una arquitectura donde el modelo, en lugar de ser un único bloque gigante, se divide en muchos «expertos» especializados, y para cada entrada activa solo unos pocos en vez de todos.",
+    comoFunciona:"Un componente llamado «enrutador» (router) decide, token a token, qué expertos son los más adecuados y envía el trabajo solo a ellos. Así el modelo puede tener una capacidad total enorme (muchos parámetros) pero usar solo una fracción en cada respuesta, ganando velocidad y ahorrando cómputo sin perder calidad.",
+    ejemplo:"Varios modelos de frontera recientes (de Mistral, DeepSeek y otros) usan MoE: pueden tener cientos de miles de millones de parámetros en total, pero activar solo una porción por consulta, lo que los hace más rápidos y baratos de operar que un modelo «denso» equivalente.",
+    paraQueSirve:"MoE explica cómo la industria sigue escalando la capacidad sin que los costos exploten. Conocerlo te ayuda a entender los anuncios técnicos («modelo 8x7B», «expertos activos») y por qué un modelo enorme puede, aun así, responder rápido y a bajo costo." }
+]},
+
+/* ===== MÓDULO 4 · LÓGICA DE PROGRAMACIÓN REAL ===== */
+{ id:"logica-programacion", titulo:"Lógica de Programación Real", icono:"💻", colorAcento:"#f59e0b",
+  desc:"Los cimientos de cómo se construye el software, para entender, no para memorizar.",
+  conceptos:[
+  { termino:"Variables y Tipos de Datos",
+    queEs:"Una variable es un espacio con nombre donde un programa guarda un dato que puede cambiar. El tipo de dato define qué clase de información contiene: número, texto (string), verdadero/falso (boolean), listas, etc.",
+    comoFunciona:"Cuando el programa crea una variable, reserva un lugar en memoria y le pone una etiqueta. El tipo importa porque determina qué operaciones son válidas: puedes sumar dos números, pero «sumar» dos textos los une (concatenación), y comparar tipos incompatibles suele causar errores. Algunos lenguajes exigen declarar el tipo; otros lo deducen solos.",
+    ejemplo:"En un carrito de compras, total es una variable numérica que cambia con cada producto; nombreCliente es un string; tieneDescuento es un boolean. Confundir tipos —tratar el número «10» como texto— es una fuente clásica de bugs en formularios y cálculos.",
+    paraQueSirve:"Variables y tipos son el abecé de cualquier programa. Entenderlos te permite leer código sin asustarte, comprender por qué fallan ciertos formularios y dialogar con desarrolladores sobre cómo se modela la información de tu producto." },
+  { termino:"Bucles e Iteraciones (Loops)",
+    queEs:"Un bucle es una instrucción que repite un bloque de código muchas veces sin tener que escribirlo una y otra vez. Iterar es, justamente, recorrer elementos uno por uno.",
+    comoFunciona:"Defines una condición o una colección y el programa repite el bloque hasta terminar: «para cada cliente de la lista, envía un correo» o «mientras queden datos, sigue procesando». El computador no se cansa: puede repetir millones de veces por segundo. El riesgo clásico es el bucle infinito, cuando la condición de salida nunca se cumple y el programa se cuelga.",
+    ejemplo:"Cuando una app calcula tu resumen anual recorriendo tus miles de canciones, o cuando un sistema envía 50.000 facturas, hay un bucle detrás procesando elemento por elemento. Toda la automatización masiva se apoya en iteraciones.",
+    paraQueSirve:"Los bucles son la verdadera superpotencia de los computadores: repetir sin aburrirse. Entenderlos te ayuda a ver qué tareas repetitivas son automatizables en tu trabajo y a comprender cómo un script hace en segundos lo que a una persona le tomaría días." },
+  { termino:"Funciones (fábricas de soluciones reutilizables)",
+    queEs:"Una función es un bloque de código con nombre que realiza una tarea concreta y puede reutilizarse cuantas veces quieras. Recibe entradas (parámetros), hace algo y suele devolver un resultado.",
+    comoFunciona:"Defines la función una vez —por ejemplo calcularIVA(monto)— y luego la «llamas» cada vez que la necesitas, pasándole datos distintos. Esto evita repetir código, reduce errores (si hay que corregir algo, lo arreglas en un solo lugar) y hace el programa legible. Las funciones se combinan como piezas de Lego para construir cosas complejas.",
+    ejemplo:"«Restablecer contraseña», «calcular envío» o «validar correo» son funciones que alguien escribió una vez y se usan millones de veces en una app. Las APIs, en el fondo, son funciones que viven en otro servidor y llamas por internet.",
+    paraQueSirve:"Las funciones explican cómo se construye software mantenible: piezas pequeñas, nombradas y reutilizables. Entender el concepto te ayuda a pensar de forma modular —dividir un problema grande en partes manejables—, una habilidad útil mucho más allá de programar." },
+  { termino:"Frontend vs Backend",
+    queEs:"El frontend es todo lo que el usuario ve y toca (pantallas, botones, colores); el backend es lo que ocurre detrás (servidores, lógica de negocio, bases de datos). Toda aplicación seria tiene ambos.",
+    comoFunciona:"El frontend corre en tu dispositivo (navegador o app) y se encarga de la presentación y la interacción. Cuando necesita datos o una acción importante, le pide al backend a través de una API. El backend valida, procesa, consulta la base de datos y devuelve la respuesta. Es la división entre «el salón del restaurante» (frontend) y «la cocina» (backend).",
+    ejemplo:"Cuando inicias sesión, el frontend toma tu correo y clave y los envía al backend; el backend verifica contra la base de datos y responde si puedes entrar. Si el sitio se ve perfecto pero «no carga», suele ser backend; si los datos están bien pero el botón no responde, suele ser frontend.",
+    paraQueSirve:"Esta división es vocabulario básico del mundo digital. Te permite ubicar dónde puede estar un problema, entender a qué se dedican los distintos desarrolladores de un equipo y dimensionar el trabajo real detrás de una app que «se ve simple»." },
+  { termino:"Control de Versiones (Git y repositorios)",
+    queEs:"El control de versiones es un sistema que guarda el historial de cambios de un proyecto, permitiendo volver atrás, ver quién cambió qué y trabajar en equipo sin pisarse. Git es la herramienta estándar; un repositorio es el proyecto con todo su historial.",
+    comoFunciona:"Cada vez que guardas un avance significativo haces un «commit», una foto del proyecto con una descripción. Puedes crear «ramas» (branches) para experimentar sin romper la versión estable y luego fusionarlas. Plataformas como GitHub o GitLab alojan estos repositorios en la nube para colaborar y respaldar.",
+    ejemplo:"Un equipo desarrolla una función nueva en una rama; si algo sale mal, vuelven al último commit estable en segundos. GitHub se ha vuelto, además, el portafolio público de millones de programadores y el hogar de gran parte del software de código abierto.",
+    paraQueSirve:"Git es la red de seguridad y la memoria del desarrollo moderno: nada se pierde, todo es reversible y el trabajo en equipo se vuelve posible. Entender el concepto te ayuda a valorar por qué «guardar versiones» es tan crítico, idea aplicable incluso a documentos y diseño." },
+  { termino:"APIs RESTful y JSON",
+    queEs:"REST es un estilo muy común para diseñar APIs web, basado en operaciones simples sobre «recursos» (usuarios, productos, pedidos). JSON es el formato de texto ligero en que esos datos viajan: pares «clave: valor» fáciles de leer por humanos y máquinas.",
+    comoFunciona:"En una API REST, cada recurso tiene una dirección (URL) y usas verbos estándar de HTTP: GET para leer, POST para crear, PUT para actualizar, DELETE para borrar. La información de ida y vuelta se empaqueta en JSON, por ejemplo { \"nombre\": \"Ana\", \"edad\": 30 }. Es predecible y universal, por eso casi toda la web lo usa.",
+    ejemplo:"Cuando una app pide «dame los datos del producto 123», hace un GET a /productos/123 y recibe un JSON con su nombre, precio y stock. Cuando publicas un comentario, se envía un POST con el texto en JSON. Las respuestas de los modelos de IA por API también llegan en JSON.",
+    paraQueSirve:"REST y JSON son el idioma común con que las aplicaciones intercambian datos en internet. Entenderlos te permite leer documentación técnica, comprender cómo se integran dos sistemas y «ver» la información estructurada que circula por debajo de cada app." }
+]},
+/* ===== MÓDULO 5 · EL FACTOR HUMANO Y ÉTICA ===== */
+{ id:"etica", titulo:"El Factor Humano y Ética", icono:"⚖️", colorAcento:"#f43f5e",
+  desc:"Lo que de verdad importa: límites, riesgos y responsabilidad al usar IA.",
+  conceptos:[
+  { termino:"Alucinaciones (por qué ocurren probabilísticamente)",
+    queEs:"Una alucinación es cuando el modelo afirma información falsa con total seguridad: datos, citas, fechas o fuentes que no existen, pero presentadas como si fueran ciertas.",
+    comoFunciona:"Un LLM no consulta una base de verdades: predice la palabra siguiente más probable según patrones del lenguaje. Cuando no «sabe» algo, igual genera la continuación más plausible, y plausible no es lo mismo que verdadero. Por eso inventa una cita con formato perfecto: estadísticamente «suena» a cita real, aunque el contenido sea ficticio. No miente a propósito; rellena con lo más probable.",
+    ejemplo:"Le pides cinco estudios científicos sobre un tema y te entrega cinco títulos con autores y años impecables… y dos no existen. O cita un artículo de ley con número y todo, pero el número corresponde a otra cosa. Pasa especialmente con datos puntuales y referencias.",
+    paraQueSirve:"Entender que la alucinación es inherente a cómo funcionan estos modelos te vuelve un usuario crítico: verifica datos, cifras, leyes y citas antes de usarlos. Y explica por qué técnicas como RAG (darle fuentes reales) reducen el problema. Confiar a ciegas es el error más caro de esta era." },
+  { termino:"Privacidad y Seguridad de Datos en la Nube",
+    queEs:"Es el conjunto de cuidados sobre qué información compartes con servicios de IA en la nube y qué se hace con ella: si se guarda, quién puede verla y si se usa para entrenar futuros modelos.",
+    comoFunciona:"Cuando usas una IA en la nube, tu texto viaja a servidores de un tercero, se procesa allí y vuelve. Según el servicio y el plan, esos datos pueden registrarse, ser revisados por personas para mejorar el producto o usarse para entrenar versiones futuras. Las versiones empresariales suelen ofrecer garantías más estrictas (no entrenar con tus datos, cifrado, retención limitada).",
+    ejemplo:"Varias empresas prohibieron a sus empleados pegar código o información confidencial en chatbots públicos tras sustos con filtraciones. La regla práctica: no pongas en una IA pública lo que no enviarías a un desconocido (contratos, datos de clientes, claves, datos personales).",
+    paraQueSirve:"La privacidad define qué puedes y qué no deberías hacer con IA, sobre todo en un trabajo con datos sensibles. Saber dónde «viven» tus datos y leer las políticas del servicio te protege de filtraciones, multas y problemas legales. Es higiene digital imprescindible." },
+  { termino:"Propiedad Intelectual y Copyright en IA",
+    queEs:"Es el debate legal sobre dos cosas: con qué derecho se entrenaron los modelos usando obras de terceros (textos, imágenes, música) y a quién pertenece lo que la IA genera.",
+    comoFunciona:"Los modelos aprendieron de enormes cantidades de contenido, mucho protegido por derechos de autor, a menudo sin permiso explícito. Eso abrió demandas de artistas, medios y escritores. Por el otro lado, la autoría de lo generado por IA es incierta: varias jurisdicciones no reconocen copyright a obras sin intervención humana significativa, y las reglas cambian según el país.",
+    ejemplo:"Medios de prensa y artistas han demandado a empresas de IA por entrenar con su trabajo. A la vez, un creador que usa imágenes generadas para su negocio puede descubrir que no puede registrarlas como propias en ciertos países. Las plataformas responden con filtros y acuerdos de licencia.",
+    paraQueSirve:"Si creas o usas contenido (textos, diseño, música, código), este tema afecta directamente tus derechos y riesgos. Entenderlo te ayuda a usar la IA con criterio legal: revisar licencias, declarar el uso de IA cuando corresponde y no asumir que «lo generé, es mío»." },
+  { termino:"Deepfakes y Desinformación Sintética",
+    queEs:"Un deepfake es contenido (video, audio o imagen) falsificado con IA de forma tan realista que parece auténtico. La desinformación sintética es el uso de IA para fabricar mentiras convincentes a gran escala.",
+    comoFunciona:"Modelos generativos aprenden la apariencia o la voz de una persona a partir de ejemplos y luego producen contenido nuevo donde «dice» o «hace» cosas que nunca ocurrieron. Hoy basta con pocos segundos de audio para clonar una voz. El costo de fabricar engaños creíbles se desplomó: antes requería un estudio; ahora, un par de prompts.",
+    ejemplo:"Han ocurrido estafas con «videollamadas» de jefes falsos pidiendo transferencias urgentes, y audios falsos de figuras públicas que se viralizan antes de poder desmentirse. También fotos hiperrealistas de eventos que nunca pasaron.",
+    paraQueSirve:"En esta era, «ver para creer» ya no basta. Saber que existen estas técnicas te entrena para verificar por otro canal cualquier pedido sensible (de dinero o datos), desconfiar de lo demasiado perfecto o indignante y no amplificar engaños. Tu juicio crítico es parte de la defensa colectiva." },
+  { termino:"Automatización y Evolución del Empleo",
+    queEs:"Es el efecto de la IA sobre el trabajo: automatiza tareas (no necesariamente empleos completos), transforma profesiones, elimina algunas funciones y crea otras nuevas.",
+    comoFunciona:"La IA es especialmente buena en tareas repetitivas, de redacción, análisis y síntesis. En la mayoría de los oficios, eso significa que una parte del trabajo se acelera o se delega, mientras el criterio, la responsabilidad y el trato humano suben de valor. El patrón histórico se repite (como Excel con los contadores), pero a mayor velocidad.",
+    ejemplo:"Un abogado revisa contratos con IA y atiende más casos; un radiólogo valida lecturas asistidas por IA; un programador supervisa código generado. La tarea cambia: menos trabajo mecánico, más juicio y verificación.",
+    paraQueSirve:"La pregunta útil no es «¿me reemplazará la IA?», sino «¿qué parte de mi trabajo puedo potenciar con IA?». Entender esta dinámica te permite adaptarte con estrategia: automatizar lo repetitivo y enfocarte en lo que aporta valor humano, en vez de competir contra la máquina en su terreno." },
+  { termino:"Alineamiento de Modelos (Gobernanza y seguridad)",
+    queEs:"El alineamiento es el desafío de lograr que un modelo haga lo que realmente queremos —respetando nuestros valores e intenciones— y no una interpretación literal o distorsionada del objetivo.",
+    comoFunciona:"Se moldea el comportamiento del modelo con técnicas como el aprendizaje por refuerzo con retroalimentación humana (RLHF), reglas o «constituciones» de principios, y filtros de seguridad. El reto de fondo es que es difícil especificar perfectamente lo que queremos: un objetivo mal puesto puede llevar al modelo a optimizar lo equivocado con eficiencia (como maximizar interacción volviéndose adictivo).",
+    ejemplo:"Que un chatbot sea útil pero se niegue a dar instrucciones peligrosas, mantenga un tono respetuoso y reconozca cuando no sabe, es resultado de trabajo de alineamiento. A nivel país, leyes como el AI Act europeo añaden gobernanza: clasifican usos por riesgo y exigen transparencia.",
+    paraQueSirve:"El alineamiento conecta lo técnico con lo ético y es central en el debate sobre IA segura. Entenderlo te permite evaluar con criterio los anuncios de «IA responsable», comprender por qué un modelo se niega a ciertas cosas y participar informado en la conversación sobre cómo gobernar esta tecnología." }
+]},
+
+/* ===== MÓDULO 6 · LA FRONTERA (mecanismos actuales) ===== */
+{ id:"la-frontera", titulo:"La Frontera", icono:"🛰️", colorAcento:"#06b6d4",
+  desc:"Lo que está pasando ahora mismo: agentes, cowork y mecanismos de última generación.",
+  conceptos:[
+  { termino:"Agentes Colaborativos (Cowork)",
+    queEs:"Es un modo de trabajo donde uno o varios agentes de IA trabajan junto a la persona (y a veces entre ellos) sobre una misma tarea, en lugar de responder una pregunta y desaparecer. La IA pasa de «herramienta que consultas» a «colega que colabora».",
+    comoFunciona:"En vez de un turno pregunta-respuesta, hay un espacio de trabajo compartido y persistente: el agente mantiene el contexto del proyecto, ejecuta pasos, te muestra avances y tú intervienes, corriges o apruebas. Puede haber varios agentes con roles distintos coordinándose, y un humano supervisando los puntos clave (human-in-the-loop).",
+    ejemplo:"Entornos tipo «cowork» donde un agente investiga, otro redacta y otro revisa mientras tú diriges; o un asistente de programación que abre archivos, propone cambios, corre pruebas y te pide aprobación antes de seguir. Es el patrón hacia el que se mueve casi todo el sector.",
+    paraQueSirve:"Entender este modo te prepara para cómo será el trabajo con IA en los próximos años: menos «escribir prompts sueltos» y más «dirigir colaboradores digitales». Saber cuándo delegar, cuándo supervisar y cómo dividir el trabajo será una habilidad profesional central." },
+  { termino:"Sistemas Multiagente",
+    queEs:"Es una arquitectura donde varios agentes de IA, a menudo especializados, se coordinan para resolver un problema más grande del que cada uno podría resolver solo. Es el equivalente a un equipo en vez de un genio solitario.",
+    comoFunciona:"Un agente «coordinador» divide la tarea y reparte subtareas a agentes especializados —uno busca, otro analiza, otro escribe, otro verifica— y luego integra sus resultados. Se comunican entre sí pasándose información, y el sistema puede revisar y corregir su propio trabajo (un agente critica lo que produjo otro).",
+    ejemplo:"Para «investiga este mercado y entrégame un informe», un sistema multiagente despliega un investigador, un analista y un redactor que trabajan en paralelo y se coordinan. Muchos productos de «investigación profunda» (deep research) funcionan así por dentro.",
+    paraQueSirve:"Es una de las formas más prometedoras de escalar lo que la IA puede hacer sin necesitar un único modelo gigantesco. Entenderlo te ayuda a dimensionar proyectos ambiciosos y a ver por qué «dividir y coordinar» es tan poderoso, en máquinas como en equipos humanos." },
+  { termino:"MCP (Model Context Protocol)",
+    queEs:"Es un estándar abierto que define una forma común para que los modelos de IA se conecten a herramientas, datos y servicios externos. Se le suele llamar «el USB-C de la IA»: un mismo enchufe para todo.",
+    comoFunciona:"En lugar de programar a mano cada integración entre un modelo y cada herramienta (tu correo, tu base de datos, tu calendario), MCP define un protocolo único. Un «servidor MCP» expone una herramienta o fuente de datos siguiendo ese estándar, y cualquier modelo compatible puede usarla sin código a medida. Estandariza el «cómo se enchufan» las piezas.",
+    ejemplo:"Gracias a MCP, un asistente puede conectarse a tu repositorio de código, a una base de datos o a una app de diseño usando el mismo mecanismo, y esos conectores se comparten entre herramientas. Anthropic lo propuso a fines de 2024 y fue adoptado ampliamente por la industria.",
+    paraQueSirve:"MCP explica cómo los agentes están dejando de ser islas para conectarse a todo de forma ordenada. Conocerlo te da la clave de por qué los asistentes son cada vez más capaces de «hacer cosas» en tus propias herramientas, y hacia dónde va la interoperabilidad." },
+  { termino:"Modelos que Razonan (Reasoning)",
+    queEs:"Son modelos diseñados para «pensar antes de responder»: en vez de soltar la primera respuesta, generan una cadena interna de pasos de razonamiento. Destacan en matemáticas, lógica, código y problemas que requieren varios pasos.",
+    comoFunciona:"Se les da más «tiempo de cómputo» en el momento de responder (test-time compute): el modelo explora, prueba caminos, se corrige y recién entonces entrega la respuesta. Es la diferencia entre contestar de memoria y pensar el problema en un borrador. A veces ese borrador (cadena de pensamiento) queda oculto y solo ves la conclusión.",
+    ejemplo:"Familias de modelos «de razonamiento» (como la serie «o» de OpenAI o los modos de pensamiento extendido de Claude y Gemini) resuelven problemas de olimpiadas de matemáticas o depuran código complejo donde los modelos clásicos fallaban.",
+    paraQueSirve:"Marca un cambio de enfoque: ya no solo importa entrenar más grande, sino dejar pensar más en el momento. Saber distinguir cuándo necesitas un modelo que razone (problemas complejos) de uno rápido (tareas simples) te hace elegir mejor la herramienta y el costo." },
+  { termino:"Computer Use (uso del computador)",
+    queEs:"Es la capacidad de un modelo de operar un computador como lo haría una persona: ver la pantalla, mover el cursor, hacer clic, escribir y navegar por aplicaciones, en lugar de depender de que cada app tenga una API.",
+    comoFunciona:"El modelo recibe una captura de la pantalla, decide la siguiente acción (clic en tal botón, escribir tal texto), la ejecuta, observa el nuevo estado y repite. Combina visión (entender la pantalla) con acción (controlar teclado y ratón) en un ciclo. Es lento y aún comete errores, pero abre la puerta a automatizar cualquier programa, tenga API o no.",
+    ejemplo:"Pedirle «rellena este formulario en una web antigua y descarga el comprobante»: el agente abre el navegador, ve los campos, los completa y guarda el archivo, todo controlando la interfaz como un humano. Varios laboratorios ya ofrecen versiones de esto.",
+    paraQueSirve:"Es uno de los caminos hacia la automatización del trabajo de oficina, incluso en sistemas viejos sin integración. Entender sus límites actuales (lentitud, errores, riesgos de seguridad) te permite evaluar con realismo qué se puede automatizar hoy y qué todavía no." },
+  { termino:"Ingeniería de Contexto (Context Engineering)",
+    queEs:"Es la disciplina de decidir qué información, herramientas y memoria entran en la ventana de contexto del modelo en cada momento, para que un agente actúe bien. Es el siguiente paso, más amplio, de la «ingeniería de prompts».",
+    comoFunciona:"En un agente que da muchos pasos, el contexto se llena rápido: instrucciones, historial, resultados de herramientas, documentos recuperados. La ingeniería de contexto gestiona ese espacio limitado: qué recuperar (RAG), qué resumir, qué recordar a largo plazo (memoria) y qué descartar, para que el modelo siempre tenga lo justo y necesario sin saturarse.",
+    ejemplo:"Un asistente de programación que trabaja en un proyecto grande no puede meter todo el código en el contexto: decide qué archivos cargar, resume lo viejo y guarda notas de lo aprendido. Hacerlo bien es la diferencia entre un agente que se pierde y uno que rinde.",
+    paraQueSirve:"A medida que pasamos de chats a agentes, esta es la habilidad técnica que más valor agrega. Entenderla te explica por qué dos agentes con el mismo modelo rinden distinto, y por qué «darle el contexto correcto» importa más que el prompt perfecto." }
+]},
+
+/* ===== MÓDULO 7 · VISIONES Y FILOSOFÍAS ===== */
+{ id:"visiones", titulo:"Visiones y Filosofías", icono:"🧭", colorAcento:"#a78bfa",
+  desc:"Las grandes posturas sobre hacia dónde debe ir la IA y quién decide.",
+  conceptos:[
+  { termino:"Seguridad ante todo (Safety-first)",
+    queEs:"Es la postura de que, dado el poder creciente de la IA, la prioridad debe ser desarrollarla de forma segura y controlable, aunque eso implique ir con más cuidado. Es la filosofía declarada de laboratorios como Anthropic.",
+    comoFunciona:"En la práctica se traduce en invertir fuerte en investigación de seguridad y alineamiento antes y durante el desarrollo: técnicas como la «IA Constitucional» (darle al modelo principios escritos que debe respetar), pruebas de riesgo, «equipos rojos» que intentan romper el modelo y despliegue escalonado. La idea: capacidad y seguridad deben crecer juntas.",
+    ejemplo:"Que un modelo se niegue a ayudar a fabricar armas, explique su razonamiento o tenga políticas públicas de uso responsable son frutos de esta postura. Anthropic, creadora de Claude (y de esta app), nació con la seguridad como misión central.",
+    paraQueSirve:"Te da un marco para evaluar a los actores del sector: ¿qué prioriza cada uno? Entender esta visión te permite leer con criterio los debates sobre «IA responsable» y distinguir el compromiso real de la fachada de marketing." },
+  { termino:"Aceleracionismo (e/acc)",
+    queEs:"Es la postura opuesta en énfasis: sostiene que la IA traerá tanta abundancia y progreso que lo correcto es acelerar su desarrollo y despliegue, y que frenar por miedo también tiene un costo. «e/acc» significa aceleracionismo efectivo.",
+    comoFunciona:"Sus defensores argumentan que la tecnología históricamente ha mejorado la vida humana, que los riesgos suelen exagerarse y que la competencia abierta y rápida produce mejores resultados que la cautela centralizada. Priorizan construir y lanzar, confiando en que los problemas se resuelven sobre la marcha y que el mayor riesgo es quedarse atrás.",
+    ejemplo:"El debate público de los últimos años enfrenta a esta tribu con la de la precaución (los «doomers»): cartas pidiendo pausar la IA respondidas por otros tildándolas de exageradas; ejecutivos que empujan a lanzar rápido frente a investigadores que piden frenar. Ambos lados quieren un buen futuro, pero discrepan en el cómo.",
+    paraQueSirve:"Conocer esta visión (y su tensión con la de seguridad) te permite ubicar cada opinión que ves en medios y redes: ¿desde qué filosofía habla? Y, sobre todo, te ayuda a formar tu propia postura informada en vez de seguir titulares." },
+  { termino:"Abierto vs Cerrado (filosofías)",
+    queEs:"Es el debate sobre si los modelos potentes deben publicarse abiertos (cualquiera puede descargarlos, estudiarlos y modificarlos) o mantenerse cerrados (controlados por la empresa, accesibles solo por API). No es solo técnico: es una postura sobre quién debe controlar la IA.",
+    comoFunciona:"Quienes defienden lo abierto argumentan que la transparencia acelera la ciencia, evita la concentración de poder y permite auditar los modelos; su riesgo es que también facilita usos maliciosos. Quienes defienden lo cerrado priorizan el control de seguridad y el negocio; su riesgo es concentrar un poder enorme en pocas manos y limitar el escrutinio externo.",
+    ejemplo:"Meta libera Llama con pesos abiertos; Anthropic y OpenAI mantienen sus mejores modelos cerrados tras una API; DeepSeek sacudió el tablero liberando modelos potentes. Cada decisión refleja una filosofía distinta sobre el equilibrio entre apertura, seguridad y poder.",
+    paraQueSirve:"Esta tensión definirá quién controla una de las tecnologías más importantes del siglo: ¿pocas empresas o toda la humanidad? Entender ambos lados te permite participar con criterio en uno de los debates de poder más relevantes de la década." },
+  { termino:"La Hipótesis del Escalado (Scaling)",
+    queEs:"Es la idea de que gran parte del progreso de la IA proviene simplemente de escalar: más datos, más parámetros y más cómputo producen modelos predeciblemente mejores, a veces con capacidades nuevas que «emergen» sin haber sido programadas.",
+    comoFunciona:"Las investigaciones sobre «leyes de escalado» mostraron que el rendimiento mejora de forma sorprendentemente regular al aumentar tamaño y cómputo. Eso impulsó la carrera por modelos cada vez más grandes. Pero hay debate sobre sus límites: ¿se puede escalar para siempre, o llegamos a rendimientos decrecientes y hacen falta ideas nuevas (como los modelos que razonan)?",
+    ejemplo:"El salto de calidad entre generaciones de modelos se explicó en buena parte por escalar. A la vez, el auge reciente del «razonamiento en el momento» sugiere que escalar el entrenamiento no es el único camino: también se puede escalar el pensamiento al responder.",
+    paraQueSirve:"Esta hipótesis explica la fiebre por las GPUs, los centros de datos gigantes y las inversiones multimillonarias. Entenderla (y su debate) te ayuda a leer con criterio los anuncios de «modelos más grandes» y a no asumir que más grande es siempre y para siempre mejor." },
+  { termino:"¿Cuándo llega la AGI? (plazos)",
+    queEs:"AGI (inteligencia artificial general) sería una IA tan capaz como un humano en prácticamente cualquier tarea intelectual. No existe, y el gran debate es cuándo —o si— llegará. Las estimaciones serias van desde «esta década» hasta «faltan décadas o quizás nunca».",
+    comoFunciona:"No hay consenso ni siquiera sobre qué cuenta como AGI. Los optimistas señalan el ritmo acelerado de avances y las leyes de escalado; los escépticos apuntan a límites reales (razonamiento robusto, mundo físico, sentido común) y a que cada generación promete más de lo que entrega. Como nadie tiene datos del futuro, las fechas son opiniones, a menudo con intereses detrás.",
+    ejemplo:"Los CEOs de los grandes laboratorios suelen hablar de «pocos años»; muchos académicos piden bajar la euforia. Ambas posturas aparecen en la prensa la misma semana, y los plazos se han corrido una y otra vez durante 70 años.",
+    paraQueSirve:"Te permite leer titulares de «la AGI está cerca» con calma: son predicciones interesadas, no hechos. Y te ayuda a tomar decisiones (de carrera, de negocio) basadas en lo que la IA puede hacer hoy, no en una fecha especulativa." },
+  { termino:"Superinteligencia y Control",
+    queEs:"Es la hipótesis y el desafío de una IA muy superior a la humana en todo (superinteligencia o ASI) y el problema de cómo mantener bajo control algo más capaz que nosotros. Hoy es especulación seria: varios laboratorios dedican equipos a prepararse, por si acaso.",
+    comoFunciona:"El reto central es de «superalineamiento»: ¿cómo supervisas y corriges a un sistema más inteligente que tú, que podría encontrar formas de cumplir sus objetivos que no anticipaste? Se investigan técnicas para que sistemas más débiles supervisen a otros más fuertes, para hacer a los modelos interpretables y para que conserven los valores humanos aunque mejoren.",
+    ejemplo:"Empresas han creado equipos de «superalineamiento» y filósofos debaten escenarios en serio; a la vez, otros expertos consideran que es preocuparse por algo demasiado lejano. La discusión no es solo ciencia ficción: moviliza recursos y políticas reales.",
+    paraQueSirve:"Te ayuda a distinguir entre los riesgos reales de HOY (sesgos, deepfakes, privacidad) y los debates de largo plazo (superinteligencia), que son distintos y a veces se mezclan en el ruido mediático. Ambos importan, pero conviene no confundirlos." }
+]},
+
+/* ===== MÓDULO 8 · ARTE Y CREATIVIDAD ===== */
+{ id:"arte-creatividad", titulo:"Arte y Creatividad", icono:"🎨", colorAcento:"#ec4899",
+  desc:"Cómo la IA entra al cine, la música y las artes — y cómo usarla sin perder tu sello.",
+  conceptos:[
+  { termino:"IA en el Cine y el Audiovisual",
+    queEs:"Es el conjunto de herramientas de IA que asisten o generan partes de una producción audiovisual: desde generar video a partir de texto hasta efectos visuales, doblaje, restauración y rejuvenecimiento digital de actores.",
+    comoFunciona:"Modelos generativos de video (entrenados con millones de clips) crean escenas a partir de una descripción; otros separan, limpian o amplían imagen y sonido. En la práctica se usan como apoyo: previsualizar tomas (storyboards animados), generar fondos, doblar a otros idiomas sincronizando labios o restaurar películas antiguas. El director sigue decidiendo qué entra al corte final.",
+    ejemplo:"Generadores como Sora (OpenAI), Veo (Google) y Runway producen clips cada vez más realistas; estudios usan IA para doblaje multilingüe conservando la voz del actor, o para envejecer y rejuvenecer personajes. Las huelgas de Hollywood de 2023 pusieron estas herramientas en el centro del debate.",
+    paraQueSirve:"Entender qué puede (y qué no) hacer la IA en cine te permite usarla como acelerador creativo —prototipar ideas barato y rápido— y, a la vez, leer con criterio el debate sobre el trabajo de actores, dobladores y técnicos. Saber dónde está la línea es clave para usarla con respeto al oficio." },
+  { termino:"IA en la Música",
+    queEs:"Son herramientas de IA que componen, producen o transforman música: generar canciones completas desde una descripción, separar instrumentos de una grabación, masterizar audio o clonar voces.",
+    comoFunciona:"Modelos entrenados con enormes cantidades de música aprenden patrones de melodía, ritmo y timbre, y generan audio nuevo a partir de un texto («una cumbia alegre con piano»). Otras herramientas hacen tareas concretas: aislar la voz de una pista, limpiar ruido, sugerir acordes o igualar el volumen profesional (mastering). El músico decide qué conserva y cómo lo integra a su obra.",
+    ejemplo:"Suno y Udio generan canciones con letra y voz en segundos; las herramientas de separación de pistas (stems) permiten remezclar; el mastering con IA acerca una maqueta casera a un sonido profesional. A la vez, la clonación de voces de cantantes sin permiso abrió fuertes debates legales y éticos.",
+    paraQueSirve:"Para un creador, estas herramientas democratizan la producción: puedes maquetar, experimentar y pulir sin un estudio caro. Entenderlas te ayuda a aprovecharlas como instrumento y a tomar postura informada frente a temas sensibles como la clonación de voz y el uso de música protegida para entrenar." },
+  { termino:"IA en las Artes Visuales (Diseño)",
+    queEs:"Son los generadores y editores de imagen por IA: crear ilustraciones desde texto, transformar estilos, expandir o retocar imágenes, y asistir en diseño gráfico, concept art y prototipado visual.",
+    comoFunciona:"A partir de una descripción, el modelo genera una imagen explorando el «mapa» de significados visuales que aprendió; puedes guiarlo con referencias, máscaras o bocetos. Sirve para producir variaciones rápidas, fondos, mockups o concept art. Aprendió de millones de imágenes —muchas de artistas—, lo que está en el corazón del debate sobre consentimiento y derechos.",
+    ejemplo:"Midjourney, DALL·E y Stable Diffusion producen imágenes en segundos (y por años batallaron con detalles como las manos de seis dedos). Diseñadores los usan para explorar ideas antes de pulir a mano; ilustradores han denunciado el entrenamiento con su trabajo sin permiso.",
+    paraQueSirve:"Bien usadas, aceleran la exploración y bajan la barrera para visualizar ideas. Entender cómo funcionan te ayuda a integrarlas a tu proceso sin renunciar a tu criterio, y a desconfiar de lo que ves: si la IA crea imágenes perfectas, no toda «foto» que circula es real." },
+  { termino:"La IA como Instrumento (no Autor)",
+    queEs:"Es el enfoque de tratar a la IA como una herramienta más al servicio del artista —como lo fueron la cámara, el sintetizador o Photoshop— y no como el autor de la obra. La visión y las decisiones siguen siendo humanas.",
+    comoFunciona:"El creador dirige: define la intención, hace las elecciones de gusto, itera sobre las salidas de la IA, descarta lo que no sirve y monta el resultado final. La IA aporta velocidad y opciones; el humano aporta criterio, contexto y sentido. Es el mismo «human-in-the-loop» de los agentes, aplicado a lo creativo: la máquina propone, la persona dispone.",
+    ejemplo:"Un cineasta que usa IA para previsualizar una escena pero filma y edita él; un músico que parte de una idea generada y la rehace con su banda; un ilustrador que toma una salida de IA como boceto y la repinta. La herramienta cambió; el artista, no.",
+    paraQueSirve:"Esta mentalidad te protege de dos trampas: creer que la IA «ya hace todo» (y entregar obra vacía) o rechazarla por miedo. Usarla como instrumento mantiene el valor donde siempre estuvo —en la visión humana— y te hace más capaz, no reemplazable." },
+  { termino:"El Sello del Creador (Autoría)",
+    queEs:"Es lo que hace reconocible y propia a una obra: la voz, el estilo, las decisiones y la intención del artista. El desafío con IA es conservar ese sello cuando parte del proceso se apoya en una herramienta que «promedia» lo que vio.",
+    comoFunciona:"Como la IA genera a partir de patrones comunes, sus salidas tienden a lo genérico. El sello aparece cuando el creador interviene: elige con gusto, combina de forma única, aporta su historia, corrige y arriesga. El estilo propio no está en pulsar un botón, sino en las miles de pequeñas decisiones que la IA no toma por ti.",
+    ejemplo:"Dos personas con el mismo generador obtienen resultados intercambiables; un artista con voz propia usa esa misma herramienta y se le reconoce igual, porque imprime su criterio, su tema y su edición. La firma humana es lo que distingue una obra de un «contenido» más.",
+    paraQueSirve:"En un mundo lleno de contenido generado, tu sello es justo lo que más valor tiene y lo que la IA no puede copiar: tu mirada. Cultivarlo —y no diluirlo— es la mejor estrategia creativa y profesional frente a la automatización." },
+  { termino:"Uso Responsable en el Arte",
+    queEs:"Es el conjunto de prácticas para crear con IA sin perjudicar a otros creadores: consentimiento, atribución, transparencia y no suplantar ni reemplazar el trabajo humano sin crédito ni compensación justa.",
+    comoFunciona:"En la práctica significa: no imitar el estilo o la voz de un artista vivo sin permiso; declarar cuándo una obra usó IA; respetar las licencias y derechos del material de entrenamiento; y usar la IA para potenciar a equipos humanos, no para eliminarlos sin más. Muchas plataformas suman filtros, marcas de agua o créditos de procedencia para apoyar estas prácticas.",
+    ejemplo:"Las huelgas de guionistas y actores de Hollywood (2023) negociaron justamente esto: consentimiento y pago por el uso de su imagen o voz con IA. Sellos y artistas exigen no entrenar con su obra sin licencia, y algunas plataformas ya etiquetan el contenido generado.",
+    paraQueSirve:"Usar la IA con responsabilidad protege el ecosistema creativo del que tú también formas parte y cuida tu reputación. Saber dónde están los límites éticos y legales te permite innovar con tranquilidad, sin pasar a llevar a otros creadores ni exponerte a problemas." }
+]}
+]};
+
+/* ============================================================
+   FRASES — banner, celebraciones y medallas (tono adulto)
+   ============================================================ */
+const MOTIVES = [
+  "Dejar de ver la IA como una caja negra empieza con un concepto a la vez.",
+  "Entender cómo funciona por dentro es lo que separa a quien usa la IA de quien la domina.",
+  "No necesitas programar para entender la lógica. Necesitas curiosidad y un buen café. ☕",
+  "Cada concepto que marcas es una pieza menos de «magia» y una más de comprensión real.",
+  "La profundidad no se logra de un golpe, sino con constancia. Hoy suma.",
+  "Saber qué es un embedding o un RAG cambia cómo piensas tus propios proyectos.",
+  "El objetivo no es memorizar: es entender lo suficiente para decidir con criterio.",
+  "Hoy es un buen día para abrir el capó y ver cómo funciona el motor. 🔧",
+  "La racha se construye un día a la vez. Tu yo del futuro lo agradecerá.",
+  "Comprender la IA es la mejor inversión para no quedar fuera de la conversación.",
+  "Un buen profesional no le teme a los términos técnicos: los entiende y los usa con calma.",
+  "Pasaste de «usar» la IA a «entenderla». Ese salto vale oro."
+];
+
+const CEL = {
+  mod: [
+    "Módulo completado: «{cat}». Una capa menos de misterio, una más de dominio. 🎓",
+    "«{cat}» dominado. Ya puedes explicar estos conceptos con confianza. 💪",
+    "Cerraste «{cat}». Tu modelo mental de la IA está más afilado que ayer. 🧠"
+  ],
+  m25: [
+    "25% de la academia. Las piezas empiezan a encajar. 📈",
+    "Un cuarto del camino. La jerga técnica ya te suena familiar."
+  ],
+  m50: [
+    "Mitad de la academia. Oficialmente entiendes la IA mejor que la mayoría que solo la usa. 🚀",
+    "50% completado. De aquí en adelante, los anuncios técnicos te van a parecer claros."
+  ],
+  m75: [
+    "75%. Estás a un paso de tener el panorama completo. 🔭",
+    "Tres cuartos. Ya conectas conceptos entre módulos como un profesional."
+  ],
+  m100: [
+    "100% COMPLETADO. Dominas la anatomía de un LLM, cómo aprende, su ecosistema, la lógica de programación y la ética. Dejaste de ver la IA como una caja negra: ahora ves el mecanismo. Maestría desbloqueada. 👑"
+  ]
+};
+
+/* Medallas: cond(s) se evalúa con el estado actual */
+const MEDALS = [
+  { id:"inicio",  emoji:"🎓", nombre:"Primer paso",          desc:"Tu primer concepto entendido",     cond:s=>s.learned>=1 },
+  { id:"aplica",  emoji:"📘", nombre:"Estudiante aplicado",  desc:"10 conceptos entendidos",          cond:s=>s.learned>=10 },
+  { id:"curiosa", emoji:"🧩", nombre:"Mente curiosa",        desc:"20 conceptos entendidos",          cond:s=>s.learned>=20 },
+  { id:"mitad",   emoji:"🚀", nombre:"Media academia",       desc:"La mitad de los conceptos",        cond:s=>s.learned>=Math.ceil(s.total/2) },
+  { id:"ctx",     emoji:"🤖", nombre:"Domador de Contexto",  desc:"Módulo «Anatomía de un LLM»",      cond:s=>s.modsDone.includes("anatomia-llm") },
+  { id:"grad",    emoji:"🧠", nombre:"Domador del Gradiente",desc:"Módulo «Cómo Aprende la IA»",      cond:s=>s.modsDone.includes("como-aprende") },
+  { id:"apis",    emoji:"🛠️", nombre:"Explorador de APIs",   desc:"Módulo «Ecosistema Técnico»",      cond:s=>s.modsDone.includes("ecosistema") },
+  { id:"code",    emoji:"💻", nombre:"Pensador en Código",   desc:"Módulo «Lógica de Programación»",  cond:s=>s.modsDone.includes("logica-programacion") },
+  { id:"etica",   emoji:"⚖️", nombre:"Brújula Ética",        desc:"Módulo «Factor Humano y Ética»",   cond:s=>s.modsDone.includes("etica") },
+  { id:"ojo",     emoji:"🎯", nombre:"Buen ojo",             desc:"15 aciertos en el Desafío",        cond:s=>s.quiz>=15 },
+  { id:"sniper",  emoji:"🏆", nombre:"Desafío perfecto",     desc:"Todos los aciertos del Desafío",   cond:s=>s.quiz>=s.quizTotal },
+  { id:"racha3",  emoji:"🔥", nombre:"En racha",             desc:"3 días seguidos de estudio",       cond:s=>s.streak>=3 },
+  { id:"racha7",  emoji:"⚡", nombre:"Imparable",            desc:"7 días seguidos de estudio",       cond:s=>s.streak>=7 },
+  { id:"frontera",emoji:"🛰️", nombre:"Pionero de la Frontera",desc:"Módulo «La Frontera»",             cond:s=>s.modsDone.includes("la-frontera") },
+  { id:"filosofo",emoji:"🧭", nombre:"Filósofo de la IA",     desc:"Módulo «Visiones y Filosofías»",   cond:s=>s.modsDone.includes("visiones") },
+  { id:"artista", emoji:"🎨", nombre:"Artista Aumentado",     desc:"Módulo «Arte y Creatividad»",      cond:s=>s.modsDone.includes("arte-creatividad") },
+  { id:"maestria",emoji:"👑", nombre:"Maestría total",       desc:"100% de la academia",              cond:s=>s.learned>=s.total }
+];
+
+/* ============================================================
+   FUENTES — un enlace serio y EVERGREEN por concepto (clave = termino).
+   Se fusiona con DATA al cargar. {url, n(nombre corto de la fuente)}
+   ============================================================ */
+const FUENTES = {
+  // Anatomía de un LLM
+  "Ventana de Contexto (Context Window)":{ url:"https://www.ibm.com/think/topics/context-window", n:"IBM Think" },
+  "Tokens":{ url:"https://platform.openai.com/tokenizer", n:"OpenAI Tokenizer (pruébalo)" },
+  "Parámetros del Modelo":{ url:"https://epoch.ai/trends", n:"Epoch AI — tendencias" },
+  "Embeddings (Vectores de significado)":{ url:"https://jalammar.github.io/illustrated-word2vec/", n:"The Illustrated Word2Vec" },
+  "Temperatura y Top-P":{ url:"https://huggingface.co/blog/how-to-generate", n:"Cómo generan texto (Hugging Face)" },
+  "Modelos de Código Abierto (Open Source) vs Cerrados":{ url:"https://opensource.org/ai", n:"Definición de IA abierta (OSI)" },
+  // Cómo Aprende la IA
+  "Entrenamiento vs Inferencia":{ url:"https://developers.google.com/machine-learning/crash-course", n:"Curso intensivo de ML (Google)" },
+  "Fine-Tuning (Ajuste Fino)":{ url:"https://huggingface.co/docs/transformers/en/training", n:"Fine-tuning (Hugging Face Docs)" },
+  "Overfitting y Underfitting (Sobreajuste)":{ url:"https://developers.google.com/machine-learning/crash-course/overfitting/overfitting", n:"Sobreajuste (Google ML)" },
+  "Datos de Sesgo (Bias en el dataset)":{ url:"https://developers.google.com/machine-learning/crash-course/fairness/types-of-bias", n:"Tipos de sesgo (Google ML)" },
+  "Descenso del Gradiente (Gradient Descent)":{ url:"https://www.youtube.com/watch?v=IHZwWFHWa-w", n:"3Blue1Brown (video)" },
+  "Funciones de Pérdida (Loss Functions)":{ url:"https://developers.google.com/machine-learning/crash-course/linear-regression/loss", n:"Pérdida y entrenamiento (Google ML)" },
+  // El Ecosistema Técnico
+  "APIs (Application Programming Interface) por dentro":{ url:"https://developer.mozilla.org/es/docs/Glossary/API", n:"Qué es una API (MDN)" },
+  "Bases de Datos Vectoriales":{ url:"https://www.pinecone.io/learn/vector-database/", n:"Base vectorial (Pinecone Learn)" },
+  "Agentes Autónomos":{ url:"https://huggingface.co/learn/agents-course/en/unit0/introduction", n:"Curso de Agentes (Hugging Face)" },
+  "Orquestadores de Datos (LangChain / LlamaIndex)":{ url:"https://python.langchain.com/docs/introduction/", n:"Introducción a LangChain" },
+  "Arquitectura RAG (Generación Aumentada por Recuperación)":{ url:"https://arxiv.org/abs/2005.11401", n:"Paper fundacional de RAG (arXiv)" },
+  "Modelos MoE (Mixture of Experts / Mezcla de Expertos)":{ url:"https://huggingface.co/blog/moe", n:"Mixture of Experts (Hugging Face)" },
+  // Lógica de Programación Real
+  "Variables y Tipos de Datos":{ url:"https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/Variables", n:"Variables (MDN)" },
+  "Bucles e Iteraciones (Loops)":{ url:"https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/Loops", n:"Bucles (MDN)" },
+  "Funciones (Como fábricas de soluciones reutilizables)":{ url:"https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/Functions", n:"Funciones (MDN)" },
+  "Frontend vs Backend":{ url:"https://developer.mozilla.org/es/docs/Learn_web_development", n:"Aprende desarrollo web (MDN)" },
+  "Control de Versiones (Git y repositorios)":{ url:"https://git-scm.com/book/es/v2", n:"Libro Pro Git (gratis)" },
+  "APIs RESTful y JSON":{ url:"https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/JSON", n:"Trabajar con JSON (MDN)" },
+  // El Factor Humano y Ética
+  "Alucinaciones (por qué ocurren probabilísticamente)":{ url:"https://www.ibm.com/think/topics/ai-hallucinations", n:"Alucinaciones de IA (IBM)" },
+  "Privacidad y Seguridad de Datos en la Nube":{ url:"https://owasp.org/www-project-top-10-for-large-language-model-applications/", n:"OWASP Top 10 para LLM" },
+  "Propiedad Intelectual y Copyright en IA":{ url:"https://www.wipo.int/about-ip/en/artificial_intelligence/", n:"IA y propiedad intelectual (OMPI)" },
+  "Deepfakes y Desinformación Sintética":{ url:"https://es.wikipedia.org/wiki/Deepfake", n:"Deepfake (Wikipedia)" },
+  "Automatización y Evolución del Empleo":{ url:"https://oecd.ai/", n:"OECD.AI (impacto y políticas)" },
+  "Alineamiento de Modelos (Gobernanza y seguridad)":{ url:"https://www.anthropic.com/news/core-views-on-ai-safety", n:"Visión de seguridad (Anthropic)" },
+  // La Frontera
+  "Agentes Colaborativos (Cowork)":{ url:"https://www.anthropic.com/research/building-effective-agents", n:"Building Effective Agents (Anthropic)" },
+  "Sistemas Multiagente":{ url:"https://www.anthropic.com/engineering", n:"Anthropic Engineering" },
+  "MCP (Model Context Protocol)":{ url:"https://modelcontextprotocol.io", n:"Sitio oficial de MCP" },
+  "Modelos que Razonan (Reasoning)":{ url:"https://openai.com/index/learning-to-reason-with-llms/", n:"Aprender a razonar (OpenAI)" },
+  "Computer Use (uso del computador)":{ url:"https://www.anthropic.com/news/3-5-models-and-computer-use", n:"Computer use (Anthropic)" },
+  "Ingeniería de Contexto (Context Engineering)":{ url:"https://www.anthropic.com/engineering", n:"Anthropic Engineering" },
+  // Visiones y Filosofías
+  "Seguridad ante todo (Safety-first)":{ url:"https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback", n:"Constitutional AI (Anthropic)" },
+  "Aceleracionismo (e/acc)":{ url:"https://en.wikipedia.org/wiki/Effective_accelerationism", n:"Aceleracionismo efectivo (Wikipedia)" },
+  "Abierto vs Cerrado (filosofías)":{ url:"https://en.wikipedia.org/wiki/Open-source_artificial_intelligence", n:"IA de código abierto (Wikipedia)" },
+  "La Hipótesis del Escalado (Scaling)":{ url:"https://arxiv.org/abs/2001.08361", n:"Scaling Laws (paper, arXiv)" },
+  "¿Cuándo llega la AGI? (plazos)":{ url:"https://ourworldindata.org/artificial-intelligence", n:"Datos sobre IA (Our World in Data)" },
+  "Superinteligencia y Control":{ url:"https://openai.com/index/introducing-superalignment/", n:"Superalineamiento (OpenAI)" },
+  "IA en el Cine y el Audiovisual":{ url:"https://openai.com/index/sora/", n:"Sora — video con IA (OpenAI)" },
+  "IA en la Música":{ url:"https://magenta.tensorflow.org", n:"Magenta — IA y música (Google)" },
+  "IA en las Artes Visuales (Diseño)":{ url:"https://jalammar.github.io/illustrated-stable-diffusion/", n:"The Illustrated Stable Diffusion" },
+  "La IA como Instrumento (no Autor)":{ url:"https://aiartists.org", n:"AIArtists.org" },
+  "El Sello del Creador (Autoría)":{ url:"https://www.copyright.gov/ai/", n:"IA y autoría (US Copyright Office)" },
+  "Uso Responsable en el Arte":{ url:"https://contentauthenticity.org", n:"Content Authenticity Initiative" }
+};
+
+/* ============================================================
+   RECURSOS — Centro «Para profundizar». Fuentes evergreen
+   (portadas/secciones que siempre muestran lo último).
+   ============================================================ */
+const RECURSOS = [
+  { titulo:"Estudios e informes serios", icono:"📊", items:[
+    { n:"Stanford AI Index", url:"https://aiindex.stanford.edu", d:"Informe anual con datos duros del estado de la IA." },
+    { n:"Our World in Data — IA", url:"https://ourworldindata.org/artificial-intelligence", d:"Gráficos y datos del avance de la IA, sin opinología." },
+    { n:"arXiv (cs.AI)", url:"https://arxiv.org/list/cs.AI/recent", d:"Los papers de IA, recién publicados, antes que nadie." },
+    { n:"Papers with Code", url:"https://paperswithcode.com", d:"Papers junto a su código y rankings por tarea." },
+    { n:"Epoch AI", url:"https://epoch.ai", d:"Investigación y datos sobre cómputo y tendencias de modelos." }
+  ]},
+  { titulo:"Medios especializados (lo último)", icono:"📰", items:[
+    { n:"MIT Technology Review — IA", url:"https://www.technologyreview.com/topic/artificial-intelligence/", d:"Periodismo tecnológico serio sobre IA." },
+    { n:"The Batch (Andrew Ng)", url:"https://www.deeplearning.ai/the-batch/", d:"Newsletter semanal que explica lo importante con calma." },
+    { n:"Import AI (Jack Clark)", url:"https://importai.substack.com", d:"Análisis semanal de alguien que está dentro de la industria." },
+    { n:"Quanta Magazine", url:"https://www.quantamagazine.org", d:"Ciencia y matemáticas (incluida IA) con rigor y belleza." },
+    { n:"Ars Technica — IA", url:"https://arstechnica.com/ai/", d:"Cobertura técnica y crítica de la actualidad." }
+  ]},
+  { titulo:"Laboratorios (de primera mano)", icono:"🏢", items:[
+    { n:"Anthropic — News & Research", url:"https://www.anthropic.com/news", d:"Investigación y anuncios de los creadores de Claude." },
+    { n:"Google DeepMind — Blog", url:"https://deepmind.google/discover/blog/", d:"Ciencia de frontera: AlphaFold, AlphaProof, robótica." },
+    { n:"OpenAI — News", url:"https://openai.com/news/", d:"Anuncios e investigación de OpenAI." },
+    { n:"Meta AI — Blog", url:"https://ai.meta.com/blog/", d:"El hogar del open source (Llama) y su investigación." }
+  ]},
+  { titulo:"Robótica e IA", icono:"🤖", items:[
+    { n:"Google DeepMind — Robotics", url:"https://deepmind.google/science/", d:"IA que aprende a controlar robots en el mundo físico." },
+    { n:"Figure", url:"https://www.figure.ai", d:"Una de las empresas líderes en robots humanoides." },
+    { n:"Boston Dynamics", url:"https://www.bostondynamics.com", d:"Pioneros de la robótica avanzada (Atlas, Spot)." },
+    { n:"IEEE Spectrum — Robotics", url:"https://spectrum.ieee.org/topic/robotics/", d:"Periodismo técnico de robótica." }
+  ]},
+  { titulo:"Ciencia e IA", icono:"🔬", items:[
+    { n:"AlphaFold (EMBL-EBI)", url:"https://alphafold.ebi.ac.uk", d:"La base de datos de proteínas que cambió la biología." },
+    { n:"DeepMind — Science", url:"https://deepmind.google/science/", d:"IA aplicada a problemas científicos de fondo." },
+    { n:"Nature — Machine Intelligence", url:"https://www.nature.com/natmachintell/", d:"Investigación de IA revisada por pares." }
+  ]},
+  { titulo:"Arte y creatividad con IA", icono:"🎨", items:[
+    { n:"US Copyright Office — IA", url:"https://www.copyright.gov/ai/", d:"Guía oficial sobre autoría y derechos de obras hechas con IA." },
+    { n:"Content Authenticity Initiative", url:"https://contentauthenticity.org", d:"Estándar para acreditar autoría y procedencia del contenido." },
+    { n:"Magenta (Google)", url:"https://magenta.tensorflow.org", d:"Investigación abierta de IA para música y arte." },
+    { n:"AIArtists.org", url:"https://aiartists.org", d:"Comunidad, herramientas y ética del arte con IA." }
+  ]}
+];
+
+/* ============================================================
+   EN_TERM — el nombre en INGLÉS de cada concepto (clave = termino).
+   Siempre se muestra junto al título, porque así aparece en los textos.
+   ============================================================ */
+const EN_TERM = {
+  "Ventana de Contexto (Context Window)":"Context Window",
+  "Tokens":"Tokens",
+  "Parámetros del Modelo":"Model Parameters",
+  "Embeddings (Vectores de significado)":"Embeddings",
+  "Temperatura y Top-P":"Temperature & Top-P",
+  "Modelos de Código Abierto (Open Source) vs Cerrados":"Open vs Closed Source Models",
+  "Entrenamiento vs Inferencia":"Training vs Inference",
+  "Fine-Tuning (Ajuste Fino)":"Fine-Tuning",
+  "Overfitting y Underfitting (Sobreajuste)":"Overfitting & Underfitting",
+  "Datos de Sesgo (Bias en el dataset)":"Dataset Bias",
+  "Descenso del Gradiente (Gradient Descent)":"Gradient Descent",
+  "Funciones de Pérdida (Loss Functions)":"Loss Functions",
+  "APIs (Application Programming Interface) por dentro":"Application Programming Interface",
+  "Bases de Datos Vectoriales":"Vector Databases",
+  "Agentes Autónomos":"Autonomous Agents",
+  "Orquestadores de Datos (LangChain / LlamaIndex)":"Orchestration (LangChain / LlamaIndex)",
+  "Arquitectura RAG (Generación Aumentada por Recuperación)":"Retrieval-Augmented Generation",
+  "Modelos MoE (Mixture of Experts / Mezcla de Expertos)":"Mixture of Experts (MoE)",
+  "Variables y Tipos de Datos":"Variables & Data Types",
+  "Bucles e Iteraciones (Loops)":"Loops",
+  "Funciones (Como fábricas de soluciones reutilizables)":"Functions",
+  "Frontend vs Backend":"Frontend vs Backend",
+  "Control de Versiones (Git y repositorios)":"Version Control (Git)",
+  "APIs RESTful y JSON":"RESTful APIs & JSON",
+  "Alucinaciones (por qué ocurren probabilísticamente)":"Hallucinations",
+  "Privacidad y Seguridad de Datos en la Nube":"Data Privacy & Cloud Security",
+  "Propiedad Intelectual y Copyright en IA":"IP & Copyright in AI",
+  "Deepfakes y Desinformación Sintética":"Deepfakes & Synthetic Disinformation",
+  "Automatización y Evolución del Empleo":"Automation & the Future of Work",
+  "Alineamiento de Modelos (Gobernanza y seguridad)":"AI Alignment",
+  "Agentes Colaborativos (Cowork)":"Collaborative Agents (Cowork)",
+  "Sistemas Multiagente":"Multi-Agent Systems",
+  "MCP (Model Context Protocol)":"Model Context Protocol",
+  "Modelos que Razonan (Reasoning)":"Reasoning Models",
+  "Computer Use (uso del computador)":"Computer Use",
+  "Ingeniería de Contexto (Context Engineering)":"Context Engineering",
+  "Seguridad ante todo (Safety-first)":"AI Safety (Safety-First)",
+  "Aceleracionismo (e/acc)":"Effective Accelerationism (e/acc)",
+  "Abierto vs Cerrado (filosofías)":"Open vs Closed",
+  "La Hipótesis del Escalado (Scaling)":"The Scaling Hypothesis",
+  "¿Cuándo llega la AGI? (plazos)":"AGI Timelines",
+  "Superinteligencia y Control":"Superintelligence & Control",
+  "IA en el Cine y el Audiovisual":"AI in Film & Video",
+  "IA en la Música":"AI in Music",
+  "IA en las Artes Visuales (Diseño)":"AI in Visual Arts",
+  "La IA como Instrumento (no Autor)":"AI as Instrument",
+  "El Sello del Creador (Autoría)":"The Creator's Signature",
+  "Uso Responsable en el Arte":"Responsible Creative Use"
+};
+
+/* ============================================================
+   ESTADO Y PERSISTENCIA (localStorage, prefijo "iad")
+   iadLearned · iadQuiz · iadMilestones · iadMedals
+   iadDark · iadSound · iadStreak · sessionStorage: iadSplash
+   ============================================================ */
+const MODS = DATA.categorias;
+// fusiona la fuente seria y el término en inglés en cada concepto
+MODS.forEach(m=>m.conceptos.forEach(c=>{ if(FUENTES[c.termino]) c.fuente=FUENTES[c.termino]; if(EN_TERM[c.termino]) c.en=EN_TERM[c.termino]; }));
+const TOTAL = MODS.reduce((n,c)=>n+c.conceptos.length,0);
+const QUIZTOTAL = TOTAL;
+const key = (mod,i)=>mod.id+"-"+i;
+
+const loadSet = k=>new Set(JSON.parse(localStorage.getItem(k)||"[]"));
+const saveSet = (k,s)=>localStorage.setItem(k,JSON.stringify([...s]));
+let learned    = loadSet("iadLearned");
+let quizOK     = loadSet("iadQuiz");
+let milestones = loadSet("iadMilestones");
+let medals     = loadSet("iadMedals");
+
+const state = { view:"home", mod:null, tab:"aprender", fcOrder:[], fcIdx:0, fcFlip:false, gq:"", gmod:"", quiz:null };
+
+function save(){ saveSet("iadLearned",learned); saveSet("iadQuiz",quizOK); saveSet("iadMilestones",milestones); saveSet("iadMedals",medals); }
+
+/* ---------- racha diaria ---------- */
+function hoy(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+let streak = JSON.parse(localStorage.getItem("iadStreak")||"null") || {last:"",count:0};
+(function initStreak(){
+  const t=hoy(); if(streak.last===t) return;
+  const a=new Date(); a.setDate(a.getDate()-1);
+  const aStr=a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");
+  streak={ last:t, count: streak.last===aStr ? streak.count+1 : 1 };
+  localStorage.setItem("iadStreak",JSON.stringify(streak));
+})();
+
+/* ---------- helpers ---------- */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const pick = a=>a[Math.floor(Math.random()*a.length)];
+const shuffle = a=>{ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const modsDone = ()=>MODS.filter(m=>m.conceptos.every((_,i)=>learned.has(key(m,i)))).map(m=>m.id);
+/* separa "Ventana de Contexto (Context Window)" -> {main, tech} */
+function splitTerm(t){ const m=String(t).match(/^(.*?)\s*\((.+)\)\s*$/); return m?{main:m[1].trim(), tech:m[2].trim()}:{main:String(t).trim(), tech:""}; }
+/* título en español (sin paréntesis) + término en inglés (siempre visible) */
+const tEs = t => String(t).replace(/\s*\([^)]*\)/g,"").replace(/\s+/g," ").trim();
+const tEn = c => (c.en || splitTerm(c.termino).tech || "").trim();
+function engChip(c){ const es=tEs(c.termino), en=tEn(c); return (en && en.toLowerCase()!==es.toLowerCase()) ? `<span class="tech mono">🇬🇧 ${esc(en)}</span>` : ""; }
+
+/* ---------- sonido (Web Audio) ---------- */
+let soundOn = localStorage.getItem("iadSound")!=="0";
+let actx=null;
+function tone(f,dur,delay,type,vol){
+  if(!soundOn) return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime+(delay||0);
+    o.type=type||"sine"; o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol||0.1,t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur+0.05);
+  }catch(e){}
+}
+const tick   = ()=>tone(720,0.05,0,"triangle",0.05);
+const ding   = ()=>{ tone(620,0.11,0,"sine",0.11); tone(930,0.2,0.08,"sine",0.11); };
+const buzz   = ()=>tone(150,0.2,0,"square",0.07);
+const fanfare= ()=>[523,659,784,1047].forEach((f,i)=>tone(f,0.26,i*0.12,"triangle",0.12));
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function render(){
+  document.querySelectorAll("#nav button").forEach(b=>{
+    b.classList.toggle("on", b.dataset.v===state.view || ((state.view==="mod"||state.view==="resources") && b.dataset.v==="home"));
+  });
+  const app=$("#app");
+  if(state.view==="home")     app.innerHTML=vHome();
+  if(state.view==="mod")      app.innerHTML=vMod();
+  if(state.view==="practice") app.innerHTML=vPracticeHub();
+  if(state.view==="gloss")    app.innerHTML=vGloss();
+  if(state.view==="quiz")     app.innerHTML=vQuiz();
+  if(state.view==="progress") app.innerHTML=vProgress();
+  if(state.view==="resources")app.innerHTML=vResources();
+}
+
+/* ---------- consola: grilla de módulos ---------- */
+function vHome(){
+  const done=modsDone();
+  const cards=MODS.map(m=>{
+    const tot=m.conceptos.length, ok=m.conceptos.filter((_,i)=>learned.has(key(m,i))).length;
+    const pct=Math.round(ok/tot*100), full=ok===tot;
+    return `<button class="modcard" data-a="mod" data-id="${m.id}" style="--cc:${m.colorAcento}">
+      ${full?'<span class="done">✅</span>':""}
+      <div class="mhead"><span class="em">${m.icono}</span><div><h3>${esc(m.titulo)}</h3><div class="n">${ok}/${tot} conceptos</div></div></div>
+      <div class="mdesc">${esc(m.desc)}</div>
+      <div class="mini"><i style="width:${pct}%"></i></div>
+    </button>`;
+  }).join("");
+  return `<div class="view">
+    <div class="stats">
+      <span class="chip">🔥 ${streak.count} día${streak.count===1?"":"s"} de racha</span>
+      <span class="chip">✅ ${learned.size}/${TOTAL}</span>
+      <span class="chip">🏅 ${medals.size} medalla${medals.size===1?"":"s"}</span>
+      ${done.length?`<span class="chip">🎓 ${done.length} módulo${done.length===1?"":"s"}</span>`:""}
+    </div>
+    <p class="intro">Bienvenido a la <b>Consola de Aprendizaje</b>. Elige un módulo y abre cada concepto bajo sus 4 dimensiones: <b>qué es</b>, <b>cómo funciona por dentro</b>, <b>ejemplo real</b> y <b>para qué te sirve</b>. Cada concepto trae su <b>nombre en inglés</b> y un <b>link para profundizar</b>.</p>
+    <div class="grid">${cards}</div>
+    <button class="reshub" data-a="resources">
+      <span class="em">🔗</span>
+      <div><h3>Para profundizar</h3><p>Estudios serios, medios especializados, laboratorios, robótica y ciencia — fuentes evergreen.</p></div>
+      <span class="rl-go">→</span>
+    </button>
+  </div>`;
+}
+
+/* ---------- centro «para profundizar» ---------- */
+function vResources(){
+  const groups=RECURSOS.map(g=>`
+    <div class="pcard">
+      <h3>${g.icono} ${esc(g.titulo)}</h3>
+      ${g.items.map(it=>`<a class="reslink" href="${esc(it.url)}" target="_blank" rel="noopener">
+        <div class="rl-h">${esc(it.n)} <span class="rl-go">↗</span></div>
+        <div class="rl-d">${esc(it.d)}</div>
+      </a>`).join("")}
+    </div>`).join("");
+  return `<div class="view" style="--cc:#3b82f6">
+    <button class="back" data-a="back">← Volver a la consola</button>
+    <div class="cathead"><span class="em">🔗</span><div><h2>Para profundizar</h2><p>Fuentes serias y duraderas para seguir aprendiendo. Se abren en una pestaña nueva.</p></div></div>
+    ${groups}
+    <p class="intro" style="margin-top:6px">Son <b>portadas y secciones</b> que siempre muestran lo último —no artículos sueltos—, por eso no se vencen. Ábrelas cuando tengas internet. 🌐</p>
+  </div>`;
+}
+
+/* ---------- detalle de módulo ---------- */
+function vMod(){
+  const m=MODS.find(x=>x.id===state.mod);
+  if(!m){ state.view="home"; return vHome(); }
+  const inner = state.tab==="aprender" ? vLearn(m) : vPractice(m);
+  return `<div class="view" style="--cc:${m.colorAcento}">
+    <button class="back" data-a="back">← Todos los módulos</button>
+    <div class="cathead"><span class="em">${m.icono}</span><div><h2>${esc(m.titulo)}</h2><p>${esc(m.desc)}</p></div></div>
+    <div class="subtabs">
+      <button class="${state.tab==="aprender"?"on":""}" data-a="tab" data-t="aprender">📖 Aprender</button>
+      <button class="${state.tab==="practicar"?"on":""}" data-a="tab" data-t="practicar">🔬 Practicar</button>
+    </div>
+    ${inner}
+  </div>`;
+}
+
+function vLearn(m){
+  return m.conceptos.map((c,i)=>{
+    const k=key(m,i), on=learned.has(k);
+    return `<article class="concept">
+      <header><span class="num">${i+1}</span>
+        <div class="thd"><h3>${esc(tEs(c.termino))}</h3>${engChip(c)}</div>
+        ${on?'<span class="ok">✅</span>':""}</header>
+      <div class="block"><b>🎯 ¿Qué es en verdad?</b><p>${esc(c.queEs)}</p></div>
+      <div class="block"><b>⚙️ ¿Cómo funciona por dentro?</b><p>${esc(c.comoFunciona)}</p></div>
+      <div class="block"><b>🌍 Ejemplo en el mundo real</b><p>${esc(c.ejemplo)}</p></div>
+      <div class="block"><b>💡 ¿Por qué te sirve saberlo?</b><p>${esc(c.paraQueSirve)}</p></div>
+      ${c.fuente?`<a class="srcbtn" href="${esc(c.fuente.url)}" target="_blank" rel="noopener">🔗 Profundizar · ${esc(c.fuente.n)}</a>`:""}
+      <button class="learnbtn ${on?"on":""}" data-a="learn" data-k="${k}">${on?"✅ Entendido":"Marcar como aprendido"}</button>
+    </article>`;
+  }).join("");
+}
+
+function vPractice(m){
+  if(!state.fcOrder.length || state.fcOrder.length!==m.conceptos.length)
+    state.fcOrder=shuffle(m.conceptos.map((_,i)=>i));
+  const idx=state.fcOrder[state.fcIdx % state.fcOrder.length];
+  const c=m.conceptos[idx], k=key(m,idx), on=learned.has(k);
+  return `<div class="fcpos">Tarjeta ${state.fcIdx+1} de ${m.conceptos.length} · toca para revelar</div>
+  <div class="fcwrap ${state.fcFlip?"flip":""}" data-a="flip">
+    <div class="fc">
+      <div class="face">
+        <span class="bigem">${m.icono}</span>
+        <h3>${esc(tEs(c.termino))}</h3>
+        ${engChip(c)}
+        <span class="hint">Piensa tu respuesta y toca para comprobar 👆</span>
+      </div>
+      <div class="face bk">
+        <div class="block"><b>🎯 ¿Qué es en verdad?</b><p>${esc(c.queEs)}</p></div>
+        <div class="block"><b>⚙️ ¿Cómo funciona?</b><p>${esc(c.comoFunciona)}</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="fcnav">
+    <button data-a="fc-prev">◀ Anterior</button>
+    <button data-a="fc-shuffle">🔀 Mezclar</button>
+    <button data-a="fc-next">Siguiente ▶</button>
+  </div>
+  <button class="learnbtn ${on?"on":""}" data-a="fc-learn" data-k="${k}">${on?"✅ Lo domino":"✓ Lo domino (marcar aprendido)"}</button>`;
+}
+
+/* ---------- práctica: hub que lleva a elegir módulo ---------- */
+function vPracticeHub(){
+  const cards=MODS.map(m=>`<button class="modcard" data-a="mod-practice" data-id="${m.id}" style="--cc:${m.colorAcento}">
+    <div class="mhead"><span class="em">${m.icono}</span><div><h3>${esc(m.titulo)}</h3><div class="n">${m.conceptos.length} flashcards</div></div></div>
+  </button>`).join("");
+  return `<div class="view">
+    <p class="intro">🔬 <b>Laboratorio de Práctica.</b> Elige un módulo: verás el término técnico, piensas su explicación y volteas la tarjeta para comprobar.</p>
+    <div class="grid">${cards}</div>
+  </div>`;
+}
+
+/* ---------- glosario indexado ---------- */
+function glossItems(){
+  const out=[];
+  MODS.forEach(m=>m.conceptos.forEach((c,i)=>out.push({m,c,k:key(m,i)})));
+  return out.sort((a,b)=>tEs(a.c.termino).localeCompare(tEs(b.c.termino),"es"));
+}
+function glossList(){
+  const q=state.gq.trim().toLowerCase();
+  let items=glossItems();
+  if(state.gmod) items=items.filter(x=>x.m.id===state.gmod);
+  if(q) items=items.filter(x=>(x.c.termino+" "+(x.c.en||"")+" "+x.c.queEs).toLowerCase().includes(q));
+  if(!items.length) return `<div class="empty">Sin resultados… prueba con otro término 🔍</div>`;
+  return items.map(x=>`<button class="gitem" data-a="gi" style="--cc:${x.m.colorAcento}">
+    <div class="row"><h4>${esc(tEs(x.c.termino))}</h4>${engChip(x.c)}<span class="gtag">${x.m.icono} ${esc(x.m.titulo)}</span>${learned.has(x.k)?"✅":""}</div>
+    <div class="def">${esc(x.c.queEs)}</div>
+    <div class="more">
+      <div class="block"><b>⚙️ ¿Cómo funciona?</b><p>${esc(x.c.comoFunciona)}</p></div>
+      <div class="block"><b>🌍 Ejemplo</b><p>${esc(x.c.ejemplo)}</p></div>
+    </div>
+  </button>`).join("");
+}
+function vGloss(){
+  const chips=`<div class="gchips">
+    <button class="${state.gmod===""?"on":""}" data-a="gmod" data-id="">Todos</button>
+    ${MODS.map(m=>`<button class="${state.gmod===m.id?"on":""}" data-a="gmod" data-id="${m.id}">${m.icono} ${esc(m.titulo)}</button>`).join("")}
+  </div>`;
+  return `<div class="view">
+    <input class="search" id="gsearch" type="search" placeholder="🔍 Busca un término (ej: RAG, token, gradiente, API...)" value="${esc(state.gq)}">
+    ${chips}
+    <div id="glist">${glossList()}</div>
+  </div>`;
+}
+
+/* ---------- evaluación de desafío ---------- */
+function newQuestion(){
+  const pool=[];
+  MODS.forEach(m=>m.conceptos.forEach((c,i)=>{ if(!quizOK.has(key(m,i))) pool.push({m,c,i}); }));
+  if(!pool.length) return {done:true};
+  const q=pick(pool);
+  const tipo=Math.floor(Math.random()*3);
+  const otros=shuffle(q.m.conceptos.filter(c=>c!==q.c)).slice(0,3).map(c=>tEs(c.termino));
+  while(otros.length<3){
+    const c=pick(pick(MODS).conceptos), mn=tEs(c.termino);
+    if(mn!==tEs(q.c.termino) && !otros.includes(mn)) otros.push(mn);
+  }
+  const opts=shuffle([tEs(q.c.termino), ...otros]);
+  return { k:key(q.m,q.i), m:q.m, c:q.c, tipo, opts, correct:opts.indexOf(tEs(q.c.termino)), answered:false, picked:-1 };
+}
+function vQuiz(){
+  if(!state.quiz) state.quiz=newQuestion();
+  const q=state.quiz;
+  const head=`<div class="qhead">
+    <span class="score">🎯 Aciertos: <b>${quizOK.size}</b> / ${QUIZTOTAL}</span>
+    <button class="reset" data-a="quiz-reset">↺ Reiniciar</button>
+  </div>
+  <div class="qbar"><i style="width:${Math.round(quizOK.size/QUIZTOTAL*100)}%"></i></div>`;
+  if(q.done) return `<div class="view">${head}
+    <div class="qcard" style="text-align:center">
+      <span style="font-size:50px">🏆</span>
+      <h3 style="margin:10px 0 6px">¡Desafío completado!</h3>
+      <p style="color:var(--muted);font-size:.88rem">Respondiste correctamente los ${QUIZTOTAL} conceptos. Comprensión sólida de punta a punta. Puedes reiniciar para repasar.</p>
+    </div></div>`;
+  const preg = q.tipo===0 ? "🎯 Según esta definición, ¿de qué concepto hablamos?"
+            : q.tipo===1 ? "🌍 En esta situación real, ¿qué concepto está en juego?"
+            : "⚙️ ¿Qué concepto funciona así por dentro?";
+  const texto = q.tipo===0 ? q.c.queEs : q.tipo===1 ? q.c.ejemplo : q.c.comoFunciona;
+  const letras=["A","B","C","D"];
+  const opts=q.opts.map((t,i)=>{
+    let cls="opt";
+    if(q.answered && i===q.correct) cls+=" good";
+    if(q.answered && i===q.picked && i!==q.correct) cls+=" bad";
+    return `<button class="${cls}" data-a="opt" data-i="${i}" ${q.answered?"disabled":""}><span class="lt">${letras[i]}</span>${esc(t)}</button>`;
+  }).join("");
+  let feed="";
+  const nombreFull = `${esc(tEs(q.c.termino))}${tEn(q.c)?` <span class="mono" style="font-size:.85em;opacity:.8">· ${esc(tEn(q.c))}</span>`:""}`;
+  if(q.answered) feed = q.picked===q.correct
+    ? `<div class="qfeed ok">✅ ¡Correcto! ${nombreFull}. Sumado al progreso.</div>`
+    : `<div class="qfeed no">La respuesta correcta era <b>${nombreFull}</b>. ${esc(q.c.queEs)}</div>`;
+  return `<div class="view">${head}
+    <div class="qcard">
+      <div class="qtag"><span class="gtag" style="--cc:${q.m.colorAcento}">${q.m.icono} ${esc(q.m.titulo)}</span></div>
+      <div class="qtag">${preg}</div>
+      <div class="qtext">${esc(texto)}</div>
+    </div>
+    ${opts}${feed}
+    ${q.answered?`<button class="nextbtn" data-a="quiz-next">Siguiente desafío →</button>`:""}
+  </div>`;
+}
+
+/* ---------- mi progreso ---------- */
+function barColor(p){ return p>=75?"var(--good)":p>=40?"var(--warn)":"var(--bad)"; }
+function vProgress(){
+  const pct=Math.round(learned.size/TOTAL*100);
+  const ring=`<div class="ringbox">
+    <div class="ring" style="background:conic-gradient(var(--blue) 0%, var(--green) ${pct}%, var(--line) ${pct}%)">
+      <div><div><b>${pct}%</b><span>aprendido</span></div></div>
+    </div>
+    <div class="ringinfo">
+      <h3>${pct===100?"👑 ¡Academia completa!":pct>=50?"🚀 Vas muy bien":pct>0?"🌱 Buen comienzo":"👋 ¡Bienvenido!"}</h3>
+      <p>${learned.size} de ${TOTAL} conceptos entendidos · ${quizOK.size} aciertos en el Desafío · 🔥 racha de ${streak.count} día${streak.count===1?"":"s"}.</p>
+    </div>
+  </div>`;
+  const bars=MODS.map(m=>{
+    const tot=m.conceptos.length, ok=m.conceptos.filter((_,i)=>learned.has(key(m,i))).length, p=Math.round(ok/tot*100);
+    return `<div class="brow"><div class="lab"><span>${m.icono} ${esc(m.titulo)}</span><span>${ok}/${tot}</span></div>
+      <div class="bar"><i style="width:${p}%;background:${barColor(p)}"></i></div></div>`;
+  }).join("");
+  const pq=Math.round(quizOK.size/QUIZTOTAL*100);
+  const quizBar=`<div class="brow"><div class="lab"><span>🧠 Evaluación de Desafío</span><span>${quizOK.size}/${QUIZTOTAL}</span></div>
+    <div class="bar"><i style="width:${pq}%;background:${barColor(pq)}"></i></div></div>`;
+  const sb={ learned:learned.size, total:TOTAL, quiz:quizOK.size, quizTotal:QUIZTOTAL, streak:streak.count, modsDone:modsDone() };
+  const md=MEDALS.map(b=>{
+    const on=medals.has(b.id)||b.cond(sb);
+    return `<div class="medal ${on?"unlock":"lock"}"><span class="be">${b.emoji}</span><b>${esc(b.nombre)}</b><small>${esc(b.desc)}</small></div>`;
+  }).join("");
+  return `<div class="view">${ring}
+    <div class="pcard"><h3>📊 Avance por módulo</h3>${bars}${quizBar}</div>
+    <div class="pcard"><h3>🏅 Medallas</h3><div class="medals">${md}</div></div>
+  </div>`;
+}
+
+/* ============================================================
+   CELEBRACIONES, HITOS Y MEDALLAS
+   ============================================================ */
+function confetti(n){
+  const box=$("#confetti"); box.innerHTML="";
+  const colors=["#3b82f6","#10b981","#8b5cf6","#f59e0b","#f43f5e","#60a5fa","#ffffff"];
+  for(let i=0;i<n;i++){
+    const s=document.createElement("i");
+    s.style.left=Math.random()*100+"%"; s.style.background=pick(colors);
+    s.style.animationDuration=(2.2+Math.random()*2.4)+"s"; s.style.animationDelay=(Math.random()*0.8)+"s";
+    s.style.transform="rotate("+Math.random()*360+"deg)"; box.appendChild(s);
+  }
+}
+let celeTimer=null;
+function celebrate(titulo,texto,emoji,grande){
+  $("#celeTitle").textContent=titulo; $("#celeText").textContent=texto; $("#celeEmoji").textContent=emoji||"🎉";
+  $("#cele").hidden=false; confetti(grande?170:90); fanfare();
+  clearTimeout(celeTimer); celeTimer=setTimeout(()=>{ $("#cele").hidden=true; },15000);
+}
+function toast(msg){
+  const t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove("show"),2800);
+}
+function checkAll(){
+  const nuevosMods=[];
+  MODS.forEach(m=>{
+    const full=m.conceptos.every((_,i)=>learned.has(key(m,i)));
+    if(full && !milestones.has("mod-"+m.id)){ milestones.add("mod-"+m.id); nuevosMods.push(m); }
+  });
+  const pct=Math.round(learned.size/TOTAL*100);
+  const nuevosHitos=[];
+  [[25,"m25"],[50,"m50"],[75,"m75"],[100,"m100"]].forEach(([mm,kk])=>{
+    if(pct>=mm && !milestones.has("g"+mm)){ milestones.add("g"+mm); nuevosHitos.push(kk); }
+  });
+  const sb={ learned:learned.size, total:TOTAL, quiz:quizOK.size, quizTotal:QUIZTOTAL, streak:streak.count, modsDone:modsDone() };
+  MEDALS.forEach(b=>{ if(!medals.has(b.id) && b.cond(sb)){ medals.add(b.id); toast("🏅 Medalla nueva: "+b.emoji+" "+b.nombre); } });
+  save();
+  if(nuevosHitos.includes("m100")) celebrate("¡100% completado!",pick(CEL.m100),"👑",true);
+  else if(nuevosMods.length) celebrate("¡Módulo completado!",pick(CEL.mod).replace("{cat}",nuevosMods[0].titulo),nuevosMods[0].icono,false);
+  else if(nuevosHitos.length) celebrate("¡Hito alcanzado!",pick(CEL[nuevosHitos[nuevosHitos.length-1]]),"🎉",false);
+}
+
+/* ---------- banner motivacional ---------- */
+let motiveIdx=-1;
+function nextMotive(){
+  const el=$("#motiv"); el.classList.add("out");
+  setTimeout(()=>{ let i; do{ i=Math.floor(Math.random()*MOTIVES.length); }while(i===motiveIdx); motiveIdx=i; el.textContent=MOTIVES[i]; el.classList.remove("out"); },300);
+}
+setInterval(nextMotive,11000);
+
+/* ============================================================
+   EVENTOS (delegación)
+   ============================================================ */
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-a]"); if(!el) return;
+  const act=el.dataset.a;
+
+  if(act==="enter"){ $("#splash").hidden=true; sessionStorage.setItem("iadSplash","1"); fanfare(); }
+  if(act==="nav"){ state.view=el.dataset.v; state.mod=null; state.quiz=null; tick(); render(); window.scrollTo(0,0); }
+  if(act==="mod"){ state.view="mod"; state.mod=el.dataset.id; state.tab="aprender"; state.fcOrder=[]; state.fcIdx=0; state.fcFlip=false; tick(); render(); window.scrollTo(0,0); }
+  if(act==="mod-practice"){ state.view="mod"; state.mod=el.dataset.id; state.tab="practicar"; state.fcOrder=[]; state.fcIdx=0; state.fcFlip=false; tick(); render(); window.scrollTo(0,0); }
+  if(act==="back"){ state.view="home"; state.mod=null; tick(); render(); window.scrollTo(0,0); }
+  if(act==="resources"){ state.view="resources"; state.mod=null; tick(); render(); window.scrollTo(0,0); }
+  if(act==="tab"){ state.tab=el.dataset.t; state.fcFlip=false; tick(); render(); }
+
+  if(act==="learn"||act==="fc-learn"){
+    const k=el.dataset.k;
+    if(learned.has(k)){ learned.delete(k); tick(); } else { learned.add(k); ding(); }
+    save(); checkAll();
+    if(act==="fc-learn" && learned.has(k)){ state.fcIdx=(state.fcIdx+1)%9999; state.fcFlip=false; }
+    render();
+  }
+  if(act==="flip"){ state.fcFlip=!state.fcFlip; tick(); render(); }
+  if(act==="fc-next"){ state.fcIdx++; state.fcFlip=false; tick(); render(); }
+  if(act==="fc-prev"){ state.fcIdx=Math.max(0,state.fcIdx-1); state.fcFlip=false; tick(); render(); }
+  if(act==="fc-shuffle"){ state.fcOrder=[]; state.fcIdx=0; state.fcFlip=false; tick(); render(); }
+
+  if(act==="gi"){ el.classList.toggle("open"); tick(); }
+  if(act==="gmod"){ state.gmod=el.dataset.id; tick(); render(); }
+
+  if(act==="opt"){
+    const q=state.quiz; if(!q||q.answered) return;
+    q.answered=true; q.picked=Number(el.dataset.i);
+    if(q.picked===q.correct){ quizOK.add(q.k); learned.add(q.k); ding(); save(); checkAll(); } else buzz();
+    render();
+  }
+  if(act==="quiz-next"){ state.quiz=null; tick(); render(); window.scrollTo(0,0); }
+  if(act==="quiz-reset"){ quizOK.clear(); save(); state.quiz=null; toast("🔄 Desafío reiniciado"); render(); }
+
+  if(act==="cele-ok"){ $("#cele").hidden=true; clearTimeout(celeTimer); tick(); }
+  if(act==="motive"){ nextMotive(); tick(); }
+  if(act==="dark"){ toggleDark(); }
+  if(act==="sound"){ toggleSound(); }
+  if(act==="install"){ doInstall(); }
+});
+
+document.addEventListener("input",e=>{
+  if(e.target.id==="gsearch"){ state.gq=e.target.value; $("#glist").innerHTML=glossList(); }
+});
+
+/* ============================================================
+   TEMA, SONIDO, INSTALACIÓN, SPLASH, SERVICE WORKER
+   ============================================================ */
+function applyDark(){ $("#btnDark").textContent=document.body.classList.contains("dark")?"☀️":"🌙"; }
+function toggleDark(){ document.body.classList.toggle("dark"); localStorage.setItem("iadDark",document.body.classList.contains("dark")?"1":"0"); applyDark(); tick(); }
+if(localStorage.getItem("iadDark")==="0") document.body.classList.remove("dark");
+applyDark();
+
+function applySound(){ $("#btnSound").textContent=soundOn?"🔊":"🔇"; }
+function toggleSound(){ soundOn=!soundOn; localStorage.setItem("iadSound",soundOn?"1":"0"); applySound(); if(soundOn) tick(); }
+applySound();
+
+let defPrompt=null;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+const standalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); defPrompt=e; if(!standalone) $("#btnInstall").hidden=false; });
+if(isIOS && !standalone) $("#btnInstall").hidden=false;
+window.addEventListener("appinstalled",()=>{ $("#btnInstall").hidden=true; toast("✅ ¡App instalada!"); });
+function doInstall(){
+  if(defPrompt){ defPrompt.prompt(); defPrompt=null; }
+  else if(isIOS) toast("📲 En Safari: Compartir → «Añadir a pantalla de inicio»");
+  else toast("📲 En el menú del navegador busca «Instalar aplicación»");
+}
+
+if(!sessionStorage.getItem("iadSplash")) $("#splash").hidden=false;
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+
+/* ---------- arranque ---------- */
+motiveIdx=Math.floor(Math.random()*MOTIVES.length);
+$("#motiv").textContent=MOTIVES[motiveIdx];
+render();
+</script>
+
+<!-- ============================================================
+     PWA — copias para separar fácilmente (ya existen como archivos
+     manifest.json y sw.js junto a este index.html).
+
+==== manifest.json ====
+{
+  "name": "La IA por Dentro — Academia intermedia",
+  "short_name": "IA por Dentro",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
+
+==== sw.js ====
+const CACHE = "iad-v1";
+const ASSETS = ["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
+self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())); });
+self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });
+self.addEventListener("fetch", e => {
+  const req = e.request; if (req.method!=="GET") return;
+  if (req.mode==="navigate" || (req.headers.get("accept")||"").includes("text/html")) {
+    e.respondWith(fetch(req).then(r=>{const c=r.clone();caches.open(CACHE).then(x=>x.put(req,c));return r;}).catch(()=>caches.match(req).then(r=>r||caches.match("./index.html")))); return;
+  }
+  e.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(r=>{const c=r.clone();caches.open(CACHE).then(x=>x.put(req,c));return r;}).catch(()=>hit)));
+});
+============================================================ -->
+</body>
+</html>
