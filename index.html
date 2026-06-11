@@ -292,7 +292,7 @@ button:active{transform:scale(.98)}
   <h1>La IA por Dentro</h1>
   <p class="sub">El siguiente nivel para entender la <b>inteligencia artificial</b> y la <b>programación</b> por dentro. Deja de ver la IA como una caja negra. ☕</p>
   <div class="feats">
-    <span>🤖 12 módulos</span><span>🧩 72 conceptos</span><span>🇬🇧 Inglés + audio</span><span>🔗 Fuentes serias</span><span>🚀 Del código a producción</span><span>📴 Offline</span>
+    <span>🤖 13 módulos</span><span>🧩 78 conceptos</span><span>🇬🇧 Inglés + audio</span><span>🔗 Fuentes serias</span><span>🚀 Crear apps con IA</span><span>📴 Offline</span>
   </div>
   <button class="go" data-a="enter">🚀 Entrar a la academia</button>
 </div>
@@ -774,6 +774,42 @@ const DATA = { categorias: [
     comoFunciona:"La plataforma registra cada petición y error en logs que puedes revisar; el monitoreo te alerta si la app se cae o se pone lenta; y si un despliegue salió malo, el rollback restaura en segundos la versión anterior que sí funcionaba. Es el «tablero de control» de producción.",
     ejemplo:"Una tienda nota por el monitoreo que las compras fallan tras un despliegue; revisa los logs, encuentra el error y hace rollback a la versión previa mientras lo arregla, minimizando el daño.",
     paraQueSirve:"Publicar no es el final: hay que operar la app en vivo. Entender monitoreo, logs y rollback explica cómo se mantienen los servicios funcionando y se reacciona rápido cuando algo falla, sin pánico." }
+]},
+
+/* ===== MÓDULO 13 · CONSTRUIR APPS CON IA ===== */
+{ id:"construir-ia", titulo:"Construir Apps con IA", icono:"🤖", colorAcento:"#6366f1",
+  desc:"El ecosistema de herramientas de IA para crear apps y webs — y cómo se conectan.",
+  conceptos:[
+  { termino:"Asistentes de Código (Copilot, Cursor, Claude Code)",
+    queEs:"Son herramientas de IA integradas al editor que escriben, completan, explican y corrigen código mientras programas. No reemplazan al desarrollador: lo aceleran, como un copiloto.",
+    comoFunciona:"Mientras escribes, el asistente sugiere la siguiente línea o un bloque completo según el contexto de tu proyecto; puedes pedirle en lenguaje natural «crea una función que valide correos» y la escribe. Los más avanzados (modo «agente») abren archivos, hacen cambios en varios a la vez, ejecutan pruebas y corrigen errores solos, con tu supervisión.",
+    ejemplo:"GitHub Copilot autocompleta dentro de VS Code; Cursor es un editor entero centrado en IA; Claude Code trabaja desde la terminal como un agente. (De hecho, estas dos academias se construyeron con Claude Code.)",
+    paraQueSirve:"Cambian la velocidad y quién puede programar: tareas que tomaban horas se hacen en minutos, y personas con poca experiencia logran más. Entenderlos te muestra hacia dónde va el oficio: de escribir cada línea a dirigir y revisar." },
+  { termino:"Generadores de Apps · Vibe Coding",
+    queEs:"Son herramientas donde describes la app o web que quieres en lenguaje natural y la IA genera el código y la interfaz funcionando, lista para ver y ajustar. «Vibe coding» es construir guiándose por la idea, sin escribir el código a mano.",
+    comoFunciona:"Escribes «una landing para mi cafetería con menú y formulario de contacto» y la herramienta produce la página real; la previsualizas, la refinas conversando («hazla más oscura», «agrega un mapa») y la publicas. Por dentro generan código de verdad que tú (o un dev) puede seguir editando.",
+    ejemplo:"v0 (de Vercel), Bolt, Lovable y Replit Agent crean apps y webs funcionales desde una descripción. Emprendedores sin equipo técnico prototipan productos en una tarde.",
+    paraQueSirve:"Bajan la barrera de «tener una idea» a «tener algo funcionando» casi a cero. Te permiten prototipar tú mismo, validar ideas rápido y conversar con realismo sobre qué tan difícil (o fácil) es construir algo." },
+  { termino:"Apps Instantáneas (Artifacts, Canvas)",
+    queEs:"Son mini-apps o piezas interactivas que un chatbot genera y ejecuta al instante dentro de la misma conversación: una calculadora, un juego, un visualizador, un documento vivo. No hay que instalar ni publicar nada.",
+    comoFunciona:"Le pides al modelo algo concreto («una calculadora de propinas», «un gráfico con estos datos») y lo construye y lo muestra funcionando ahí mismo, listo para usar y modificar pidiéndole cambios. Es la creación más inmediata posible: idea → herramienta usable en segundos.",
+    ejemplo:"Claude Artifacts y ChatGPT Canvas generan apps, visualizaciones y documentos interactivos dentro del chat. (Esta misma academia es, en el fondo, ese tipo de artefacto: una app de un solo archivo creada conversando.)",
+    paraQueSirve:"Demuestran lo lejos que llegó la creación con IA: cualquiera puede tener una herramienta a medida sin saber programar ni montar nada. Útil para resolver necesidades puntuales al toque, sin proyectos ni despliegues." },
+  { termino:"No-Code / Low-Code (Bubble, Webflow)",
+    queEs:"Son plataformas para crear apps y webs de forma visual —arrastrando bloques— sin escribir código (no-code) o con muy poco (low-code). La IA ahora potencia muchas de ellas.",
+    comoFunciona:"En vez de programar, diseñas en una interfaz visual: pones botones, formularios y lógica conectando piezas. La plataforma genera la app real por detrás y la aloja. Cada vez más incorporan IA para generar el diseño o la lógica desde una descripción.",
+    ejemplo:"Webflow y Framer para sitios web profesionales; Bubble para apps con base de datos y usuarios; Airtable para herramientas internas. Negocios completos funcionan sobre no-code, sin un solo programador.",
+    paraQueSirve:"Permiten que personas no técnicas creen productos reales y los lancen. Entender el no-code te da una vía concreta para construir sin programar, y criterio para saber cuándo alcanza y cuándo conviene código a medida." },
+  { termino:"Meter IA en tu App (APIs de modelos)",
+    queEs:"Es conectar tu propia app o web a un modelo de IA a través de su API, para darle funciones inteligentes: un chat, resúmenes, búsqueda semántica, generación de texto o imágenes.",
+    comoFunciona:"Casi nadie entrena su propio modelo: te conectas por API al de Anthropic, OpenAI, Google u otro, le mandas el texto del usuario y recibes la respuesta para mostrarla en tu app. Tú pones la interfaz y la lógica; el modelo pone la inteligencia. Se paga por uso (por token) y la clave va en variables de entorno.",
+    ejemplo:"Un chat de soporte en una tienda, un resumidor de reseñas o un buscador que «entiende» lo que pides: por dentro, casi todos llaman a la API de un modelo. Frameworks como LangChain ayudan a orquestar esas llamadas.",
+    paraQueSirve:"Es cómo la IA llega «dentro» de miles de productos sin que cada uno invente un modelo. Te muestra el camino realista para sumarle IA a una idea propia, y por qué importan los costos por token y la seguridad de las claves." },
+  { termino:"De la Idea al Producto con IA",
+    queEs:"Es juntar todo lo anterior en un solo flujo: usar IA para idear, generar, programar, conectar servicios y publicar, con el humano dirigiendo en cada paso. Hoy una persona sola puede recorrer ese camino completo.",
+    comoFunciona:"Defines la idea y la diriges; un generador o asistente crea la primera versión; le conectas un backend listo (BaaS) y un modelo por API si necesitas IA; versionas en GitHub y publicas en una plataforma de hosting. La IA acelera cada etapa, pero tú tomas las decisiones de gusto, criterio y prioridad.",
+    ejemplo:"De «quiero una app para mi negocio» a algo publicado en internet en días, no meses: idea → generar con v0 o Claude → ajustar → conectar Supabase → deploy en Vercel. (Estas academias son un ejemplo en miniatura de ese flujo.)",
+    paraQueSirve:"Es la foto completa de crear hoy: la IA no solo «ayuda a programar», cambia quién puede construir y a qué velocidad. Entender el flujo entero te empodera para llevar una idea a la realidad dirigiendo a la IA, en vez de depender de un equipo grande." }
 ]}
 ]};
 
@@ -840,6 +876,7 @@ const MEDALS = [
   { id:"versionador",emoji:"🗂️",nombre:"Guardián de Versiones",desc:"Módulo «Versionar y Colaborar»",   cond:s=>s.modsDone.includes("versionar") },
   { id:"plataf",  emoji:"☁️", nombre:"Cazador de Plataformas",desc:"Módulo «Plataformas y Hosting»",   cond:s=>s.modsDone.includes("plataformas-hosting") },
   { id:"lanzador",emoji:"🚀", nombre:"Lanzador a Producción", desc:"Módulo «Desplegar y Operar»",      cond:s=>s.modsDone.includes("desplegar") },
+  { id:"creador", emoji:"🤖", nombre:"Creador con IA",        desc:"Módulo «Construir Apps con IA»",    cond:s=>s.modsDone.includes("construir-ia") },
   { id:"maestria",emoji:"👑", nombre:"Maestría total",       desc:"100% de la academia",              cond:s=>s.learned>=s.total }
 ];
 
@@ -926,7 +963,13 @@ const FUENTES = {
   "Deploy / Despliegue":{ url:"https://vercel.com/docs/deployments/overview", n:"Despliegues en Vercel (Docs)" },
   "Dominios y DNS":{ url:"https://www.cloudflare.com/learning/dns/what-is-dns/", n:"Qué es el DNS (Cloudflare)" },
   "CI/CD":{ url:"https://docs.github.com/en/actions/about-github-actions/understanding-github-actions", n:"CI/CD con GitHub Actions (Docs)" },
-  "Monitoreo, Logs y Rollback":{ url:"https://opentelemetry.io/docs/what-is-opentelemetry/", n:"Qué es la observabilidad (OpenTelemetry)" }
+  "Monitoreo, Logs y Rollback":{ url:"https://opentelemetry.io/docs/what-is-opentelemetry/", n:"Qué es la observabilidad (OpenTelemetry)" },
+  "Asistentes de Código (Copilot, Cursor, Claude Code)":{ url:"https://github.com/features/copilot", n:"GitHub Copilot" },
+  "Generadores de Apps · Vibe Coding":{ url:"https://v0.dev", n:"v0 (Vercel)" },
+  "Apps Instantáneas (Artifacts, Canvas)":{ url:"https://www.anthropic.com/news/artifacts", n:"Artifacts (Anthropic)" },
+  "No-Code / Low-Code (Bubble, Webflow)":{ url:"https://webflow.com", n:"Webflow (no-code)" },
+  "Meter IA en tu App (APIs de modelos)":{ url:"https://docs.anthropic.com", n:"Documentación de la API (Anthropic)" },
+  "De la Idea al Producto con IA":{ url:"https://www.ycombinator.com/library", n:"YC Startup Library" }
 };
 
 /* ============================================================
@@ -981,6 +1024,14 @@ const RECURSOS = [
     { n:"Supabase", url:"https://supabase.com", d:"Backend como servicio open source: base de datos + login + APIs." },
     { n:"Firebase (Google)", url:"https://firebase.google.com", d:"Backend como servicio de Google para apps web y móviles." },
     { n:"AWS · Free Tier", url:"https://aws.amazon.com/free/", d:"La nube más grande; capa gratuita para empezar a explorar." }
+  ]},
+  { titulo:"Crear apps con IA", icono:"🤖", items:[
+    { n:"Claude Code (Anthropic)", url:"https://www.anthropic.com/claude-code", d:"Agente de programación en la terminal (con el que se hicieron estas apps)." },
+    { n:"GitHub Copilot", url:"https://github.com/features/copilot", d:"Asistente de código dentro del editor." },
+    { n:"Cursor", url:"https://cursor.com", d:"Editor de código centrado en IA." },
+    { n:"v0 (Vercel)", url:"https://v0.dev", d:"Genera webs y apps desde una descripción («vibe coding»)." },
+    { n:"Bolt", url:"https://bolt.new", d:"Construir y desplegar apps completas conversando." },
+    { n:"Bubble", url:"https://bubble.io", d:"Crear apps con base de datos sin escribir código." }
   ]}
 ];
 
@@ -1060,7 +1111,13 @@ const EN_TERM = {
   "Deploy / Despliegue":"Deploy / Deployment",
   "Dominios y DNS":"Domains & DNS",
   "CI/CD":"Continuous Integration / Delivery",
-  "Monitoreo, Logs y Rollback":"Monitoring, Logs & Rollback"
+  "Monitoreo, Logs y Rollback":"Monitoring, Logs & Rollback",
+  "Asistentes de Código (Copilot, Cursor, Claude Code)":"Coding Assistants",
+  "Generadores de Apps · Vibe Coding":"App Generators (Vibe Coding)",
+  "Apps Instantáneas (Artifacts, Canvas)":"Instant Apps (Artifacts)",
+  "No-Code / Low-Code (Bubble, Webflow)":"No-Code / Low-Code",
+  "Meter IA en tu App (APIs de modelos)":"Model APIs (AI in Your App)",
+  "De la Idea al Producto con IA":"From Idea to Product with AI"
 };
 
 /* ============================================================
