@@ -177,6 +177,10 @@ button:active{transform:scale(.98)}
 .gitem .def{font-size:.83rem;color:var(--muted);margin-top:5px;line-height:1.5}
 .gitem .more{display:none;margin-top:8px}
 .gitem.open .more{display:block;animation:fadeUp .25s ease}
+.glearn{display:inline-block;margin-top:10px;padding:7px 13px;border-radius:10px;font-weight:700;font-size:.78rem;border:2px solid var(--good);color:var(--good);background:transparent;cursor:pointer;transition:all .2s}
+.glearn.on{background:var(--good);color:#fff}
+.glearn:hover{filter:brightness(1.06)}
+.glearn:active{transform:scale(.96)}
 
 /* ---------- evaluación ---------- */
 .qhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
@@ -1501,6 +1505,7 @@ function glossList(){
   return items.map(x=>`<button class="gitem" data-a="gi" style="--cc:${x.m.colorAcento}">
     <div class="row"><h4>${esc(tEs(x.c.termino))}</h4>${engChip(x.c)}<span class="gtag">${x.m.icono} ${esc(x.m.titulo)}</span>${learned.has(x.k)?"✅":""}</div>
     <div class="def">${esc(x.c.queEs)}</div>
+    <span class="glearn ${learned.has(x.k)?"on":""}" data-a="gloss-learn" data-k="${x.k}" role="button" tabindex="0">${learned.has(x.k)?"✅ Entendido":"✓ Marcar entendido"}</span>
     <div class="more">
       <div class="block"><b>⚙️ ¿Cómo funciona?</b><p>${esc(x.c.comoFunciona)}</p></div>
       <div class="block"><b>🌍 Ejemplo</b><p>${esc(x.c.ejemplo)}</p></div>
@@ -1730,6 +1735,12 @@ document.addEventListener("click",e=>{
 
   if(act==="speak"){ e.stopPropagation(); speak(el.dataset.t); return; }
   if(act==="gi"){ el.classList.toggle("open"); tick(); }
+  if(act==="gloss-learn"){
+    e.stopPropagation();
+    const k=el.dataset.k;
+    if(learned.has(k)){ learned.delete(k); tick(); } else { learned.add(k); ding(); }
+    save(); checkAll(); render();
+  }
   if(act==="gmod"){ state.gmod=el.dataset.id; tick(); render(); }
 
   if(act==="wgroup"){ state.wg=el.dataset.id; tick(); render(); }
