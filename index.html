@@ -87,13 +87,15 @@ button:active{transform:scale(.98)}
 .motiv.out{opacity:0}
 
 /* ---------- pestañas de navegación ---------- */
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:12px 0 18px}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin:12px 0 18px}
 .tabs button{
-  padding:10px 3px;border-radius:13px;background:var(--card);border:1px solid var(--line);
-  font-size:.7rem;font-weight:600;color:var(--muted);box-shadow:var(--shadow2);transition:all .2s;
+  padding:9px 2px;border-radius:12px;background:var(--card);border:1px solid var(--line);
+  font-size:.6rem;font-weight:600;color:var(--muted);box-shadow:var(--shadow2);transition:all .2s;
   display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.1;
+  text-align:center;overflow-wrap:break-word;word-break:break-word;
 }
-.tabs button .ti{font-size:16px}
+.tabs button .ti{font-size:15px}
+@media(max-width:430px){.tabs{gap:4px}.tabs button{font-size:.54rem;padding:8px 1px}}
 .tabs button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(59,130,246,.32)}
 
 .view{animation:fadeUp .35s ease}
@@ -278,6 +280,27 @@ button:active{transform:scale(.98)}
 .reslink .rl-h{font-weight:700;font-size:.9rem;display:flex;justify-content:space-between;gap:8px;align-items:center}
 .reslink .rl-go{color:var(--muted);font-size:.9rem}
 .reslink .rl-d{font-size:.78rem;color:var(--muted);margin-top:3px;line-height:1.45}
+
+/* ---------- 💻 banco de palabras (sección Código) ---------- */
+.wlead{font-size:.88rem;line-height:1.55;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:10px;box-shadow:var(--shadow2)}
+.wlead b{color:var(--ink)}
+.wprog{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 15px;margin-bottom:12px;box-shadow:var(--shadow2)}
+.wprog-lab{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;margin-bottom:6px}
+.wprog-lab span:last-child{color:var(--muted)}
+.wcard{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow2);transition:border-color .2s}
+.wcard.done{border-color:color-mix(in srgb,var(--good) 50%,var(--line))}
+.wtop{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.wen{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;font-size:1rem;color:var(--ink)}
+.wsay{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:8px;cursor:pointer;background:color-mix(in srgb,var(--blue) 18%,transparent);color:var(--blue);font-size:.8rem;flex:none;transition:filter .15s,transform .15s}
+.wsay:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.wsay:active{transform:scale(.9)}
+.wpron{font-size:.8rem;color:var(--muted);font-style:italic}
+.wtag{font-size:.6rem;font-weight:700;padding:3px 9px;border-radius:99px;color:#fff;margin-left:auto;white-space:nowrap}
+.wes{font-size:.88rem;margin-top:9px}
+.wes b{color:var(--blue)}
+.wdef{font-size:.86rem;color:var(--muted);line-height:1.6;margin-top:6px}
+.wlearn{width:100%;margin-top:11px;padding:10px;border-radius:11px;font-weight:700;font-size:.84rem;border:2px solid var(--blue);color:var(--blue);background:transparent;transition:all .2s}
+.wlearn.on{background:var(--good);border-color:var(--good);color:#fff}
 </style>
 </head>
 <body class="dark">
@@ -317,6 +340,7 @@ button:active{transform:scale(.98)}
     <button data-a="nav" data-v="home"><span class="ti">🏠</span>Consola</button>
     <button data-a="nav" data-v="practice"><span class="ti">🔬</span>Práctica</button>
     <button data-a="nav" data-v="gloss"><span class="ti">📚</span>Glosario</button>
+    <button data-a="nav" data-v="words"><span class="ti">⌨️</span>Tecnolecto</button>
     <button data-a="nav" data-v="quiz"><span class="ti">🧠</span>Desafío</button>
     <button data-a="nav" data-v="progress"><span class="ti">📊</span>Progreso</button>
   </nav>
@@ -1132,16 +1156,135 @@ const TOTAL = MODS.reduce((n,c)=>n+c.conceptos.length,0);
 const QUIZTOTAL = TOTAL;
 const key = (mod,i)=>mod.id+"-"+i;
 
+/* ============================================================
+   💻 CÓDIGO — banco de 100 palabras (inglés técnico) con audio.
+   Grupos: ia · prog · deploy. Cada una: { g, en, pron, es, que }
+   Explicaciones más extensas (nivel intermedio). Independiente de DATA.
+   ============================================================ */
+const WGROUPS = [
+  { id:"ia",     label:"🤖 IA",        color:"#3b82f6" },
+  { id:"prog",   label:"⌨️ Programar",  color:"#8b5cf6" },
+  { id:"deploy", label:"🚀 Subir",      color:"#f43f5e" }
+];
+const WORDS = [
+  // 🤖 IA (30)
+  { g:"ia", en:"prompt", pron:"promt", es:"la instrucción / el pedido", que:"El texto de entrada que define la tarea del modelo. En sistemas reales no es una frase suelta: combina instrucciones, contexto, ejemplos y formato de salida. Diseñarlo bien (prompt engineering) es la palanca más barata para mejorar resultados sin tocar el modelo." },
+  { g:"ia", en:"token", pron:"TÓU-ken", es:"unidad de texto", que:"La pieza mínima en que el tokenizador parte el texto antes de procesarlo; ni letra ni palabra exacta. Todo el costo y el límite de contexto se miden en tokens, y el output suele cobrarse más caro que el input. Pensar en tokens es pensar en presupuesto." },
+  { g:"ia", en:"tokenizer", pron:"TÓU-ke-nái-ser", es:"segmentador de texto", que:"El componente que convierte tu texto en tokens (números) antes de que el modelo lo vea, y reconstruye texto a la salida. Cada familia de modelos usa el suyo, por eso el mismo texto puede costar distinto según el modelo." },
+  { g:"ia", en:"model", pron:"MÁ-del", es:"modelo", que:"La red entrenada con sus pesos congelados; el artefacto que hace inferencia. «GPT» o «Claude» son modelos; la app es la envoltura. Vienen en tallas (8B, 70B, 400B) que equilibran capacidad, velocidad y costo." },
+  { g:"ia", en:"data", pron:"DÉI-ta", es:"datos", que:"La materia prima del entrenamiento y de todo sistema de IA. Su calidad, volumen y sesgos fijan el techo del modelo: «garbage in, garbage out». En inglés se pronuncia «DÉI-ta»." },
+  { g:"ia", en:"dataset", pron:"DÉI-ta-set", es:"conjunto de datos", que:"La colección curada de ejemplos para entrenar, validar o evaluar. Se divide en train/validation/test para medir si el modelo generaliza en vez de memorizar. La calidad pesa más que el tamaño." },
+  { g:"ia", en:"training", pron:"TRÉI-ning", es:"entrenamiento", que:"La fase donde el modelo ajusta sus parámetros minimizando el error sobre el dataset, vía descenso de gradiente. Es cara (meses de GPU) y se hace una vez; el conocimiento queda fijo hasta su fecha de corte." },
+  { g:"ia", en:"inference", pron:"ÍN-fe-rens", es:"inferencia", que:"El uso del modelo ya entrenado: cada respuesta que genera, con los pesos congelados. Es barata por llamada, pero a escala (millones de usuarios) domina el costo operativo de un producto de IA." },
+  { g:"ia", en:"machine learning", pron:"ma-SHÍN LÉR-ning", es:"aprendizaje automático", que:"El paradigma de aprender patrones a partir de datos en vez de reglas escritas a mano. Engloba desde regresiones simples hasta redes profundas; toda la IA moderna es ML." },
+  { g:"ia", en:"deep learning", pron:"díp LÉR-ning", es:"aprendizaje profundo", que:"ML con redes neuronales de muchas capas, donde cada una aprende representaciones más abstractas que la anterior. Es lo que destrabó visión, voz y lenguaje desde 2012." },
+  { g:"ia", en:"neural network", pron:"NIÚ-ral NÉT-uork", es:"red neuronal", que:"Capas de unidades que multiplican entradas por pesos, suman y aplican una función no lineal. Apilando capas y ajustando pesos aprende funciones muy complejas. La unidad básica del deep learning." },
+  { g:"ia", en:"transformer", pron:"trans-FÓR-mer", es:"arquitectura transformador", que:"La arquitectura (2017, «Attention is All You Need») detrás de casi todos los LLM. Procesa la secuencia en paralelo y pesa qué partes importan vía atención, en vez de leer palabra por palabra. Su escalabilidad abrió la era actual." },
+  { g:"ia", en:"attention", pron:"a-TÉN-shon", es:"atención", que:"El mecanismo que, para cada token, calcula cuánto «mirar» a los demás del contexto. Captura relaciones a larga distancia (un sujeto con su verbo 50 palabras después). Es el corazón del transformer." },
+  { g:"ia", en:"embedding", pron:"em-BÉ-ding", es:"vector de significado", que:"Representación de texto como vector numérico donde la cercanía mide similitud semántica. Base de la búsqueda semántica, los recomendadores y RAG: comparar significados, no letras." },
+  { g:"ia", en:"vector database", pron:"VÉK-tor DÉI-ta-beis", es:"base de datos vectorial", que:"Almacén optimizado para guardar embeddings y hallar los más cercanos a una consulta (vecinos más próximos) en milisegundos. Es la memoria de los sistemas RAG. Ejemplos: Pinecone, Weaviate, pgvector." },
+  { g:"ia", en:"fine-tuning", pron:"fáin-TIÚ-ning", es:"ajuste fino", que:"Reentrenar un modelo base con un dataset específico para especializarlo en un dominio, estilo o tarea. Más barato que entrenar desde cero; alternativa o complemento de un buen prompt y RAG." },
+  { g:"ia", en:"RLHF", pron:"ar-el-éich-ef", es:"refuerzo con feedback humano", que:"Humanos comparan respuestas y con eso se entrena un modelo de recompensa que afina al LLM para ser útil, honesto e inofensivo. Gran parte de por qué un chatbot suena amable y rechaza ciertas cosas." },
+  { g:"ia", en:"alignment", pron:"a-LÁIN-ment", es:"alineación", que:"El problema de lograr que el modelo persiga lo que de verdad queremos, no una versión literal o distorsionada. Abarca seguridad, honestidad y control. Cuanto más capaz el modelo, más crítico el tema." },
+  { g:"ia", en:"hallucination", pron:"ja-lu-si-NÉI-shon", es:"alucinación", que:"Cuando el modelo genera información plausible pero falsa con total confianza: citas, cifras o APIs inexistentes. Surge porque predice texto probable, no verdad verificada. RAG y verificación reducen el riesgo, no lo eliminan." },
+  { g:"ia", en:"context window", pron:"CÓN-text UÍN-dou", es:"ventana de contexto", que:"El máximo de tokens (entrada + salida) que el modelo considera a la vez. Lo que excede se descarta o resume, por eso «olvida» lo viejo en chats largos. Ventanas grandes cuestan más por llamada." },
+  { g:"ia", en:"temperature", pron:"TÉM-pra-cher", es:"temperatura", que:"Parámetro que regula la aleatoriedad al elegir el siguiente token. Cerca de 0 = determinista y repetible (datos, código); alta = creativa y diversa (ideas), con más riesgo de incoherencia." },
+  { g:"ia", en:"top-p", pron:"top-PÍ", es:"muestreo por núcleo", que:"Complemento de la temperatura: limita los candidatos al conjunto más pequeño cuya probabilidad acumulada llega a P (ej. 0,9), descartando la cola improbable. Controla diversidad sin abrir la puerta a tokens absurdos." },
+  { g:"ia", en:"parameters", pron:"pa-RÁ-me-ters", es:"parámetros (pesos)", que:"Los valores ajustables aprendidos en el entrenamiento; donde «vive» el conocimiento. «70B» = 70 mil millones. Más parámetros suele dar más capacidad, pero también más costo y latencia; no siempre más es mejor." },
+  { g:"ia", en:"weights", pron:"uéits", es:"pesos", que:"Los números concretos que ponderan las conexiones de la red; en la práctica, sinónimo operativo de parámetros. «Open weights» significa liberar el modelo entrenado para que otros lo ejecuten." },
+  { g:"ia", en:"quantization", pron:"cuan-ti-SÉI-shon", es:"cuantización", que:"Reducir la precisión numérica de los pesos (de 16 a 8 o 4 bits) para que el modelo ocupe menos memoria y corra más rápido, con pérdida mínima de calidad. Es lo que permite correr modelos grandes en hardware modesto." },
+  { g:"ia", en:"distillation", pron:"dis-ti-LÉI-shon", es:"destilación", que:"Entrenar un modelo pequeño («estudiante») para imitar a uno grande («maestro»), conservando buena parte de su capacidad a una fracción del costo. Detrás de muchas versiones «mini» rápidas y baratas." },
+  { g:"ia", en:"RAG", pron:"rag", es:"generación aumentada por recuperación", que:"Patrón que, antes de responder, busca fragmentos relevantes en una base externa (vía embeddings) y se los pasa al modelo como contexto. Da respuestas actualizadas y citables sin reentrenar, y baja las alucinaciones." },
+  { g:"ia", en:"agent", pron:"ÉI-yent", es:"agente", que:"Sistema que usa un LLM como cerebro para planificar y ejecutar tareas en varios pasos, llamando herramientas (buscar, código, APIs) y reaccionando a los resultados. Pasa de «conversar» a «hacer»." },
+  { g:"ia", en:"system prompt", pron:"SÍS-tem promt", es:"instrucción de sistema", que:"Las instrucciones de alto nivel, fijas y ocultas al usuario, que definen rol, tono, reglas y límites del asistente. Tienen prioridad sobre lo que pide el usuario y moldean todo el comportamiento." },
+  { g:"ia", en:"multimodal", pron:"mol-ti-MÓU-dal", es:"multimodal", que:"Modelo que entiende y/o genera varios tipos de dato —texto, imagen, audio, video— en un mismo espacio. Permite «leer» una foto, describir un gráfico o conversar por voz." },
+  // ⌨️ Programar / web (40)
+  { g:"prog", en:"code", pron:"cóud", es:"código", que:"Las instrucciones, escritas en un lenguaje de programación, que la máquina ejecuta. Texto plano que el navegador o el runtime interpretan." },
+  { g:"prog", en:"bug", pron:"bog", es:"error / defecto", que:"Comportamiento no deseado del programa. El término viene de una polilla real en un relé en 1947. Reproducirlo de forma fiable es medio camino para arreglarlo." },
+  { g:"prog", en:"debug", pron:"di-BÓG", es:"depurar", que:"Aislar la causa de un bug y corregirla: reproducir, inspeccionar estado, formular hipótesis y verificar. Herramientas clave: logs, breakpoints y el debugger del navegador." },
+  { g:"prog", en:"function", pron:"FÓNK-shon", es:"función", que:"Bloque de código reutilizable que recibe entradas (parámetros), hace algo y normalmente devuelve un resultado. Unidad básica para organizar y no repetir lógica (principio DRY)." },
+  { g:"prog", en:"variable", pron:"VÉ-ria-bol", es:"variable", que:"Nombre que apunta a un valor en memoria. En JS se declara con let/const/var; const evita reasignarla. Su «alcance» (scope) define dónde es visible." },
+  { g:"prog", en:"array", pron:"a-RÉI", es:"arreglo / lista", que:"Colección ordenada e indexada desde 0. Métodos como map, filter y reduce la transforman sin bucles explícitos, base del estilo declarativo en JS." },
+  { g:"prog", en:"object", pron:"ÓB-yect", es:"objeto", que:"Estructura de pares clave-valor para modelar entidades. En JS es el ladrillo central del lenguaje, y su serialización a texto es JSON." },
+  { g:"prog", en:"string", pron:"string", es:"cadena de texto", que:"Secuencia de caracteres. Soporta interpolación (template literals con backticks) y debe escaparse al insertarla en HTML para evitar inyección (XSS)." },
+  { g:"prog", en:"boolean", pron:"BÚ-li-an", es:"booleano (sí/no)", que:"Tipo con solo dos valores: true o false. Gobierna condicionales y banderas. Ojo con los valores «falsy» de JS (0, '', null, undefined, NaN)." },
+  { g:"prog", en:"loop", pron:"lup", es:"bucle / iteración", que:"Repetir un bloque mientras se cumpla una condición (for, while) o recorriendo una colección (for...of, forEach). Cuidado con los bucles infinitos." },
+  { g:"prog", en:"if / else", pron:"if / els", es:"condicional", que:"Bifurca el flujo según una condición booleana. Encadenado (else if) o en su forma corta (operador ternario a ? b : c) decide qué rama ejecuta el programa." },
+  { g:"prog", en:"return", pron:"ri-TÉRN", es:"devolver", que:"Entrega un valor desde una función y termina su ejecución. Sin return explícito, en JS la función devuelve undefined." },
+  { g:"prog", en:"render", pron:"RÉN-der", es:"pintar en pantalla", que:"Transformar datos/estado en lo que se ve en el DOM. En estas PWA, una función arma el HTML y lo inyecta; en frameworks, el render se dispara al cambiar el estado. Re-renderizar de más es causa típica de lentitud." },
+  { g:"prog", en:"console", pron:"con-SÓUL", es:"consola", que:"La interfaz de texto (DevTools en el navegador, terminal en el sistema) donde se ven logs y errores y se ejecutan comandos. Primera parada para diagnosticar." },
+  { g:"prog", en:"log", pron:"log", es:"registro", que:"Emitir mensajes para observar la ejecución (console.log, o logs de servidor). En producción, logs estructurados y niveles (info/warn/error) son la base del monitoreo." },
+  { g:"prog", en:"cache", pron:"cash", es:"caché (memoria temporal)", que:"Copia guardada de datos costosos de obtener para servirlos más rápido la próxima vez. Vive en el navegador, en CDNs y en el service worker. Su lado oscuro: ver contenido viejo hasta invalidarla. Se pronuncia «cash»." },
+  { g:"prog", en:"import", pron:"im-PÓRT", es:"importar", que:"Traer funciones, objetos o componentes de otro módulo o paquete (import ... from ...). Hace explícitas las dependencias entre archivos." },
+  { g:"prog", en:"module", pron:"MÓ-diul", es:"módulo", que:"Archivo que encapsula código y expone solo lo que exporta. Los ES modules (import/export) organizan un proyecto en piezas reutilizables y con scope propio." },
+  { g:"prog", en:"library", pron:"LÁI-bre-ri", es:"biblioteca", que:"Conjunto de código reutilizable que tú llamas cuando lo necesitas (React, lodash). Tú controlas el flujo y la invocas; sirve para no reinventar la rueda." },
+  { g:"prog", en:"framework", pron:"FRÉIM-uork", es:"marco de trabajo", que:"Estructura que define la arquitectura de tu app y llama a tu código (inversión de control). Más opinado que una librería: tú llenas los huecos que él define (Next.js, Angular)." },
+  { g:"prog", en:"dependency", pron:"di-PÉN-den-si", es:"dependencia", que:"Paquete externo del que tu proyecto depende. Se listan en package.json; demasiadas o desactualizadas son deuda técnica y riesgo de seguridad." },
+  { g:"prog", en:"package", pron:"PÁ-kech", es:"paquete", que:"Unidad de código distribuible y versionada (con su package.json). El registro npm aloja millones; instalar uno arrastra también sus propias dependencias." },
+  { g:"prog", en:"npm", pron:"en-pi-em", es:"gestor de paquetes de Node", que:"La herramienta y el registro estándar para instalar, versionar y publicar paquetes JavaScript. «npm install» descarga las dependencias a node_modules." },
+  { g:"prog", en:"node", pron:"nóud", es:"Node.js (JS fuera del navegador)", que:"Runtime que ejecuta JavaScript en el servidor o tu máquina, fuera del navegador. Hace posible el tooling moderno: bundlers, servidores, scripts de build." },
+  { g:"prog", en:"API", pron:"éi-pi-ái", es:"interfaz de programación", que:"Contrato por el que dos programas se comunican: qué pedir, cómo y qué responde. Una API web expone endpoints; tu app consume la API del modelo de IA enviando requests." },
+  { g:"prog", en:"endpoint", pron:"ÉND-point", es:"punto de acceso (URL de API)", que:"Una URL específica de una API que representa una operación o recurso (ej. /v1/messages). Cada uno acepta ciertos métodos y parámetros." },
+  { g:"prog", en:"request", pron:"ri-CUÉST", es:"petición", que:"El mensaje que el cliente envía al servidor: método (GET/POST), cabeceras y a veces un cuerpo (JSON). Inicia el ciclo petición-respuesta de la web." },
+  { g:"prog", en:"response", pron:"ris-PÓNS", es:"respuesta", que:"Lo que el servidor devuelve: un código de estado, cabeceras y normalmente un cuerpo (HTML o JSON). Tu código la procesa para mostrar resultados o manejar errores." },
+  { g:"prog", en:"status code", pron:"STÉI-tus cóud", es:"código de estado HTTP", que:"Número que resume el resultado de una petición: 2xx éxito, 3xx redirección, 4xx error del cliente (404, 401), 5xx error del servidor. Diagnóstico de un vistazo." },
+  { g:"prog", en:"HTTP", pron:"éich-ti-ti-pi", es:"protocolo de la web", que:"Las reglas con que clientes y servidores intercambian mensajes en la web. HTTPS es su versión cifrada (TLS), hoy obligatoria para PWA y para proteger los datos." },
+  { g:"prog", en:"JSON", pron:"YÉI-son", es:"formato de datos", que:"Formato de texto ligero (clave-valor) para intercambiar datos entre sistemas, derivado de los objetos JS. Es el idioma franco de las APIs." },
+  { g:"prog", en:"frontend", pron:"FRÓNT-end", es:"la capa visible", que:"Todo lo que corre en el navegador y el usuario ve y toca: HTML, CSS, JS. Responsable de la interfaz, la interacción y el rendimiento percibido." },
+  { g:"prog", en:"backend", pron:"BÁK-end", es:"la capa de servidor", que:"Lo que corre en el servidor: lógica de negocio, base de datos, autenticación, APIs. El frontend le pide datos y acciones." },
+  { g:"prog", en:"server", pron:"SÉR-ver", es:"servidor", que:"Programa (o máquina) que escucha peticiones y devuelve respuestas. Puede servir archivos estáticos o ejecutar lógica. En la nube, escala según la demanda." },
+  { g:"prog", en:"client", pron:"CLÁI-ent", es:"cliente", que:"El extremo que inicia las peticiones: el navegador, una app móvil, otro servicio. En web, «del lado del cliente» = corre en el dispositivo del usuario." },
+  { g:"prog", en:"DOM", pron:"dom", es:"árbol del documento", que:"La representación en memoria, como árbol de nodos, de la página que el navegador construye desde el HTML. JavaScript lo lee y modifica para cambiar lo que se ve sin recargar." },
+  { g:"prog", en:"event", pron:"i-VÉNT", es:"evento", que:"Señal de que algo ocurrió (click, tecla, carga, scroll). Tu código «escucha» eventos con listeners y reacciona. La delegación (un listener en un padre) es un patrón eficiente." },
+  { g:"prog", en:"async / await", pron:"éi-sink / a-UÉIT", es:"asíncrono / esperar", que:"Forma moderna de manejar operaciones que tardan (red, archivos) sin congelar la app: await pausa la función hasta que la promesa se resuelve, manteniendo el código legible como si fuera secuencial." },
+  { g:"prog", en:"promise", pron:"PRÓ-mis", es:"promesa", que:"Objeto que representa un resultado futuro de una operación asíncrona: pendiente, resuelta o rechazada. Base de async/await y de fetch; se encadena con .then() y .catch()." },
+  { g:"prog", en:"HTML · CSS · JavaScript", pron:"éich-ti-em-él · si-es-és · YÁ-va-script", es:"el trío de la web", que:"Las tres capas de toda página: HTML estructura el contenido, CSS define presentación y layout, JavaScript agrega comportamiento. Separar responsabilidades entre ellas mantiene el código mantenible." },
+  // 🚀 Subir — git + Vercel + PWA (30)
+  { g:"deploy", en:"repository", pron:"ri-PÓ-si-to-ri", es:"repositorio", que:"El proyecto versionado con todo su historial bajo Git. Local y/o remoto (GitHub). Permite ver quién cambió qué, cuándo y por qué, y volver a cualquier punto." },
+  { g:"deploy", en:"commit", pron:"co-MÍT", es:"confirmar cambios", que:"Una instantánea de los cambios con un mensaje y un identificador único (hash). Commits pequeños y bien descritos hacen el historial legible y el rollback preciso." },
+  { g:"deploy", en:"push", pron:"push", es:"subir al remoto", que:"Enviar tus commits locales al repositorio remoto (GitHub), publicándolos para el equipo y para el pipeline de despliegue." },
+  { g:"deploy", en:"pull", pron:"pul", es:"traer del remoto", que:"Descargar e integrar a tu rama local los commits nuevos del remoto (fetch + merge). Se hace antes de empezar a trabajar para no quedar desincronizado." },
+  { g:"deploy", en:"branch", pron:"branch", es:"rama", que:"Línea de trabajo paralela e independiente. Permite desarrollar una feature o un fix sin tocar la rama estable (main) hasta que esté listo." },
+  { g:"deploy", en:"merge", pron:"merch", es:"fusionar", que:"Integrar los cambios de una rama en otra. Si ambas tocaron lo mismo, Git pide resolver un conflicto a mano antes de completar la fusión." },
+  { g:"deploy", en:"merge conflict", pron:"merch CÓN-flict", es:"conflicto de fusión", que:"Cuando dos ramas modifican las mismas líneas y Git no puede decidir cuál gana. Hay que editar los marcadores (<<<<, ====, >>>>) y elegir el resultado correcto." },
+  { g:"deploy", en:"clone", pron:"clóun", es:"clonar", que:"Crear una copia local completa de un repositorio remoto, con todo su historial. Primer paso para trabajar en un proyecto existente." },
+  { g:"deploy", en:"fork", pron:"fork", es:"bifurcar", que:"Copia personal de un repositorio ajeno en tu cuenta, para experimentar o proponer cambios vía pull request sin permisos sobre el original. Base de la colaboración open source." },
+  { g:"deploy", en:"pull request", pron:"pul ri-CUÉST", es:"solicitud de cambios (PR)", que:"Propuesta de fusionar tu rama en otra, abierta a revisión y discusión antes de aceptarse. Punto de control de calidad: aquí ocurre el code review." },
+  { g:"deploy", en:"checkout", pron:"CHÉK-aut", es:"cambiar de rama/versión", que:"Moverte a otra rama o commit, actualizando tu directorio a ese estado. En Git moderno, «switch» y «restore» dividen sus usos." },
+  { g:"deploy", en:"diff", pron:"dif", es:"diferencias", que:"La comparación línea a línea entre dos versiones: qué se agregó y qué se quitó. Es lo que se revisa en un PR para entender el cambio." },
+  { g:"deploy", en:"gitignore", pron:"git-ig-NÓR", es:"archivo de exclusiones", que:"Archivo que lista lo que Git debe ignorar: node_modules, claves, temporales. Evita subir basura o secretos al repositorio." },
+  { g:"deploy", en:"remote / origin", pron:"ri-MÓUT / Ó-ri-yin", es:"repositorio remoto", que:"El repo alojado fuera de tu máquina (en GitHub); «origin» es el nombre por defecto del remoto desde el que clonaste. Hacia él haces push y pull." },
+  { g:"deploy", en:"tag", pron:"tag", es:"etiqueta de versión", que:"Marca un commit concreto, típicamente para señalar una versión (v1.2.0). Sirve de ancla estable para releases y rollbacks." },
+  { g:"deploy", en:"deploy", pron:"di-PLÓI", es:"desplegar / publicar", que:"Llevar el código a un entorno donde corre de verdad (producción). En Vercel o Netlify suele dispararse solo con cada push, tras pasar el build." },
+  { g:"deploy", en:"build", pron:"bild", es:"compilar / empaquetar", que:"Paso que transforma el código fuente en los archivos optimizados que se sirven (minificados, agrupados). Estas PWA de un solo archivo no lo requieren; un proyecto con framework, sí." },
+  { g:"deploy", en:"hosting", pron:"JÓUS-ting", es:"alojamiento", que:"El servicio que sirve tu sitio a internet. Para estáticos y PWA, plataformas como Vercel o Netlify lo hacen con CDN, HTTPS y despliegue automático desde Git." },
+  { g:"deploy", en:"domain", pron:"do-MÉIN", es:"dominio", que:"El nombre legible que el DNS traduce a la dirección real del servidor (miapp.com). Se apunta al hosting vía registros DNS; el SSL lo hace servible por HTTPS." },
+  { g:"deploy", en:"environment", pron:"en-VÁIR-on-ment", es:"entorno", que:"El contexto donde corre la app: development (local), staging (ensayo) y production (real). Cada uno con su configuración para no mezclar pruebas con datos reales." },
+  { g:"deploy", en:"env variable", pron:"env VÉ-ria-bol", es:"variable de entorno", que:"Valor de configuración inyectado desde fuera del código (claves de API, URLs), distinto por entorno. Mantiene los secretos fuera del repositorio." },
+  { g:"deploy", en:"production", pron:"pro-DÓK-shon", es:"producción (en vivo)", que:"El entorno real que usan las personas. Aquí los errores se ven y cuestan; por eso se prueba antes en staging y se monitorea después del deploy." },
+  { g:"deploy", en:"staging", pron:"STÉI-ying", es:"preproducción / ensayo", que:"Entorno casi idéntico a producción donde se prueban los cambios con datos realistas antes de publicarlos. En Vercel, las «preview deployments» por PR cumplen ese rol." },
+  { g:"deploy", en:"rollback", pron:"RÓUL-bak", es:"revertir despliegue", que:"Volver a una versión anterior estable cuando un deploy rompe algo. En plataformas modernas es casi instantáneo (re-apuntar al build previo): el botón de pánico." },
+  { g:"deploy", en:"localhost", pron:"LÓU-cal-jost", es:"tu máquina local", que:"El servidor corriendo en tu propio computador (típicamente 127.0.0.1, en un puerto como :3000). Tu entorno de desarrollo, visible solo para ti." },
+  { g:"deploy", en:"CI/CD", pron:"si-ái / si-di", es:"integración y entrega continuas", que:"Automatización que, ante cada push, corre pruebas y build (CI) y despliega si todo pasa (CD). Reduce errores manuales y acelera la entrega. GitHub Actions y Vercel lo proveen." },
+  { g:"deploy", en:"CDN", pron:"si-di-en", es:"red de distribución de contenido", que:"Red de servidores repartidos por el mundo que sirven tus archivos desde el nodo más cercano al usuario, bajando la latencia. Vercel y Netlify publican tu sitio en su CDN automáticamente." },
+  { g:"deploy", en:"HTTPS / SSL", pron:"éich-ti-ti-pi-es / es-es-el", es:"conexión cifrada", que:"HTTPS es HTTP sobre TLS/SSL: cifra el tráfico entre navegador y servidor y verifica la identidad del sitio. Obligatorio para PWA, service workers y para proteger datos." },
+  { g:"deploy", en:"PWA", pron:"pi-dóbliu-éi", es:"aplicación web progresiva", que:"Web que, con manifest y service worker, se instala como app, funciona offline y se siente nativa. Estas tres academias son PWA: sin tienda, sin build, multiplataforma." },
+  { g:"deploy", en:"service worker", pron:"SÉR-vis UÓR-ker", es:"trabajador de servicio", que:"Script que corre en segundo plano entre la app y la red, interceptando peticiones para cachear y servir offline. Es lo que hace que una PWA abra sin internet; su versión de caché se sube al cambiar assets." }
+];
+const WTOTAL = WORDS.length;
+const wkey = w => w.en;   // clave de progreso = término inglés (único)
+
 const loadSet = k=>new Set(JSON.parse(localStorage.getItem(k)||"[]"));
 const saveSet = (k,s)=>localStorage.setItem(k,JSON.stringify([...s]));
 let learned    = loadSet("iadLearned");
 let quizOK     = loadSet("iadQuiz");
 let milestones = loadSet("iadMilestones");
 let medals     = loadSet("iadMedals");
+let wordsLearned = loadSet("iadWords");   // 💻 palabras de la sección Código
 
-const state = { view:"home", mod:null, tab:"aprender", fcOrder:[], fcIdx:0, fcFlip:false, gq:"", gmod:"", quiz:null };
+const state = { view:"home", mod:null, tab:"aprender", fcOrder:[], fcIdx:0, fcFlip:false, gq:"", gmod:"", quiz:null, wq:"", wg:"" };
 
-function save(){ saveSet("iadLearned",learned); saveSet("iadQuiz",quizOK); saveSet("iadMilestones",milestones); saveSet("iadMedals",medals); }
+function save(){ saveSet("iadLearned",learned); saveSet("iadQuiz",quizOK); saveSet("iadMilestones",milestones); saveSet("iadMedals",medals); saveSet("iadWords",wordsLearned); }
 
 /* ---------- racha diaria ---------- */
 function hoy(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
@@ -1217,6 +1360,7 @@ function render(){
   if(state.view==="mod")      app.innerHTML=vMod();
   if(state.view==="practice") app.innerHTML=vPracticeHub();
   if(state.view==="gloss")    app.innerHTML=vGloss();
+  if(state.view==="words")    app.innerHTML=vWords();
   if(state.view==="quiz")     app.innerHTML=vQuiz();
   if(state.view==="progress") app.innerHTML=vProgress();
   if(state.view==="resources")app.innerHTML=vResources();
@@ -1375,6 +1519,47 @@ function vGloss(){
   </div>`;
 }
 
+/* ---------- 💻 Código: banco de palabras (inglés técnico) con audio ---------- */
+function wordCard(w){
+  const on = wordsLearned.has(wkey(w));
+  const grp = WGROUPS.find(x=>x.id===w.g) || WGROUPS[0];
+  return `<div class="wcard ${on?"done":""}">
+    <div class="wtop">
+      <span class="wen">${esc(w.en)}</span>
+      <span class="wsay" data-a="speak" data-t="${esc(w.en)}" role="button" tabindex="0" title="Escuchar en inglés">🔊</span>
+      <span class="wpron">🗣️ "${esc(w.pron)}"</span>
+      <span class="wtag" style="background:${grp.color}">${esc(grp.label)}</span>
+    </div>
+    <div class="wes">🇪🇸 <b>${esc(w.es)}</b></div>
+    <div class="wdef">${esc(w.que)}</div>
+    <button class="wlearn ${on?"on":""}" data-a="wlearn" data-k="${esc(wkey(w))}">${on?"✅ ¡La domino!":"✓ La domino"}</button>
+  </div>`;
+}
+function wordsList(){
+  const q = state.wq.trim().toLowerCase();
+  let items = WORDS.slice();
+  if(state.wg) items = items.filter(w=>w.g===state.wg);
+  if(q) items = items.filter(w=>(w.en+" "+w.es+" "+w.que).toLowerCase().includes(q));
+  if(!items.length) return `<div class="empty">Sin resultados… prueba con otro término 🔍</div>`;
+  return items.map(wordCard).join("");
+}
+function vWords(){
+  const learnedN = WORDS.filter(w=>wordsLearned.has(wkey(w))).length;
+  const pct = Math.round(learnedN/WTOTAL*100);
+  const counts = g => WORDS.filter(w=>w.g===g).length;
+  const chips = `<div class="gchips">
+    <button class="${state.wg===""?"on":""}" data-a="wgroup" data-id="">Todas (${WTOTAL})</button>
+    ${WGROUPS.map(g=>`<button class="${state.wg===g.id?"on":""}" data-a="wgroup" data-id="${g.id}">${esc(g.label)} (${counts(g.id)})</button>`).join("")}
+  </div>`;
+  return `<div class="view">
+    <div class="wlead">💻 <b>Inglés técnico</b> del trabajo real: los términos que se usan al programar por dentro y al subir el proyecto a Git y Vercel. Toca 🔊 para oír la palabra, lee su explicación y márcala cuando la domines.</div>
+    <div class="wprog"><div class="wprog-lab"><span>Palabras dominadas</span><span>${learnedN}/${WTOTAL}</span></div><div class="bar"><i style="width:${pct}%;background:${barColor(pct)}"></i></div></div>
+    <input class="search" id="wsearch" type="search" placeholder="🔍 Busca (transformer, commit, async, CDN...)" value="${esc(state.wq)}">
+    ${chips}
+    <div id="wlist">${wordsList()}</div>
+  </div>`;
+}
+
 /* ---------- evaluación de desafío ---------- */
 function newQuestion(){
   const pool=[];
@@ -1452,13 +1637,16 @@ function vProgress(){
   const pq=Math.round(quizOK.size/QUIZTOTAL*100);
   const quizBar=`<div class="brow"><div class="lab"><span>🧠 Evaluación de Desafío</span><span>${quizOK.size}/${QUIZTOTAL}</span></div>
     <div class="bar"><i style="width:${pq}%;background:${barColor(pq)}"></i></div></div>`;
+  const wl=WORDS.filter(w=>wordsLearned.has(wkey(w))).length, pw=WTOTAL?Math.round(wl/WTOTAL*100):0;
+  const wordsBar=`<div class="brow"><div class="lab"><span>💻 Código (inglés técnico)</span><span>${wl}/${WTOTAL}</span></div>
+    <div class="bar"><i style="width:${pw}%;background:${barColor(pw)}"></i></div></div>`;
   const sb={ learned:learned.size, total:TOTAL, quiz:quizOK.size, quizTotal:QUIZTOTAL, streak:streak.count, modsDone:modsDone() };
   const md=MEDALS.map(b=>{
     const on=medals.has(b.id)||b.cond(sb);
     return `<div class="medal ${on?"unlock":"lock"}"><span class="be">${b.emoji}</span><b>${esc(b.nombre)}</b><small>${esc(b.desc)}</small></div>`;
   }).join("");
   return `<div class="view">${ring}
-    <div class="pcard"><h3>📊 Avance por módulo</h3>${bars}${quizBar}</div>
+    <div class="pcard"><h3>📊 Avance por módulo</h3>${bars}${quizBar}${wordsBar}</div>
     <div class="pcard"><h3>🏅 Medallas</h3><div class="medals">${md}</div></div>
   </div>`;
 }
@@ -1544,6 +1732,20 @@ document.addEventListener("click",e=>{
   if(act==="gi"){ el.classList.toggle("open"); tick(); }
   if(act==="gmod"){ state.gmod=el.dataset.id; tick(); render(); }
 
+  if(act==="wgroup"){ state.wg=el.dataset.id; tick(); render(); }
+  if(act==="wlearn"){
+    const k=el.dataset.k;
+    if(wordsLearned.has(k)){ wordsLearned.delete(k); tick(); }
+    else {
+      wordsLearned.add(k); ding();
+      if(wordsLearned.size===WTOTAL && !milestones.has("wAll")){
+        milestones.add("wAll");
+        celebrate("¡100 palabras dominadas!","Manejas el inglés técnico de IA, programación interna y despliegue en Git y Vercel. Hablas el idioma de la industria. 💻🚀","💻",true);
+      }
+    }
+    save(); render();
+  }
+
   if(act==="opt"){
     const q=state.quiz; if(!q||q.answered) return;
     q.answered=true; q.picked=Number(el.dataset.i);
@@ -1562,6 +1764,7 @@ document.addEventListener("click",e=>{
 
 document.addEventListener("input",e=>{
   if(e.target.id==="gsearch"){ state.gq=e.target.value; $("#glist").innerHTML=glossList(); }
+  if(e.target.id==="wsearch"){ state.wq=e.target.value; $("#wlist").innerHTML=wordsList(); }
 });
 
 /* ============================================================
