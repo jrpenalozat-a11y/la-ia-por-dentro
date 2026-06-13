@@ -270,7 +270,7 @@ button:active{transform:scale(.98)}
 .reading{outline:3px solid var(--cc,var(--blue));outline-offset:4px;border-radius:12px;
   background:color-mix(in srgb,var(--cc,var(--blue)) 14%,transparent);scroll-margin:90px}
 #readbar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(110px);z-index:96;
-  display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:10px 12px;border-radius:18px;
   background:var(--ink);color:var(--bg2);box-shadow:var(--shadow);opacity:0;transition:transform .3s,opacity .3s;max-width:94vw}
 #readbar.show{transform:translateX(-50%) translateY(0);opacity:1}
 #readStatus{font-size:.82rem;font-weight:700;white-space:nowrap}
@@ -397,9 +397,11 @@ button:active{transform:scale(.98)}
 <!-- Barra de control de la lectura en voz alta (accesibilidad) -->
 <div id="readbar" hidden role="region" aria-label="Lectura en voz alta">
   <span id="readStatus">🔊 Leyendo</span>
-  <button id="readSpeed" data-a="read-speed" type="button" title="Velocidad de lectura">1×</button>
+  <button id="readPrev" data-a="read-prev" type="button" title="Bloque anterior" aria-label="Anterior">⏮️</button>
   <button id="readToggle" data-a="read-toggle" type="button">⏸️ Pausa</button>
-  <button id="readStop" data-a="read-stop" type="button">⏹️ Detener</button>
+  <button id="readNext" data-a="read-next" type="button" title="Bloque siguiente" aria-label="Siguiente">⏭️</button>
+  <button id="readSpeed" data-a="read-speed" type="button" title="Velocidad de lectura">1×</button>
+  <button id="readStop" data-a="read-stop" type="button" title="Detener" aria-label="Detener">⏹️</button>
 </div>
 
 <div id="toast"></div>
@@ -1504,16 +1506,25 @@ function cambiarVelocidadLectura(){
    elemento VIVO (para resaltarlo) y su idioma. Los términos en
    inglés van como una sola frase en inglés; el español se arregla
    (siglas) y se parte en frases (evita el corte ~15 s de la voz). */
+/* "track" = bloque de contenido al que pertenece la frase (concepto,
+   ítem del glosario o tarjeta). Sirve para que ⏮️/⏭️ salten de un
+   contenido al siguiente, no frase por frase. */
+function trackDe(el){ return el.closest(".concept,.gitem,.wcard") || el; }
 function segmentarUnidad(el){
   const texto = limpiarNodoLectura(el);
   if(!texto) return [];
-  if(el.matches(SEL_INGLES)) return [{el, text:texto, lang:"en"}];
+  const track = trackDe(el);
+  if(el.matches(SEL_INGLES)) return [{el, track, text:texto, lang:"en"}];
   return (arreglarSiglas(texto).match(/[^.!?…]+[.!?…]*/g) || [texto])
-    .map(f=>f.trim()).filter(Boolean).map(t=>({el, text:t, lang:"es"}));
+    .map(f=>f.trim()).filter(Boolean).map(t=>({el, track, text:t, lang:"es"}));
 }
 function construirColaLectura(){
   const cola = [];
-  $("#app").querySelectorAll(SEL_LECTURA).forEach(el=>{ segmentarUnidad(el).forEach(s=>cola.push(s)); });
+  $("#app").querySelectorAll(SEL_LECTURA).forEach(el=>{
+    const git = el.closest(".gitem");
+    if(git && !git.classList.contains("open")) return; // glosario: solo lo expandido
+    segmentarUnidad(el).forEach(s=>cola.push(s));
+  });
   return cola;
 }
 
@@ -1521,12 +1532,13 @@ function iniciarLectura(){
   if(!("speechSynthesis" in window)){ toast("🔇 Tu navegador no permite la voz"); return; }
   pararLectura(true);
   lector.cola = construirColaLectura();
-  if(!lector.cola.length){ toast("🔇 No hay texto para leer aquí"); return; }
+  if(!lector.cola.length){ toast(state.view==="gloss" ? "👆 Abre uno o más términos del glosario para escucharlos" : "🔇 No hay texto para leer aquí"); return; }
   lector.voz = vozEspanol();
   lector.vozEn = vozIngles();
   if(!lector.voz) toast("🗣️ Sin voz en español: instálala en tu dispositivo para una mejor lectura");
   lector.idx=0; lector.activo=true; lector.pausado=false;
   mostrarBarraLectura();
+  activarMediaSession();
   hablarSiguiente();
 }
 
@@ -1549,19 +1561,86 @@ function hablarSiguiente(){
 
 function alternarPausaLectura(){
   if(!lector.activo) return;
-  if(lector.pausado){ lector.pausado=false; window.speechSynthesis.resume(); }
-  else { lector.pausado=true; window.speechSynthesis.pause(); }
-  actualizarBarraLectura();
+  if(lector.pausado){ lector.pausado=false; window.speechSynthesis.resume(); if(audioSilencio) audioSilencio.play().catch(()=>{}); }
+  else { lector.pausado=true; window.speechSynthesis.pause(); if(audioSilencio) audioSilencio.pause(); }
+  mediaEstado(); actualizarBarraLectura();
 }
 
 function pararLectura(silencioso){
   lector.activo=false; lector.pausado=false;
   try{ window.speechSynthesis.cancel(); }catch(e){}
+  desactivarMediaSession();
   quitarResaltado();
   if(!silencioso) ocultarBarraLectura();
 }
 
-function finLectura(){ lector.activo=false; quitarResaltado(); ocultarBarraLectura(); toast("✅ Lectura terminada"); }
+function finLectura(){ lector.activo=false; desactivarMediaSession(); quitarResaltado(); ocultarBarraLectura(); toast("✅ Lectura terminada"); }
+
+/* ---------- navegación por bloques (botones ⏮️/⏭️ y audífonos) ---------- */
+function saltarA(i){
+  if(!lector.cola.length) return;
+  if(lector.utter){ lector.utter.onend=null; lector.utter.onerror=null; } // que la cancelada no avance sola
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+  if(i<0) i=0;
+  if(i>=lector.cola.length){ finLectura(); return; }
+  lector.idx=i; lector.pausado=false; mediaEstado();
+  hablarSiguiente();
+}
+function siguienteTrack(){
+  if(!lector.activo) return;
+  const t=lector.cola[lector.idx].track;
+  let i=lector.idx; while(i<lector.cola.length && lector.cola[i].track===t) i++;
+  saltarA(i); // si pasa del final → termina
+}
+function anteriorTrack(){
+  if(!lector.activo) return;
+  const t=lector.cola[lector.idx].track;
+  let start=lector.idx; while(start>0 && lector.cola[start-1].track===t) start--;
+  if(lector.idx>start){ saltarA(start); return; }   // primero reinicia el bloque actual
+  if(start===0){ saltarA(0); return; }
+  const pt=lector.cola[start-1].track;
+  let p=start-1; while(p>0 && lector.cola[p-1].track===pt) p--;
+  saltarA(p);
+}
+
+/* ---------- control desde audífonos Bluetooth (Media Session) ----------
+   speechSynthesis no cuenta como "media", así que reproducimos un audio
+   en SILENCIO en bucle para mantener viva la sesión multimedia; entonces
+   los botones del audífono (▶ ⏸ ⏭ ⏮) llaman a nuestras funciones. */
+let audioSilencio=null;
+function urlSilencio(seg){
+  const sr=8000, n=sr*seg, dv=new DataView(new ArrayBuffer(44+n*2));
+  const w=(o,s)=>{ for(let i=0;i<s.length;i++) dv.setUint8(o+i,s.charCodeAt(i)); };
+  w(0,"RIFF"); dv.setUint32(4,36+n*2,true); w(8,"WAVE"); w(12,"fmt ");
+  dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,1,true);
+  dv.setUint32(24,sr,true); dv.setUint32(28,sr*2,true); dv.setUint16(32,2,true);
+  dv.setUint16(34,16,true); w(36,"data"); dv.setUint32(40,n*2,true);
+  // muestras a un volumen ÍNFIMO (≈ -63 dB, inaudible) en vez de cero:
+  // un audio totalmente mudo NO "agarra" la sesión multimedia en Chrome.
+  for(let i=0;i<n;i++) dv.setInt16(44+i*2, i%2?24:-24, true);
+  return URL.createObjectURL(new Blob([dv.buffer],{type:"audio/wav"}));
+}
+function activarMediaSession(){
+  try{
+    if(!audioSilencio){ audioSilencio=new Audio(urlSilencio(2)); audioSilencio.loop=true; audioSilencio.volume=1; }
+    audioSilencio.play().catch(()=>{});
+    if("mediaSession" in navigator){
+      const ms=navigator.mediaSession;
+      ms.metadata=new MediaMetadata({title:"Lectura en voz alta", artist:"La IA por Dentro",
+        artwork:[{src:"icon-192.png",sizes:"192x192",type:"image/png"},{src:"icon-512.png",sizes:"512x512",type:"image/png"}]});
+      ms.setActionHandler("play",()=>{ if(lector.pausado) alternarPausaLectura(); });
+      ms.setActionHandler("pause",()=>{ if(!lector.pausado) alternarPausaLectura(); });
+      ms.setActionHandler("previoustrack",()=>anteriorTrack());
+      ms.setActionHandler("nexttrack",()=>siguienteTrack());
+      try{ ms.setActionHandler("stop",()=>pararLectura()); }catch(e){}
+      ms.playbackState="playing";
+    }
+  }catch(e){}
+}
+function desactivarMediaSession(){
+  try{ if(audioSilencio) audioSilencio.pause(); if("mediaSession" in navigator) navigator.mediaSession.playbackState="none"; }catch(e){}
+}
+function mediaEstado(){ try{ if("mediaSession" in navigator) navigator.mediaSession.playbackState = lector.pausado?"paused":"playing"; }catch(e){} }
 
 /* resaltar el bloque que se está leyendo y traerlo a la vista */
 function resaltar(el){
@@ -2043,10 +2122,12 @@ document.addEventListener("click",e=>{
   const act=el.dataset.a;
 
   // cualquier acción que no sea control de lectura detiene la lectura en curso
-  if(lector.activo && !["read-toggle","read-stop","read-aloud","read-speed"].includes(act)) pararLectura();
+  if(lector.activo && !["read-toggle","read-stop","read-aloud","read-speed","read-prev","read-next"].includes(act)) pararLectura();
 
   if(act==="read-aloud"){ iniciarLectura(); return; }
   if(act==="read-toggle"){ alternarPausaLectura(); return; }
+  if(act==="read-prev"){ anteriorTrack(); return; }
+  if(act==="read-next"){ siguienteTrack(); return; }
   if(act==="read-speed"){ cambiarVelocidadLectura(); return; }
   if(act==="read-stop"){ pararLectura(); toast("⏹️ Lectura detenida"); return; }
 
