@@ -1398,17 +1398,38 @@ function speak(text){
    la Web Speech API, resaltando lo que se va leyendo.
    ============================================================ */
 
-/* Unidades de lectura: cada selector es un "párrafo" natural.
-   No se solapan (un h3 no vive dentro de un .block, etc.), así
-   que no hay texto repetido. El término en inglés (.tech) y su
-   botón de audio (.say) quedan fuera porque viven en .thd, no en
-   el h3, y además se listan como ruido. */
-const SEL_LECTURA = ".cathead h2,.cathead p,.concept h3,.block,.intro,.empty,.def";
+/* Unidades de lectura: cada selector es un "párrafo" natural de
+   las pantallas con contenido (Aprender, Glosario, Tecnolecto y
+   Vías). No se solapan, así que no hay texto repetido. */
+const SEL_LECTURA = ".cathead h2,.cathead p,.concept h3,.tech,.block,.intro,.wlead,.empty,.gitem h4,.def,.wen,.wes,.wdef";
+
+/* Elementos cuyo texto es un término en INGLÉS → se pronuncian con
+   voz inglesa (la chapita 🇬🇧 .tech y las palabras de Tecnolecto). */
+const SEL_INGLES = ".tech,.wen";
 
 /* "Ruido" que jamás debe oírse: sintaxis de código, íconos,
-   chip de inglés, botones y badges decorativos. */
+   pronunciación figurada, botones y badges decorativos. */
 const RUIDO_LECTURA = "script,style,noscript,code,pre,img,svg,button,"
-  + ".tech,.say,.num,.ok,.done,.learnbtn,.srcbtn,.back,.subtabs,.readaloud,.mini";
+  + ".say,.wsay,.wpron,.wtag,.gtag,.glearn,.wlearn,"
+  + ".num,.ok,.done,.learnbtn,.srcbtn,.mini,.back,.subtabs,.readaloud,.gchips,.search,.wprog";
+
+/* Siglas que el motor en español lee mal (ej. "ML" → "mililitros").
+   Se reemplazan por su deletreo fonético en español. Solo afecta al
+   texto en español, respetando mayúsculas y límites de palabra. */
+const SIGLAS = [
+  ["LLMs","ele ele emes"], ["LLM","ele ele eme"], ["MLOps","eme ele óps"], ["ML","eme ele"],
+  ["APIs","a pe is"], ["API","a pe i"], ["URLs","u erre eles"], ["URL","u erre ele"],
+  ["HTML","hache te eme ele"], ["CSS","ce ese ese"], ["JSON","yeisón"], ["JS","jota ese"],
+  ["GPT","gue pe te"], ["PWA","pe doble u a"], ["CPU","ce pe u"], ["GPU","gue pe u"],
+  ["SDK","ese de ka"], ["IDE","i de e"], ["UX","u équis"], ["UI","u i"],
+  ["NLP","ene ele pe"], ["DNS","de ene ese"], ["SQL","ese cu ele"], ["RAG","rag"],
+  ["CDN","ce de ene"], ["CD","ce de"], ["CI","ce i"], ["TPU","te pe u"]
+];
+function arreglarSiglas(t){
+  let out=t;
+  SIGLAS.forEach(([k,v])=>{ out = out.replace(new RegExp("\\b"+k+"\\b","g"), v); });
+  return out;
+}
 
 /* Normaliza el texto para que el motor no deletree símbolos:
    quita emojis, viñetas huérfanas (* - • …), separadores
@@ -1464,6 +1485,7 @@ const lector = { cola:[], idx:0, activo:false, pausado:false, voz:null, el:null,
 lector.vi = Math.min(Math.max(parseInt(localStorage.getItem("iadReadVel"),10)||1,0), VELS.length-1);
 
 function vozEspanol(){ if(!voices.length) loadVoices(); return voices.find(v=>/^es/i.test(v.lang)) || null; }
+function vozIngles(){ if(!voices.length) loadVoices(); return voices.find(v=>/^en/i.test(v.lang)) || null; }
 
 /* cicla a la siguiente velocidad; si está leyendo, re-dice la frase
    actual a la nueva velocidad (el rate no se puede cambiar en caliente) */
@@ -1478,18 +1500,20 @@ function cambiarVelocidadLectura(){
   }
 }
 
-/* Igual que la función pedida, pero conserva el elemento VIVO de
-   cada frase para poder resaltarlo, y parte cada párrafo en frases
-   (algunos navegadores cortan la voz en textos largos ~15 s). */
+/* Convierte un elemento en frases para la cola, conservando el
+   elemento VIVO (para resaltarlo) y su idioma. Los términos en
+   inglés van como una sola frase en inglés; el español se arregla
+   (siglas) y se parte en frases (evita el corte ~15 s de la voz). */
+function segmentarUnidad(el){
+  const texto = limpiarNodoLectura(el);
+  if(!texto) return [];
+  if(el.matches(SEL_INGLES)) return [{el, text:texto, lang:"en"}];
+  return (arreglarSiglas(texto).match(/[^.!?…]+[.!?…]*/g) || [texto])
+    .map(f=>f.trim()).filter(Boolean).map(t=>({el, text:t, lang:"es"}));
+}
 function construirColaLectura(){
   const cola = [];
-  $("#app").querySelectorAll(SEL_LECTURA).forEach(el=>{
-    const texto = limpiarNodoLectura(el);
-    if(!texto) return;
-    (texto.match(/[^.!?…]+[.!?…]*/g) || [texto]).forEach(f=>{
-      const t=f.trim(); if(t) cola.push({el, text:t});
-    });
-  });
+  $("#app").querySelectorAll(SEL_LECTURA).forEach(el=>{ segmentarUnidad(el).forEach(s=>cola.push(s)); });
   return cola;
 }
 
@@ -1499,6 +1523,7 @@ function iniciarLectura(){
   lector.cola = construirColaLectura();
   if(!lector.cola.length){ toast("🔇 No hay texto para leer aquí"); return; }
   lector.voz = vozEspanol();
+  lector.vozEn = vozIngles();
   if(!lector.voz) toast("🗣️ Sin voz en español: instálala en tu dispositivo para una mejor lectura");
   lector.idx=0; lector.activo=true; lector.pausado=false;
   mostrarBarraLectura();
@@ -1512,7 +1537,9 @@ function hablarSiguiente(){
   resaltar(item.el);
   actualizarBarraLectura();
   const u = new SpeechSynthesisUtterance(item.text);
-  if(lector.voz){ u.voice=lector.voz; u.lang=lector.voz.lang; } else u.lang="es-ES";
+  // elegir voz según el idioma de la frase (inglés para los términos)
+  const v = item.lang==="en" ? (lector.vozEn||lector.voz) : (lector.voz||lector.vozEn);
+  if(v){ u.voice=v; u.lang=v.lang; } else u.lang = item.lang==="en" ? "en-US" : "es-ES";
   u.rate=VELS[lector.vi].r; u.pitch=1;
   u.onend  =()=>{ if(lector.activo && !lector.pausado){ lector.idx++; hablarSiguiente(); } };
   u.onerror=()=>{ if(lector.activo){ lector.idx++; hablarSiguiente(); } };
@@ -1553,6 +1580,9 @@ function actualizarBarraLectura(){
   if(tg) tg.textContent = lector.pausado ? "▶️ Seguir" : "⏸️ Pausa";
   if(sp) sp.textContent = VELS[lector.vi].t;
 }
+
+/* botón de lectura en voz alta (se reusa en varias pantallas) */
+function btnLeer(){ return `<button class="readaloud" data-a="read-aloud" title="Escuchar en voz alta">🔊 Leer en voz alta</button>`; }
 
 /* ============================================================
    RENDER
@@ -1722,6 +1752,7 @@ function vGloss(){
     ${MODS.map(m=>`<button class="${state.gmod===m.id?"on":""}" data-a="gmod" data-id="${m.id}">${m.icono} ${esc(m.titulo)}</button>`).join("")}
   </div>`;
   return `<div class="view">
+    ${btnLeer()}
     <input class="search" id="gsearch" type="search" placeholder="🔍 Busca un término (ej: RAG, token, gradiente, API...)" value="${esc(state.gq)}">
     ${chips}
     <div id="glist">${glossList()}</div>
@@ -1761,6 +1792,7 @@ function vWords(){
     ${WGROUPS.map(g=>`<button class="${state.wg===g.id?"on":""}" data-a="wgroup" data-id="${g.id}">${esc(g.label)} (${counts(g.id)})</button>`).join("")}
   </div>`;
   return `<div class="view">
+    ${btnLeer()}
     <div class="wlead">💻 <b>Inglés técnico</b> del trabajo real: los términos que se usan al programar por dentro y al subir el proyecto a Git y Vercel. Toca 🔊 para oír la palabra, lee su explicación y márcala cuando la domines.</div>
     <div class="wprog"><div class="wprog-lab"><span>Palabras dominadas</span><span>${learnedN}/${WTOTAL}</span></div><div class="bar"><i style="width:${pct}%;background:${barColor(pct)}"></i></div></div>
     <input class="search" id="wsearch" type="search" placeholder="🔍 Busca (transformer, commit, async, CDN...)" value="${esc(state.wq)}">
@@ -1851,6 +1883,7 @@ function vSurfaces(){
   return `<div class="view" style="--cc:${s.color}">
     <p class="intro">🖥️ Claude no es una sola cosa: se usa por <b>tres vías</b> con poderes muy distintos. Aquí, el <b>potencial</b> y las <b>limitaciones</b> de cada una. Regla rápida: <b>Chat</b> para conversar y pensar · <b>Cowork</b> para que trabaje solo en tus archivos de oficina · <b>Code</b> para construir software en tu repo.</p>
     <div class="subtabs tri">${subs}</div>
+    ${btnLeer()}
     <div class="cathead"><span class="em">${s.icono}</span><div><h2>${esc(s.nombre)}</h2><p>${esc(s.lema)}</p></div></div>
     <div class="block"><b>🧭 ¿Qué es?</b><p>${esc(s.queEs)}</p></div>
     <div class="block"><b>⚙️ ¿Cómo funciona?</b><p>${esc(s.comoFunciona)}</p></div>
