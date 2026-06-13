@@ -1543,7 +1543,7 @@ function iniciarLectura(){
   lector.idx=0; lector.activo=true; lector.pausado=false;
   mostrarBarraLectura();
   activarMediaSession();
-  kaInicio();
+  kaInicio(); wakeOn();
   hablarSiguiente();
 }
 
@@ -1558,8 +1558,10 @@ function hablarSiguiente(){
   const v = item.lang==="en" ? (lector.vozEn||lector.voz) : (lector.voz||lector.vozEn);
   if(v){ u.voice=v; u.lang=v.lang; } else u.lang = item.lang==="en" ? "en-US" : "es-ES";
   u.rate=VELS[lector.vi].r; u.pitch=1;
-  u.onend  =()=>{ if(lector.activo && !lector.pausado){ lector.idx++; hablarSiguiente(); } };
-  u.onerror=()=>{ if(lector.activo){ lector.idx++; hablarSiguiente(); } };
+  // si la página está oculta (pantalla bloqueada), NO avanzar: evita que
+  // la cola se "vacíe" de golpe y se cierre la lectura.
+  u.onend  =()=>{ if(lector.activo && !lector.pausado && !document.hidden){ lector.idx++; hablarSiguiente(); } };
+  u.onerror=()=>{ if(lector.activo && !lector.pausado && !document.hidden){ lector.idx++; hablarSiguiente(); } };
   lector.utter=u;
   window.speechSynthesis.speak(u);
 }
@@ -1572,14 +1574,14 @@ function alternarPausaLectura(){
 }
 
 function pararLectura(silencioso){
-  lector.activo=false; lector.pausado=false; kaFin();
+  lector.activo=false; lector.pausado=false; ocultoPausa=false; kaFin(); wakeOff();
   try{ window.speechSynthesis.cancel(); }catch(e){}
   desactivarMediaSession();
   quitarResaltado();
   if(!silencioso) ocultarBarraLectura();
 }
 
-function finLectura(){ lector.activo=false; kaFin(); desactivarMediaSession(); quitarResaltado(); ocultarBarraLectura(); toast("✅ Lectura terminada"); }
+function finLectura(){ lector.activo=false; ocultoPausa=false; kaFin(); wakeOff(); desactivarMediaSession(); quitarResaltado(); ocultarBarraLectura(); toast("✅ Lectura terminada"); }
 
 /* ---------- navegación por bloques (botones ⏮️/⏭️ y audífonos) ---------- */
 function saltarA(i){
@@ -1637,6 +1639,25 @@ function kaInicio(){ kaFin(); lecturaKA=setInterval(()=>{
   try{ if(lector.activo && !lector.pausado && window.speechSynthesis.paused) window.speechSynthesis.resume(); }catch(e){}
 },3000); }
 function kaFin(){ if(lecturaKA){ clearInterval(lecturaKA); lecturaKA=null; } }
+
+/* Wake Lock: mantiene la pantalla ENCENDIDA mientras lee, para que el
+   teléfono no se bloquee solo y la voz no se corte (la voz del navegador
+   se suspende con la pantalla apagada). */
+let wakeLock=null;
+async function wakeOn(){ try{ if("wakeLock" in navigator) wakeLock=await navigator.wakeLock.request("screen"); }catch(e){} }
+function wakeOff(){ try{ if(wakeLock){ wakeLock.release(); wakeLock=null; } }catch(e){} }
+
+/* Si la página se oculta (bloqueo manual o cambio de app), pausamos en vez
+   de dejar que la cola se vacíe; al volver, reanudamos donde iba. */
+let ocultoPausa=false;
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){
+    if(lector.activo && !lector.pausado){ ocultoPausa=true; lector.pausado=true; try{window.speechSynthesis.pause();}catch(e){} if(audioSilencio) audioSilencio.pause(); mediaEstado(); actualizarBarraLectura(); }
+  } else if(lector.activo){
+    wakeOn();                                   // el wake lock se libera al ocultar: re-pedirlo
+    if(ocultoPausa){ ocultoPausa=false; lector.pausado=false; try{window.speechSynthesis.cancel();}catch(e){} if(audioSilencio) audioSilencio.play().catch(()=>{}); mediaEstado(); actualizarBarraLectura(); hablarSiguiente(); }
+  }
+});
 
 /* ---------- control desde audífonos Bluetooth (Media Session) ----------
    speechSynthesis no cuenta como "media", así que reproducimos un audio
