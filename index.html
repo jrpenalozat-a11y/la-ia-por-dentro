@@ -1549,7 +1549,10 @@ function iniciarLectura(){
 
 function hablarSiguiente(){
   if(!lector.activo) return;
-  if(lector.idx >= lector.cola.length){ finLectura(); return; }
+  if(lector.idx >= lector.cola.length){
+    if(state.view==="gloss" && avanzarGlosarioAuto()) return;  // glosario: seguir con el siguiente término
+    finLectura(); return;
+  }
   const item = lector.cola[lector.idx];
   resaltar(item.el);
   actualizarBarraLectura();
@@ -1609,6 +1612,24 @@ function navGlosario(delta){
   lector.cola = construirColaLectura();          // rehacer la cola con lo expandido
   const idx = lector.cola.findIndex(it=>it.el.closest(".gitem")===destino);
   if(idx>=0) saltarA(idx);
+}
+
+/* Al terminar el contenido expandido del glosario, abre y sigue con el
+   siguiente término automáticamente (audiolibro continuo). Devuelve
+   false solo si ya era el último término. */
+function avanzarGlosarioAuto(){
+  const items=[...$("#app").querySelectorAll(".gitem")];
+  if(!items.length) return false;
+  let ultimo=null;
+  for(let i=lector.cola.length-1;i>=0;i--){ const g=lector.cola[i].el.closest(".gitem"); if(g){ ultimo=g; break; } }
+  let i = ultimo ? items.indexOf(ultimo)+1 : 0;
+  if(i>items.length-1) return false;            // no hay más términos → terminar de verdad
+  const destino=items[i];
+  destino.classList.add("open");
+  lector.cola=construirColaLectura();
+  const idx=lector.cola.findIndex(it=>it.el.closest(".gitem")===destino);
+  if(idx<0) return false;
+  lector.idx=idx; hablarSiguiente(); return true;
 }
 
 function siguienteTrack(){
