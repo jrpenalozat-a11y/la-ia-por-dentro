@@ -269,13 +269,15 @@ button:active{transform:scale(.98)}
 .readaloud:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 .reading{outline:3px solid var(--cc,var(--blue));outline-offset:4px;border-radius:12px;
   background:color-mix(in srgb,var(--cc,var(--blue)) 14%,transparent);scroll-margin:90px}
-#readbar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(110px);z-index:96;
-  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:10px 12px;border-radius:18px;
+#readbar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(120px);z-index:96;
+  display:flex;flex-direction:column;align-items:stretch;gap:9px;padding:11px 13px;border-radius:18px;
   background:var(--ink);color:var(--bg2);box-shadow:var(--shadow);opacity:0;transition:transform .3s,opacity .3s;max-width:94vw}
 #readbar.show{transform:translateX(-50%) translateY(0);opacity:1}
-#readStatus{font-size:.82rem;font-weight:700;white-space:nowrap}
-#readbar button{border:0;border-radius:12px;padding:9px 13px;font-size:.82rem;font-weight:700;cursor:pointer;
-  font-family:'Sora';background:var(--blue);color:#fff}
+#readStatus{font-size:.82rem;font-weight:700;text-align:center}
+.readctrls{display:flex;gap:8px;justify-content:center;align-items:center}
+#readbar button{border:0;border-radius:12px;padding:10px 0;min-width:46px;font-size:1rem;font-weight:700;cursor:pointer;
+  font-family:'Sora';background:var(--blue);color:#fff;line-height:1}
+#readSpeed{min-width:54px;font-size:.82rem}
 #readbar button:hover{filter:brightness(1.1)}
 #readbar button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 
@@ -397,11 +399,13 @@ button:active{transform:scale(.98)}
 <!-- Barra de control de la lectura en voz alta (accesibilidad) -->
 <div id="readbar" hidden role="region" aria-label="Lectura en voz alta">
   <span id="readStatus">🔊 Leyendo</span>
-  <button id="readPrev" data-a="read-prev" type="button" title="Bloque anterior" aria-label="Anterior">⏮️</button>
-  <button id="readToggle" data-a="read-toggle" type="button">⏸️ Pausa</button>
-  <button id="readNext" data-a="read-next" type="button" title="Bloque siguiente" aria-label="Siguiente">⏭️</button>
-  <button id="readSpeed" data-a="read-speed" type="button" title="Velocidad de lectura">1×</button>
-  <button id="readStop" data-a="read-stop" type="button" title="Detener" aria-label="Detener">⏹️</button>
+  <div class="readctrls">
+    <button id="readPrev" data-a="read-prev" type="button" title="Anterior" aria-label="Anterior">⏮️</button>
+    <button id="readToggle" data-a="read-toggle" type="button" title="Pausa" aria-label="Pausa">⏸️</button>
+    <button id="readNext" data-a="read-next" type="button" title="Siguiente" aria-label="Siguiente">⏭️</button>
+    <button id="readSpeed" data-a="read-speed" type="button" title="Velocidad de lectura">1×</button>
+    <button id="readStop" data-a="read-stop" type="button" title="Detener" aria-label="Detener">⏹️</button>
+  </div>
 </div>
 
 <div id="toast"></div>
@@ -1539,6 +1543,7 @@ function iniciarLectura(){
   lector.idx=0; lector.activo=true; lector.pausado=false;
   mostrarBarraLectura();
   activarMediaSession();
+  kaInicio();
   hablarSiguiente();
 }
 
@@ -1567,14 +1572,14 @@ function alternarPausaLectura(){
 }
 
 function pararLectura(silencioso){
-  lector.activo=false; lector.pausado=false;
+  lector.activo=false; lector.pausado=false; kaFin();
   try{ window.speechSynthesis.cancel(); }catch(e){}
   desactivarMediaSession();
   quitarResaltado();
   if(!silencioso) ocultarBarraLectura();
 }
 
-function finLectura(){ lector.activo=false; desactivarMediaSession(); quitarResaltado(); ocultarBarraLectura(); toast("✅ Lectura terminada"); }
+function finLectura(){ lector.activo=false; kaFin(); desactivarMediaSession(); quitarResaltado(); ocultarBarraLectura(); toast("✅ Lectura terminada"); }
 
 /* ---------- navegación por bloques (botones ⏮️/⏭️ y audífonos) ---------- */
 function saltarA(i){
@@ -1582,18 +1587,39 @@ function saltarA(i){
   if(lector.utter){ lector.utter.onend=null; lector.utter.onerror=null; } // que la cancelada no avance sola
   try{ window.speechSynthesis.cancel(); }catch(e){}
   if(i<0) i=0;
-  if(i>=lector.cola.length){ finLectura(); return; }
+  if(i>=lector.cola.length){ return; }   // sin bloque siguiente: NO cerrar la lectura
   lector.idx=i; lector.pausado=false; mediaEstado();
   hablarSiguiente();
 }
+
+/* En el glosario, ⏮️/⏭️ navegan TÉRMINO por término (abriendo el
+   siguiente automáticamente) en vez de frase por frase. */
+function navGlosario(delta){
+  const items=[...$("#app").querySelectorAll(".gitem")];
+  if(!items.length) return;
+  let cur = lector.cola[lector.idx] ? lector.cola[lector.idx].el.closest(".gitem") : null;
+  if(!cur) cur = items.find(g=>g.classList.contains("open")) || items[0];
+  let i = items.indexOf(cur) + delta;
+  if(i<0) i=0;
+  if(i>items.length-1){ toast("Es el último término"); return; }
+  const destino = items[i];
+  destino.classList.add("open");                 // expandir el término destino
+  lector.cola = construirColaLectura();          // rehacer la cola con lo expandido
+  const idx = lector.cola.findIndex(it=>it.el.closest(".gitem")===destino);
+  if(idx>=0) saltarA(idx);
+}
+
 function siguienteTrack(){
   if(!lector.activo) return;
+  if(state.view==="gloss"){ navGlosario(1); return; }
   const t=lector.cola[lector.idx].track;
   let i=lector.idx; while(i<lector.cola.length && lector.cola[i].track===t) i++;
-  saltarA(i); // si pasa del final → termina
+  if(i>=lector.cola.length){ toast("Es el último bloque"); return; }   // no cerrar la lectura
+  saltarA(i);
 }
 function anteriorTrack(){
   if(!lector.activo) return;
+  if(state.view==="gloss"){ navGlosario(-1); return; }
   const t=lector.cola[lector.idx].track;
   let start=lector.idx; while(start>0 && lector.cola[start-1].track===t) start--;
   if(lector.idx>start){ saltarA(start); return; }   // primero reinicia el bloque actual
@@ -1602,6 +1628,15 @@ function anteriorTrack(){
   let p=start-1; while(p>0 && lector.cola[p-1].track===pt) p--;
   saltarA(p);
 }
+
+/* keepalive: algunos navegadores "duermen" la voz en segundo plano
+   (pantalla bloqueada). Si la sesión sigue activa y el usuario no la
+   pausó, la reanudamos. */
+let lecturaKA=null;
+function kaInicio(){ kaFin(); lecturaKA=setInterval(()=>{
+  try{ if(lector.activo && !lector.pausado && window.speechSynthesis.paused) window.speechSynthesis.resume(); }catch(e){}
+},3000); }
+function kaFin(){ if(lecturaKA){ clearInterval(lecturaKA); lecturaKA=null; } }
 
 /* ---------- control desde audífonos Bluetooth (Media Session) ----------
    speechSynthesis no cuenta como "media", así que reproducimos un audio
@@ -1656,7 +1691,7 @@ function actualizarBarraLectura(){
   const total=lector.cola.length, n=Math.min(lector.idx+1,total);
   const st=$("#readStatus"), tg=$("#readToggle"), sp=$("#readSpeed");
   if(st) st.textContent = lector.pausado ? `⏸️ En pausa · ${n}/${total}` : `🔊 Leyendo ${n}/${total}`;
-  if(tg) tg.textContent = lector.pausado ? "▶️ Seguir" : "⏸️ Pausa";
+  if(tg){ tg.textContent = lector.pausado ? "▶️" : "⏸️"; tg.title = lector.pausado ? "Seguir" : "Pausa"; }
   if(sp) sp.textContent = VELS[lector.vi].t;
 }
 
