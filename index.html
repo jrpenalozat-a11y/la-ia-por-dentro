@@ -87,15 +87,15 @@ button:active{transform:scale(.98)}
 .motiv.out{opacity:0}
 
 /* ---------- pestañas de navegación ---------- */
-.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin:12px 0 18px}
+.tabs{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0 18px}
 .tabs button{
-  padding:9px 2px;border-radius:12px;background:var(--card);border:1px solid var(--line);
-  font-size:.6rem;font-weight:600;color:var(--muted);box-shadow:var(--shadow2);transition:all .2s;
+  padding:9px 1px;border-radius:11px;background:var(--card);border:1px solid var(--line);
+  font-size:.56rem;font-weight:600;color:var(--muted);box-shadow:var(--shadow2);transition:all .2s;
   display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.1;
   text-align:center;overflow-wrap:break-word;word-break:break-word;
 }
-.tabs button .ti{font-size:15px}
-@media(max-width:430px){.tabs{gap:4px}.tabs button{font-size:.54rem;padding:8px 1px}}
+.tabs button .ti{font-size:14px}
+@media(max-width:430px){.tabs{gap:3px}.tabs button{font-size:.5rem;padding:8px 1px}}
 .tabs button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(59,130,246,.32)}
 
 .view{animation:fadeUp .35s ease}
@@ -261,6 +261,24 @@ button:active{transform:scale(.98)}
 .foot{text-align:center;font-size:.72rem;color:var(--muted);margin-top:34px;line-height:1.6}
 .empty{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 10px}
 
+/* ---------- lectura en voz alta (accesibilidad / baja visión) ---------- */
+.readaloud{display:inline-flex;align-items:center;gap:8px;margin:0 0 16px;padding:11px 18px;border:0;border-radius:13px;
+  font-family:'Sora';font-size:.9rem;font-weight:700;color:#fff;cursor:pointer;
+  background:var(--cc,var(--blue));box-shadow:var(--shadow2)}
+.readaloud:hover{filter:brightness(1.08)}
+.readaloud:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.reading{outline:3px solid var(--cc,var(--blue));outline-offset:4px;border-radius:12px;
+  background:color-mix(in srgb,var(--cc,var(--blue)) 14%,transparent);scroll-margin:90px}
+#readbar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(110px);z-index:96;
+  display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-radius:18px;
+  background:var(--ink);color:var(--bg2);box-shadow:var(--shadow);opacity:0;transition:transform .3s,opacity .3s;max-width:94vw}
+#readbar.show{transform:translateX(-50%) translateY(0);opacity:1}
+#readStatus{font-size:.82rem;font-weight:700;white-space:nowrap}
+#readbar button{border:0;border-radius:12px;padding:9px 13px;font-size:.82rem;font-weight:700;cursor:pointer;
+  font-family:'Sora';background:var(--blue);color:#fff}
+#readbar button:hover{filter:brightness(1.1)}
+#readbar button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
 /* ---------- término en inglés (chip mono) en glosario/flashcard ---------- */
 .tech{font-family:'JetBrains Mono';font-size:.7rem;color:var(--muted);display:inline-block}
 .gitem .tech{padding:2px 7px;border-radius:6px;background:color-mix(in srgb,var(--cc,var(--blue)) 12%,transparent);font-size:.66rem}
@@ -305,6 +323,16 @@ button:active{transform:scale(.98)}
 .wdef{font-size:.86rem;color:var(--muted);line-height:1.6;margin-top:6px}
 .wlearn{width:100%;margin-top:11px;padding:10px;border-radius:11px;font-weight:700;font-size:.84rem;border:2px solid var(--blue);color:var(--blue);background:transparent;transition:all .2s}
 .wlearn.on{background:var(--good);border-color:var(--good);color:#fff}
+
+/* ---------- 🖥️ Vías de uso (Chat · Cowork · Code) ---------- */
+.subtabs.tri{grid-template-columns:repeat(3,1fr)}
+.block.pro{background:color-mix(in srgb,var(--good) 9%,transparent);border-color:color-mix(in srgb,var(--good) 32%,transparent)}
+.block.pro b{color:var(--good)}
+.block.con{background:color-mix(in srgb,var(--bad) 9%,transparent);border-color:color-mix(in srgb,var(--bad) 32%,transparent)}
+.block.con b{color:var(--bad)}
+.block ul{margin:2px 0 0;padding-left:20px}
+.block li{font-size:.9rem;line-height:1.55;margin-bottom:6px}
+.block li:last-child{margin-bottom:0}
 </style>
 </head>
 <body class="dark">
@@ -345,6 +373,7 @@ button:active{transform:scale(.98)}
     <button data-a="nav" data-v="practice"><span class="ti">🔬</span>Práctica</button>
     <button data-a="nav" data-v="gloss"><span class="ti">📚</span>Glosario</button>
     <button data-a="nav" data-v="words"><span class="ti">⌨️</span>Tecnolecto</button>
+    <button data-a="nav" data-v="surfaces"><span class="ti">🖥️</span>Vías</button>
     <button data-a="nav" data-v="quiz"><span class="ti">🧠</span>Desafío</button>
     <button data-a="nav" data-v="progress"><span class="ti">📊</span>Progreso</button>
   </nav>
@@ -363,6 +392,14 @@ button:active{transform:scale(.98)}
     <p id="celeText"></p>
     <button data-a="cele-ok">Seguir aprendiendo →</button>
   </div>
+</div>
+
+<!-- Barra de control de la lectura en voz alta (accesibilidad) -->
+<div id="readbar" hidden role="region" aria-label="Lectura en voz alta">
+  <span id="readStatus">🔊 Leyendo</span>
+  <button id="readSpeed" data-a="read-speed" type="button" title="Velocidad de lectura">1×</button>
+  <button id="readToggle" data-a="read-toggle" type="button">⏸️ Pausa</button>
+  <button id="readStop" data-a="read-stop" type="button">⏹️ Detener</button>
 </div>
 
 <div id="toast"></div>
@@ -1286,7 +1323,7 @@ let milestones = loadSet("iadMilestones");
 let medals     = loadSet("iadMedals");
 let wordsLearned = loadSet("iadWords");   // 💻 palabras de la sección Código
 
-const state = { view:"home", mod:null, tab:"aprender", fcOrder:[], fcIdx:0, fcFlip:false, gq:"", gmod:"", quiz:null, wq:"", wg:"" };
+const state = { view:"home", mod:null, tab:"aprender", fcOrder:[], fcIdx:0, fcFlip:false, gq:"", gmod:"", quiz:null, wq:"", wg:"", surf:"chat" };
 
 function save(){ saveSet("iadLearned",learned); saveSet("iadQuiz",quizOK); saveSet("iadMilestones",milestones); saveSet("iadMedals",medals); saveSet("iadWords",wordsLearned); }
 
@@ -1353,6 +1390,171 @@ function speak(text){
 }
 
 /* ============================================================
+   LECTURA EN VOZ ALTA  (accesibilidad para baja visión)
+   ------------------------------------------------------------
+   Convierte la lección visible en un "audiolibro": extrae SOLO
+   el texto narrable (sin código, imágenes, URLs ni símbolos
+   sueltos), lo divide en frases y lo reproduce en español con
+   la Web Speech API, resaltando lo que se va leyendo.
+   ============================================================ */
+
+/* Unidades de lectura: cada selector es un "párrafo" natural.
+   No se solapan (un h3 no vive dentro de un .block, etc.), así
+   que no hay texto repetido. El término en inglés (.tech) y su
+   botón de audio (.say) quedan fuera porque viven en .thd, no en
+   el h3, y además se listan como ruido. */
+const SEL_LECTURA = ".cathead h2,.cathead p,.concept h3,.block,.intro,.empty,.def";
+
+/* "Ruido" que jamás debe oírse: sintaxis de código, íconos,
+   chip de inglés, botones y badges decorativos. */
+const RUIDO_LECTURA = "script,style,noscript,code,pre,img,svg,button,"
+  + ".tech,.say,.num,.ok,.done,.learnbtn,.srcbtn,.back,.subtabs,.readaloud,.mini";
+
+/* Normaliza el texto para que el motor no deletree símbolos:
+   quita emojis, viñetas huérfanas (* - • …), separadores
+   técnicos (/ \ | < > etc.) y colapsa los espacios y saltos de
+   línea. Conserva . , ¿ ? ¡ ! que el navegador usa de forma
+   nativa para las pausas y la entonación. */
+function normalizarLectura(txt){
+  return String(txt)
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{2000}-\u{206F}\u{FE00}-\u{FE0F}\u{200D}]/gu," ") // emojis, banderas, flechas, símbolos
+    .replace(/(^|\s)[*•·▪►◆▶➤–—-]+(?=\s|$)/g," ") // viñetas/guiones sueltos
+    .replace(/[|/\\<>`~^_=+]+/g," ")               // separadores técnicos huérfanos
+    .replace(/\s+/g," ")                            // colapsar dobles espacios y saltos
+    .trim();
+}
+
+/* Limpia UN elemento: trabaja sobre una copia en memoria
+   (cloneNode) para no tocar lo que se ve en pantalla, borra el
+   ruido y, en los enlaces, conserva solo el texto humano
+   descartando las URLs crudas (no debe deletrear direcciones). */
+function limpiarNodoLectura(nodo){
+  const clon = nodo.cloneNode(true);
+  clon.querySelectorAll(RUIDO_LECTURA).forEach(n=>n.remove());
+  clon.querySelectorAll("a").forEach(a=>{
+    const t=(a.textContent||"").trim();
+    if(/^(https?:\/\/|www\.)/i.test(t)) a.remove();                 // URL cruda → fuera
+    else a.replaceWith(document.createTextNode(" "+t+" "));         // texto del enlace → se conserva
+  });
+  // separar bloques adyacentes (ej. la etiqueta <b> del <p>) para no pegar palabras
+  clon.innerHTML = clon.innerHTML.replace(/></g,"> <");
+  return normalizarLectura(clon.textContent||"");
+}
+
+/* === Función pedida: obtenerTextoPuroParaLectura(idContenedor) ===
+   Devuelve un Array de strings, una frase/párrafo ya limpio por
+   elemento, listo para enviarse en secuencia a window.speechSynthesis.
+   Cada unidad se clona en memoria, así que el DOM real no se altera. */
+function obtenerTextoPuroParaLectura(idContenedor){
+  const cont = document.getElementById(idContenedor);
+  if(!cont) return [];
+  const salida = [];
+  cont.querySelectorAll(SEL_LECTURA).forEach(u=>{
+    const t = limpiarNodoLectura(u);
+    if(t) salida.push(t);
+  });
+  return salida;
+}
+
+/* ---------- controlador del reproductor ---------- */
+/* velocidades disponibles (rate de la Web Speech API) con su etiqueta */
+const VELS = [ {r:0.75,t:"🐢 0.75×"}, {r:1,t:"1×"}, {r:1.25,t:"1.25×"}, {r:1.5,t:"🐇 1.5×"} ];
+const lector = { cola:[], idx:0, activo:false, pausado:false, voz:null, el:null, vi:1, utter:null };
+/* recordar la velocidad elegida entre sesiones */
+lector.vi = Math.min(Math.max(parseInt(localStorage.getItem("iadReadVel"),10)||1,0), VELS.length-1);
+
+function vozEspanol(){ if(!voices.length) loadVoices(); return voices.find(v=>/^es/i.test(v.lang)) || null; }
+
+/* cicla a la siguiente velocidad; si está leyendo, re-dice la frase
+   actual a la nueva velocidad (el rate no se puede cambiar en caliente) */
+function cambiarVelocidadLectura(){
+  lector.vi = (lector.vi+1) % VELS.length;
+  localStorage.setItem("iadReadVel", lector.vi);
+  actualizarBarraLectura();
+  if(lector.activo && !lector.pausado){
+    if(lector.utter){ lector.utter.onend=null; lector.utter.onerror=null; } // que la cancelada no avance
+    window.speechSynthesis.cancel();
+    hablarSiguiente();
+  }
+}
+
+/* Igual que la función pedida, pero conserva el elemento VIVO de
+   cada frase para poder resaltarlo, y parte cada párrafo en frases
+   (algunos navegadores cortan la voz en textos largos ~15 s). */
+function construirColaLectura(){
+  const cola = [];
+  $("#app").querySelectorAll(SEL_LECTURA).forEach(el=>{
+    const texto = limpiarNodoLectura(el);
+    if(!texto) return;
+    (texto.match(/[^.!?…]+[.!?…]*/g) || [texto]).forEach(f=>{
+      const t=f.trim(); if(t) cola.push({el, text:t});
+    });
+  });
+  return cola;
+}
+
+function iniciarLectura(){
+  if(!("speechSynthesis" in window)){ toast("🔇 Tu navegador no permite la voz"); return; }
+  pararLectura(true);
+  lector.cola = construirColaLectura();
+  if(!lector.cola.length){ toast("🔇 No hay texto para leer aquí"); return; }
+  lector.voz = vozEspanol();
+  if(!lector.voz) toast("🗣️ Sin voz en español: instálala en tu dispositivo para una mejor lectura");
+  lector.idx=0; lector.activo=true; lector.pausado=false;
+  mostrarBarraLectura();
+  hablarSiguiente();
+}
+
+function hablarSiguiente(){
+  if(!lector.activo) return;
+  if(lector.idx >= lector.cola.length){ finLectura(); return; }
+  const item = lector.cola[lector.idx];
+  resaltar(item.el);
+  actualizarBarraLectura();
+  const u = new SpeechSynthesisUtterance(item.text);
+  if(lector.voz){ u.voice=lector.voz; u.lang=lector.voz.lang; } else u.lang="es-ES";
+  u.rate=VELS[lector.vi].r; u.pitch=1;
+  u.onend  =()=>{ if(lector.activo && !lector.pausado){ lector.idx++; hablarSiguiente(); } };
+  u.onerror=()=>{ if(lector.activo){ lector.idx++; hablarSiguiente(); } };
+  lector.utter=u;
+  window.speechSynthesis.speak(u);
+}
+
+function alternarPausaLectura(){
+  if(!lector.activo) return;
+  if(lector.pausado){ lector.pausado=false; window.speechSynthesis.resume(); }
+  else { lector.pausado=true; window.speechSynthesis.pause(); }
+  actualizarBarraLectura();
+}
+
+function pararLectura(silencioso){
+  lector.activo=false; lector.pausado=false;
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+  quitarResaltado();
+  if(!silencioso) ocultarBarraLectura();
+}
+
+function finLectura(){ lector.activo=false; quitarResaltado(); ocultarBarraLectura(); toast("✅ Lectura terminada"); }
+
+/* resaltar el bloque que se está leyendo y traerlo a la vista */
+function resaltar(el){
+  quitarResaltado(); lector.el=el;
+  if(el){ el.classList.add("reading"); try{ el.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){} }
+}
+function quitarResaltado(){ if(lector.el){ lector.el.classList.remove("reading"); lector.el=null; } }
+
+/* barra flotante con estado + pausa/seguir + detener */
+function mostrarBarraLectura(){ const b=$("#readbar"); b.hidden=false; requestAnimationFrame(()=>b.classList.add("show")); actualizarBarraLectura(); }
+function ocultarBarraLectura(){ const b=$("#readbar"); if(!b) return; b.classList.remove("show"); setTimeout(()=>{ if(!lector.activo) b.hidden=true; },320); }
+function actualizarBarraLectura(){
+  const total=lector.cola.length, n=Math.min(lector.idx+1,total);
+  const st=$("#readStatus"), tg=$("#readToggle"), sp=$("#readSpeed");
+  if(st) st.textContent = lector.pausado ? `⏸️ En pausa · ${n}/${total}` : `🔊 Leyendo ${n}/${total}`;
+  if(tg) tg.textContent = lector.pausado ? "▶️ Seguir" : "⏸️ Pausa";
+  if(sp) sp.textContent = VELS[lector.vi].t;
+}
+
+/* ============================================================
    RENDER
    ============================================================ */
 function render(){
@@ -1365,6 +1567,7 @@ function render(){
   if(state.view==="practice") app.innerHTML=vPracticeHub();
   if(state.view==="gloss")    app.innerHTML=vGloss();
   if(state.view==="words")    app.innerHTML=vWords();
+  if(state.view==="surfaces") app.innerHTML=vSurfaces();
   if(state.view==="quiz")     app.innerHTML=vQuiz();
   if(state.view==="progress") app.innerHTML=vProgress();
   if(state.view==="resources")app.innerHTML=vResources();
@@ -1430,6 +1633,7 @@ function vMod(){
       <button class="${state.tab==="aprender"?"on":""}" data-a="tab" data-t="aprender">📖 Aprender</button>
       <button class="${state.tab==="practicar"?"on":""}" data-a="tab" data-t="practicar">🔬 Practicar</button>
     </div>
+    ${state.tab==="aprender"?`<button class="readaloud" data-a="read-aloud" title="Escuchar la lección en voz alta">🔊 Leer en voz alta</button>`:""}
     ${inner}
   </div>`;
 }
@@ -1562,6 +1766,98 @@ function vWords(){
     <input class="search" id="wsearch" type="search" placeholder="🔍 Busca (transformer, commit, async, CDN...)" value="${esc(state.wq)}">
     ${chips}
     <div id="wlist">${wordsList()}</div>
+  </div>`;
+}
+
+/* ---------- 🖥️ Vías de uso: Chat · Cowork · Code (potencial y límites) ---------- */
+const SURFACES = [
+  { id:"chat", icono:"💬", nombre:"Claude Chat", color:"#3b82f6",
+    lema:"Claude como conversación: el asistente que usas turno a turno.",
+    queEs:"Es la forma más conocida de usar Claude: una conversación. Disponible en la web (claude.ai) y en apps de escritorio y móvil. Tú escribes o hablas, Claude responde, y avanzan turno a turno. Es Claude como asistente y copiloto de pensamiento, sin nada técnico que instalar.",
+    comoFunciona:"Conversas dentro de una ventana de contexto. Puedes adjuntar archivos, imágenes y PDFs; activar búsqueda web (con citas); usar Proyectos (un espacio con tus instrucciones y archivos de referencia reutilizables); ver Artifacts (vistas interactivas de código o documentos en una barra lateral); y conectar herramientas externas vía conectores/MCP. En cada paso, tú llevas el volante.",
+    pro:[
+      "Escribir y reescribir: correos, informes, guiones, publicaciones; ajusta tono, largo y estilo en segundos.",
+      "Analizar documentos: pega o sube PDFs, imágenes o planillas y pregunta; resume, compara, extrae datos y explica.",
+      "Pensar y aprender: lluvia de ideas, tutor paciente, explicaciones a tu nivel, segundas opiniones, planificar.",
+      "Programación puntual: explicar código, cazar un bug, generar una función o un script, y verlo correr en un Artifact interactivo.",
+      "Visión: entiende imágenes (capturas, gráficos, fotos) y razona sobre ellas.",
+      "Búsqueda web con fuentes para traer información actual más allá de su fecha de corte.",
+      "Proyectos: instrucciones y conocimiento propios reutilizables entre conversaciones.",
+      "Inmediato y multiplataforma: web, escritorio, móvil y voz; cero fricción para empezar."
+    ],
+    con:[
+      "No es autónomo: avanza turno a turno y tú diriges cada paso. No «se hace la tarea solo» mientras te alejas.",
+      "No toca tu computador ni tus archivos: lo que produce queda en el chat o en un Artifact; no edita tus documentos locales ni ejecuta cosas en tu sistema (eso es Cowork o Code).",
+      "Límite de contexto por conversación: en chats muy largos puede «olvidar» lo del principio; conviene resumir o usar Proyectos.",
+      "Topes de uso según el plan: hay límites de mensajes por periodo.",
+      "Fecha de corte + alucinaciones: puede no saber lo más reciente (salvo que busque en la web) e inventar con seguridad; verifica lo crítico.",
+      "No corre tareas largas multipaso de fondo ni programadas."
+    ],
+    usar:"Para redactar, analizar un documento, aprender algo, pensar en voz alta o resolver una duda puntual (incluida de código). Es la opción por defecto del día a día.",
+    noUsar:"Cuando necesitas que Claude trabaje solo en una tarea larga sobre tus archivos de oficina (→ Cowork) o que edite tu código real y corra comandos (→ Code)." },
+
+  { id:"cowork", icono:"🤝", nombre:"Claude Cowork", color:"#8b5cf6",
+    lema:"Claude que trabaja solo en tu escritorio sobre tus archivos de oficina.",
+    queEs:"Cowork lleva las capacidades agénticas de Claude al trabajo de conocimiento (no técnico): «el poder de Claude Code, pero para trabajo de oficina». Vive en la app de escritorio (macOS y Windows), accede a tus archivos y aplicaciones locales, y completa tareas multipaso de principio a fin mientras te alejas. Está en los planes pagos (Pro, Max, Team y Enterprise).",
+    comoFunciona:"Le das un objetivo; Claude arma un plan, lo divide en subtareas (incluso con subagentes en paralelo), ejecuta —corriendo código y comandos en una máquina virtual aislada dentro de tu computador— y entrega los resultados directo a tu sistema de archivos. Tú eliges qué carpetas y conectores puede tocar. Dos modos: «preguntar antes de actuar» (pausa y pide aprobación) o «actuar sin preguntar» (más rápido, más riesgo); borrar archivos siempre pide permiso aparte. Soporta tareas programadas (revisar tu correo cada mañana, un resumen semanal de Slack) y Proyectos con memoria compartida.",
+    pro:[
+      "Hace la tarea completa, no solo la explica: lee, edita y crea archivos en las carpetas que autorices.",
+      "Salidas profesionales: Excel con fórmulas y formato condicional, PowerPoint desde notas o transcripciones, documentos editados «en su lugar».",
+      "Organiza archivos: renombra, ordena y deduplica carpetas; convierte una carpeta de recibos en un informe de gastos.",
+      "Investiga y sintetiza: combina búsquedas web, artículos y tus notas en un reporte coherente; analiza transcripciones (temas y tareas).",
+      "Análisis de datos: estadística (outliers, tablas cruzadas, series de tiempo) y visualizaciones.",
+      "Tareas largas y programadas: corre sin timeouts de conversación, en la cadencia que definas, con subagentes en paralelo.",
+      "Supervisión humana por diseño: te muestra el plan y espera tu aprobación; tú defines sus permisos. Las decisiones de peso quedan contigo.",
+      "Desde el móvil (Pro/Max) puedes asignarle tareas y tu escritorio las ejecuta."
+    ],
+    con:[
+      "Requiere la app de escritorio (macOS/Windows) abierta y el computador despierto: si lo cierras o se suspende, la sesión termina. No es web ni chat móvil.",
+      "Solo planes pagos (Pro, Max, Team, Enterprise).",
+      "Consume más uso que el chat normal: las tareas complejas son intensivas en cómputo.",
+      "Sin memoria entre sesiones sueltas (solo se conserva dentro de Proyectos) y no puedes compartir una sesión con otra persona.",
+      "No es para preguntas rápidas y simples (ahí el chat normal rinde más) ni para tareas que necesitan tu presencia y feedback en tiempo real.",
+      "Riesgos por su naturaleza agéntica + acceso a internet y archivos: hay que aprobar las acciones con cuidado, sobre todo con datos sensibles."
+    ],
+    usar:"Para una tarea larga y concreta sobre tus archivos o apps que quieres que Claude termine solo: armar el Excel, ordenar la carpeta, el reporte semanal automático, procesar recibos.",
+    noUsar:"Para una duda rápida (→ Chat) o para editar tu código fuente y correr tu proyecto de software (→ Code)." },
+
+  { id:"code", icono:"⌨️", nombre:"Claude Code", color:"#f59e0b",
+    lema:"Claude como ingeniero dentro de tu código: terminal, editor y git.",
+    queEs:"Claude Code es Claude trabajando como ingeniero dentro de tu entorno de desarrollo: la terminal y los editores (VS Code, JetBrains). Lee tu proyecto, escribe y edita archivos, corre comandos y construye software contigo, de forma agéntica. (Esta misma academia se construyó con Claude Code.)",
+    comoFunciona:"Le hablas en lenguaje natural sobre tu código; Claude explora el repositorio, planifica (modo plan), hace cambios en varios archivos, ejecuta comandos y tests, y usa git. Se extiende con MCP (conectar herramientas y datos), Skills (habilidades), comandos propios (slash-commands), hooks (automatizaciones) y subagentes (trabajo en paralelo). Corre en tu máquina con los permisos que le des, y tú revisas y apruebas. También hay una versión en la nube/web para tareas asíncronas.",
+    pro:[
+      "Ingeniería real sobre tu código: cambios en muchos archivos a la vez, refactors grandes, features completas y arreglo de bugs con causa raíz.",
+      "Ejecuta de verdad: corre comandos, tests, linters y builds, e itera hasta que pase.",
+      "Git integrado: ramas, commits y pull requests; historial revisable paso a paso.",
+      "Autónomo y multipaso: toma un objetivo y trabaja largo rato; el modo plan acuerda el enfoque antes de tocar nada.",
+      "Extensible a tu flujo: MCP, Skills, hooks, subagentes y comandos propios; lo adaptas a ti y a tu equipo.",
+      "En tu máquina, con tus herramientas: trabaja sobre el proyecto real, no una copia en la nube.",
+      "Vive en terminal e IDE, con versión en la nube para correr tareas en segundo plano."
+    ],
+    con:[
+      "Es para perfiles técnicos: está pensado para programar y requiere comodidad con la terminal y el desarrollo. No es la vía para trabajo de oficina no técnico (→ Cowork).",
+      "Corre con permisos en tu sistema: puede hacer cambios destructivos si lo dejas sin supervisión. Trabaja en ramas de git y revisa el diff antes de aceptar.",
+      "Necesita revisión humana: muy capaz, pero puede equivocarse o «alucinar» APIs; tú firmas el código.",
+      "El costo escala con el uso intenso: las sesiones agénticas largas consumen bastante.",
+      "Enfoque en código: no es para redactar tu informe de marketing ni armar tu presentación (eso es Chat o Cowork)."
+    ],
+    usar:"Para construir o modificar software de verdad sobre tu repositorio: features, refactors y arreglos con ejecución y tests, y automatizar tareas de desarrollo.",
+    noUsar:"Si no programas, o si la tarea es de oficina/documentos (→ Cowork) o una consulta rápida (→ Chat)." }
+];
+function vSurfaces(){
+  const s = SURFACES.find(x=>x.id===state.surf) || SURFACES[0];
+  const subs = SURFACES.map(x=>`<button class="${state.surf===x.id?"on":""}" data-a="surf" data-s="${x.id}" style="--cc:${x.color}">${x.icono} ${esc(x.nombre.replace("Claude ",""))}</button>`).join("");
+  const li = arr => arr.map(t=>`<li>${esc(t)}</li>`).join("");
+  return `<div class="view" style="--cc:${s.color}">
+    <p class="intro">🖥️ Claude no es una sola cosa: se usa por <b>tres vías</b> con poderes muy distintos. Aquí, el <b>potencial</b> y las <b>limitaciones</b> de cada una. Regla rápida: <b>Chat</b> para conversar y pensar · <b>Cowork</b> para que trabaje solo en tus archivos de oficina · <b>Code</b> para construir software en tu repo.</p>
+    <div class="subtabs tri">${subs}</div>
+    <div class="cathead"><span class="em">${s.icono}</span><div><h2>${esc(s.nombre)}</h2><p>${esc(s.lema)}</p></div></div>
+    <div class="block"><b>🧭 ¿Qué es?</b><p>${esc(s.queEs)}</p></div>
+    <div class="block"><b>⚙️ ¿Cómo funciona?</b><p>${esc(s.comoFunciona)}</p></div>
+    <div class="block pro"><b>🟢 Potencial</b><ul>${li(s.pro)}</ul></div>
+    <div class="block con"><b>🔴 Limitaciones</b><ul>${li(s.con)}</ul></div>
+    <div class="block"><b>🎯 Cuándo usarlo</b><p>${esc(s.usar)}</p></div>
+    <div class="block"><b>🚫 Cuándo NO</b><p>${esc(s.noUsar)}</p></div>
   </div>`;
 }
 
@@ -1713,6 +2009,14 @@ document.addEventListener("click",e=>{
   const el=e.target.closest("[data-a]"); if(!el) return;
   const act=el.dataset.a;
 
+  // cualquier acción que no sea control de lectura detiene la lectura en curso
+  if(lector.activo && !["read-toggle","read-stop","read-aloud","read-speed"].includes(act)) pararLectura();
+
+  if(act==="read-aloud"){ iniciarLectura(); return; }
+  if(act==="read-toggle"){ alternarPausaLectura(); return; }
+  if(act==="read-speed"){ cambiarVelocidadLectura(); return; }
+  if(act==="read-stop"){ pararLectura(); toast("⏹️ Lectura detenida"); return; }
+
   if(act==="enter"){ $("#splash").hidden=true; sessionStorage.setItem("iadSplash","1"); fanfare(); }
   if(act==="nav"){ state.view=el.dataset.v; state.mod=null; state.quiz=null; tick(); render(); window.scrollTo(0,0); }
   if(act==="mod"){ state.view="mod"; state.mod=el.dataset.id; state.tab="aprender"; state.fcOrder=[]; state.fcIdx=0; state.fcFlip=false; tick(); render(); window.scrollTo(0,0); }
@@ -1742,6 +2046,7 @@ document.addEventListener("click",e=>{
     save(); checkAll(); render();
   }
   if(act==="gmod"){ state.gmod=el.dataset.id; tick(); render(); }
+  if(act==="surf"){ state.surf=el.dataset.s; tick(); render(); window.scrollTo(0,0); }
 
   if(act==="wgroup"){ state.wg=el.dataset.id; tick(); render(); }
   if(act==="wlearn"){
