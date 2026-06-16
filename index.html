@@ -2876,11 +2876,16 @@ function toggleSound(){ soundOn=!soundOn; localStorage.setItem("iadSound",soundO
 applySound();
 
 let defPrompt=null;
-const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
 const standalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone;
-window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); defPrompt=e; if(!standalone) $("#btnInstall").hidden=false; });
-if(!standalone) $("#btnInstall").hidden=false;   // mostrar siempre que no esté ya instalada
-window.addEventListener("appinstalled",()=>{ $("#btnInstall").hidden=true; toast("✅ ¡App instalada!"); });
+const yaInstalada = ()=> standalone || localStorage.getItem("iadInstalled")==="1";
+function verInstall(v){ const b=$("#btnInstall"); if(b) b.hidden=!v; }
+// El botón solo aparece cuando hay instalación REAL disponible:
+//  · Android/escritorio (Chrome/Edge): cuando el navegador dispara beforeinstallprompt
+//  · iOS (Safari): no existe ese evento, pero sí «Agregar a pantalla de inicio»
+window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); defPrompt=e; if(!yaInstalada()) verInstall(true); });
+if(isIOS && !yaInstalada()) verInstall(true);
+window.addEventListener("appinstalled",()=>{ localStorage.setItem("iadInstalled","1"); defPrompt=null; verInstall(false); toast("✅ ¡App instalada!"); });
 async function doShare(){
   const url="https://la-ia-por-dentro.vercel.app";
   const datos={ title:"La IA por Dentro", text:"Entiende la IA por dentro y aprende a crear apps — academia gratis. 🚀", url };
@@ -2889,9 +2894,13 @@ async function doShare(){
   catch(_){ toast("Comparte este enlace: "+url); }
 }
 function doInstall(){
-  if(defPrompt){ defPrompt.prompt(); defPrompt=null; return; }   // instalación nativa de 1 toque (Android/Chrome)
-  if(isIOS){ toast("📲 Toca Compartir ⬆️ (abajo) y elige «Agregar a pantalla de inicio»"); return; }
-  toast("📲 Abre el menú del navegador (⋮ o ⋯) y elige «Instalar app»");
+  if(defPrompt){   // instalación nativa de 1 toque (Android/Chrome/Edge)
+    defPrompt.prompt();
+    defPrompt.userChoice.then(r=>{ if(r && r.outcome==="accepted"){ localStorage.setItem("iadInstalled","1"); verInstall(false); } defPrompt=null; });
+    return;
+  }
+  if(isIOS){ toast("📲 Toca Compartir ⬆️ abajo en Safari y elige «Agregar a pantalla de inicio»"); return; }
+  toast("ℹ️ Tu navegador la instala desde su menú (⋮) → «Instalar app»");
 }
 
 if(!sessionStorage.getItem("iadSplash")) $("#splash").hidden=false;
