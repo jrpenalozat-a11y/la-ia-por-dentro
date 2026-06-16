@@ -1422,7 +1422,7 @@ if("speechSynthesis" in window){ loadVoices(); window.speechSynthesis.onvoicesch
 function speak(text){
   if(!("speechSynthesis" in window)){ toast("🔇 Tu navegador no permite la voz"); return; }
   if(!voices.length) loadVoices();
-  const v=voices.find(x=>/^en/i.test(x.lang));
+  const v=vozIngles();
   if(!v){ toast("🔇 Instala una voz en inglés en tu dispositivo para escuchar la pronunciación"); return; }
   const clean=String(text).replace(/\(.*?\)/g,"").replace(/[·—&\/]/g," ").trim();
   const u=new SpeechSynthesisUtterance(clean);
@@ -1539,8 +1539,20 @@ function enPantalla(el){
 /* recordar la velocidad elegida entre sesiones */
 lector.vi = Math.min(Math.max(parseInt(localStorage.getItem("iadReadVel"),10)||1,0), VELS.length-1);
 
-function vozEspanol(){ if(!voices.length) loadVoices(); return voices.find(v=>/^es/i.test(v.lang)) || null; }
-function vozIngles(){ if(!voices.length) loadVoices(); return voices.find(v=>/^en/i.test(v.lang)) || null; }
+/* Elige la mejor voz por orden de preferencia de locale.
+   Prioriza español LATINOAMERICANO (y de Chile) sobre el de España, y dentro
+   de cada locale prefiere voces de mayor calidad (Google/natural/neural). */
+function elegirVoz(prefs){
+  if(!voices.length) loadVoices();
+  const calidad = v => /google|natural|neural|premium|enhanced|online/i.test(v.name||"") ? 0 : 1;
+  for(const re of prefs){
+    const cands = voices.filter(v=>re.test(v.lang)).sort((a,b)=>calidad(a)-calidad(b));
+    if(cands.length) return cands[0];
+  }
+  return null;
+}
+function vozEspanol(){ return elegirVoz([ /es[-_](CL|419|US|MX|AR|CO|PE|VE|EC|UY|PY|BO|CR|GT|DO|PA|NI|HN|SV)/i, /^es(?![-_]?ES)/i, /^es/i ]); }
+function vozIngles(){ return elegirVoz([ /en[-_]US/i, /en[-_]GB/i, /^en/i ]); }
 
 /* cicla a la siguiente velocidad; si está leyendo, re-dice la frase
    actual a la nueva velocidad (el rate no se puede cambiar en caliente) */
