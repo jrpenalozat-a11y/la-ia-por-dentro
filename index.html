@@ -354,6 +354,54 @@ button:active{transform:scale(.98)}
 .block ul{margin:2px 0 0;padding-left:20px}
 .block li{font-size:.9rem;line-height:1.55;margin-bottom:6px}
 .block li:last-child{margin-bottom:0}
+
+/* ---------- 👤 Personajes de la IA ---------- */
+.pjlead{font-size:.84rem;line-height:1.55;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 15px;margin-bottom:10px;box-shadow:var(--shadow2)}
+.pjlead b{color:var(--ink)}
+.pjchips{display:flex;gap:7px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;scrollbar-width:none}
+.pjchips::-webkit-scrollbar{display:none}
+.pjchips button{flex:none;padding:7px 12px;border-radius:99px;font-size:.72rem;font-weight:700;background:var(--card);border:1px solid var(--line);color:var(--muted);box-shadow:var(--shadow2);white-space:nowrap}
+.pjchips button.on{background:var(--grad);color:#fff;border-color:transparent}
+.pjcount{font-size:.74rem;color:var(--muted);font-weight:600;margin:2px 2px 10px}
+.pj{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:11px;box-shadow:var(--shadow2);overflow:hidden;--cc:#3b82f6}
+.pj.open{border-color:color-mix(in srgb,var(--cc) 45%,var(--line))}
+.pjhead{width:100%;text-align:left;display:flex;align-items:center;gap:11px;padding:13px 14px}
+.pjem{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;flex:none;background:color-mix(in srgb,var(--cc) 16%,transparent)}
+.pjt{flex:1;min-width:0}
+.pjt h3{font-size:1rem;line-height:1.2}
+.pjrole{font-size:.71rem;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pjexp{font-size:1.05rem;color:var(--muted);flex:none;transition:transform .2s}
+.pj.open .pjexp{transform:rotate(90deg)}
+.pjmetrics{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}
+.mchip{font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:99px;display:inline-flex;gap:4px;align-items:center;border:1px solid transparent}
+.mchip .ml{opacity:.65;font-weight:600}
+.mchip.n1{background:color-mix(in srgb,var(--good) 15%,transparent);color:var(--good)}
+.mchip.n2{background:color-mix(in srgb,var(--warn) 17%,transparent);color:var(--warn)}
+.mchip.n3{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
+.mchip.ori{background:color-mix(in srgb,var(--cc) 15%,transparent);color:var(--cc)}
+.mchip.hist{background:color-mix(in srgb,var(--muted) 18%,transparent);color:var(--muted)}
+.pjmeta{font-size:.83rem;line-height:1.55;color:var(--ink);background:color-mix(in srgb,var(--cc) 9%,transparent);border:1px solid color-mix(in srgb,var(--cc) 28%,var(--line));border-radius:11px;padding:10px 12px;margin-top:11px}
+.pjmeta b{color:var(--cc)}
+.pjbody{display:none;padding:2px 14px 15px;border-top:1px solid var(--line)}
+.pj.open .pjbody{display:block;animation:fadeUp .25s ease}
+.pjrow{font-size:.85rem;line-height:1.5;margin-top:10px}
+.pjrow b{color:var(--cc);font-weight:700}
+.pjblock{padding:10px 12px;border-radius:11px;margin-top:9px;background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line)}
+.pjblock b{display:block;font-size:.65rem;letter-spacing:.04em;text-transform:uppercase;color:var(--cc);margin-bottom:4px;font-weight:700}
+.pjblock p{font-size:.88rem;line-height:1.55}
+.pjacts{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.pjsrc{display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:11px;font-size:.8rem;font-weight:700;text-decoration:none;color:var(--cc);border:1px dashed var(--cc);background:color-mix(in srgb,var(--cc) 8%,transparent)}
+.pjsrc:hover{background:color-mix(in srgb,var(--cc) 16%,transparent)}
+.pjnote{font-size:.74rem;color:var(--muted);line-height:1.5;background:color-mix(in srgb,var(--warn) 8%,transparent);border:1px solid color-mix(in srgb,var(--warn) 28%,var(--line));border-radius:12px;padding:11px 13px;margin:10px 0 10px}
+.pjlegend{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:0 14px;margin-bottom:12px;box-shadow:var(--shadow2)}
+.pjlegend summary{cursor:pointer;font-weight:700;font-size:.84rem;padding:12px 0;color:var(--blue);list-style:none}
+.pjlegend summary::-webkit-details-marker{display:none}
+.pjlegend summary::before{content:"ⓘ ";}
+.pjlegend[open] summary{border-bottom:1px solid var(--line)}
+.pjlegbody{padding:10px 0 12px}
+.pjlegbody p{font-size:.82rem;line-height:1.55;color:var(--muted);margin-bottom:8px}
+.pjlegbody p:last-child{margin-bottom:0}
+.pjlegbody b{color:var(--ink)}
 </style>
 </head>
 <body class="dark">
@@ -1366,7 +1414,252 @@ let milestones = loadSet("iadMilestones");
 let medals     = loadSet("iadMedals");
 let wordsLearned = loadSet("iadWords");   // 💻 palabras de la sección Código
 
-const state = { view:"home", mod:null, tab:"aprender", fcOrder:[], fcIdx:0, fcFlip:false, gq:"", gmod:"", quiz:null, wq:"", wg:"", surf:"chat" };
+const state = { view:"home", mod:null, tab:"aprender", fcOrder:[], fcIdx:0, fcFlip:false, gq:"", gmod:"", quiz:null, wq:"", wg:"", surf:"chat", pcat:"", pori:"", pq:"" };
+
+/* ============================================================
+   👤 PERSONAJES DE LA IA — 40 figuras en 10 categorías.
+   Cada ficha: lectura editorial (riesgo/regulación/apertura/orientación)
+   + datos verificables. Fuente: Britannica (o Stanford Encyclopedia of
+   Philosophy para los filósofos), nunca Wikipedia.
+   ============================================================ */
+const PCATS = [
+  { id:"fundadores", n:"Fundadores y Precursores",            em:"🏛️" },
+  { id:"deep",       n:"Arquitectos del Deep Learning",       em:"🧠" },
+  { id:"comercial",  n:"Líderes de la Era Comercial",         em:"🚀" },
+  { id:"infra",      n:"Infraestructura y Hardware",          em:"⚙️" },
+  { id:"practicos",  n:"Arquitectos Prácticos y Divulgación", em:"🛠️" },
+  { id:"agi",        n:"Arquitectos de AGI",                  em:"🌐" },
+  { id:"modelos",    n:"Arquitectos de Modelos",              em:"🤖" },
+  { id:"etica",      n:"Ética y Alineación",                  em:"⚖️" },
+  { id:"mente",      n:"Filósofos de la Mente",               em:"💭" },
+  { id:"gobernanza", n:"Ética y Gobernanza",                  em:"📜" }
+];
+const PERSONAJES = [
+/* ===== 1 · Fundadores y Precursores ===== */
+{ n:"Alan Turing", cat:"fundadores", era:"Pre-IA histórica", hist:true, sub:"Funcionalismo temprano", ori:"Neutral", ri:"Bajo", rg:"Baja", ap:"Media",
+  nac:"Londres, Reino Unido", dnd:"Reino Unido", ins:"Universidad de Cambridge · Bletchley Park · Laboratorio Nacional de Física (NPL) · Universidad de Mánchester",
+  des:"Matemático, lógico y criptógrafo británico, considerado el padre de la informática teórica y un precursor de la inteligencia artificial. Estudió en Cambridge y se doctoró en Princeton bajo Alonzo Church. Su mente unió la lógica más abstracta con problemas físicos y biológicos concretos: trabajó en computación, criptografía, ajedrez por computador y morfogénesis (cómo surgen los patrones en la naturaleza). Murió en 1954, perseguido judicialmente por su homosexualidad; en 2013 recibió un perdón real póstumo.",
+  hit:"En 1936, con 24 años, publicó «On Computable Numbers», donde definió la Máquina Universal de Turing: un modelo matemático que delimitó qué puede y qué no puede calcular una máquina, fundando la teoría de la computación. En la Segunda Guerra Mundial lideró en Bletchley Park al equipo que descifró la máquina Enigma de la Armada alemana, diseñando la electromecánica «Bombe»; se estima que acortó la guerra varios años y salvó millones de vidas. En 1950 publicó «Computing Machinery and Intelligence», donde planteó «¿pueden pensar las máquinas?» y propuso el Juego de la Imitación, hoy llamado Test de Turing.",
+  alc:"Su Máquina Universal es el fundamento conceptual de todo computador moderno: la idea de que un único dispositivo programable puede ejecutar cualquier algoritmo. El Test de Turing sigue siendo, 75 años después, el punto de partida de casi todo debate sobre inteligencia, conciencia y evaluación de máquinas. Sus trabajos sobre morfogénesis anticiparon la biología computacional.",
+  ctx:"Idea clave: separar la inteligencia de su sustrato. Para Turing lo decisivo no es de qué está hecha una mente, sino qué puede hacer; si una máquina conversa de forma indistinguible de un humano, preguntar si «realmente» piensa pierde sentido práctico. Esa postura funcionalista abrió —y sigue alimentando— el debate que retomarían Searle, Dennett y Putnam.",
+  meta:"Riesgo y Regulación bajos porque trabajó en una era anterior a la IA capaz de causar daños a escala, y no se pronunció sobre su control; la Apertura media y la orientación neutral reflejan a un científico que compartía ideas pero sin militar en debates de gobernanza que aún no existían. Las etiquetas describen su contexto histórico, no una postura explícita." },
+{ n:"John McCarthy", cat:"fundadores", era:"Pioneros fundacionales", hist:true, sub:"Racionalismo simbólico", ori:"Neutral", ri:"Bajo", rg:"Baja", ap:"Media",
+  nac:"Boston, Massachusetts, EE. UU.", dnd:"Estados Unidos", ins:"Princeton · Dartmouth College · MIT · Stanford",
+  des:"Científico de la computación y lógico estadounidense, una de las mentes fundadoras de la IA como disciplina. Doctorado en matemáticas en Princeton, enseñó en Dartmouth, el MIT y, durante casi cuatro décadas, en Stanford, donde dirigió su laboratorio de IA (SAIL). Defendía una IA basada en la lógica formal: creía que el conocimiento y el sentido común podían representarse con enunciados lógicos que una máquina manipulara para razonar.",
+  hit:"En 1955 acuñó el término «Inteligencia Artificial» en la propuesta de la Conferencia de Dartmouth de 1956, el evento fundacional del campo. En 1958 inventó LISP, uno de los lenguajes de programación más antiguos aún en uso, que introdujo ideas revolucionarias como la recursión, las listas enlazadas y la recolección automática de memoria (garbage collection). Fue pionero de la computación por tiempo compartido (varios usuarios en un mismo computador) y anticipó la idea de la computación como servicio público, antecedente de la nube. Recibió el Premio Turing en 1971.",
+  alc:"LISP fue durante décadas EL lenguaje de la investigación en IA y aún influye en lenguajes modernos. La computación por tiempo compartido que impulsó es el ancestro directo de los sistemas operativos multiusuario y de la nube. Su programa de «IA lógica» definió uno de los dos grandes paradigmas del campo (el simbólico), dominante hasta los años 90.",
+  ctx:"Idea clave: el sentido común como problema lógico. McCarthy pensaba que una IA realmente inteligente debía representar y razonar sobre el conocimiento cotidiano del mundo. Ese «problema del sentido común» resultó mucho más difícil de lo previsto y sigue abierto; es una de las razones por las que la IA simbólica cedió terreno frente al aprendizaje estadístico, aunque hoy resurge el interés por combinar ambos.",
+  meta:"Como pionero centrado en construir las bases técnicas, McCarthy no enmarcó la IA como un riesgo a controlar: de ahí Riesgo y Regulación bajos. Promovía el intercambio académico de ideas (Apertura media), pero sin ideología sobre abrir o cerrar modelos, un debate que llegaría medio siglo después." },
+{ n:"Marvin Minsky", cat:"fundadores", era:"Pioneros fundacionales", hist:true, sub:"IA clásica y tecno-optimismo", ori:"Pro-automatización", ri:"Bajo", rg:"Baja", ap:"Media",
+  nac:"Nueva York, EE. UU.", dnd:"Estados Unidos", ins:"Harvard · MIT",
+  des:"Científico cognitivo y de la computación estadounidense, cofundador del laboratorio de IA del MIT y una figura intelectual omnívora: trabajó en matemáticas, neurociencia, robótica, óptica (inventó el microscopio confocal) y filosofía de la mente. Padre de la IA y mentor de generaciones de investigadores, fue asesor de Stanley Kubrick en «2001: Odisea del espacio».",
+  hit:"Participó en la Conferencia de Dartmouth (1956) y en 1959 cofundó con McCarthy el Laboratorio de IA del MIT. En 1969 publicó con Seymour Papert «Perceptrons», un análisis que demostró las limitaciones de las redes neuronales de una sola capa (no podían resolver problemas tan simples como el XOR); el libro enfrió el financiamiento de las redes neuronales durante años (el «invierno conexionista»). En 1986 publicó «The Society of Mind», donde propuso que la inteligencia emerge de muchos procesos simples y «no inteligentes». Recibió el Premio Turing en 1969.",
+  alc:"Estructuró la IA simbólica y la ciencia cognitiva durante dos décadas. «Perceptrons» retrasó —pero también clarificó— el desarrollo de las redes neuronales: las limitaciones que señaló se superaron con las redes multicapa y la retropropagación, base del deep learning actual. «The Society of Mind» influyó en la arquitectura de agentes y en la idea de inteligencia distribuida.",
+  ctx:"Idea clave y debate: la mente como «sociedad» de agentes. Minsky rechazaba que existiera un único mecanismo mágico de la inteligencia; para él la mente es un enjambre de procesos especializados. Su escepticismo hacia las redes neuronales lo enfrentó al enfoque conexionista que acabaría triunfando: un caso ejemplar de cómo una crítica técnica acertada puede, sin querer, frenar una vía prometedora.",
+  meta:"Minsky era tecno-optimista: confiaba en que las máquinas pensantes eran posibles y deseables, sin verlas como un peligro inminente (Riesgo y Regulación bajos). Su orientación «Pro-automatización» refleja ese entusiasmo por construir mentes artificiales; la Apertura media corresponde a la cultura académica de compartir avances de su época." },
+{ n:"Allen Newell", cat:"fundadores", era:"Pioneros fundacionales", hist:true, sub:"Computacionalismo simbólico", ori:"Neutral", ri:"Bajo", rg:"Baja", ap:"Media",
+  nac:"San Francisco, California, EE. UU.", dnd:"Estados Unidos", ins:"RAND Corporation · Carnegie Mellon (CMU)",
+  des:"Investigador estadounidense en ciencias de la computación y psicología cognitiva, profesor en Carnegie Mellon y figura central en el nacimiento de la IA y de la ciencia cognitiva. Junto a Herbert Simon formó una de las colaboraciones más fecundas del campo, buscando entender la mente humana construyendo programas que la imitaran.",
+  hit:"En 1956 creó con Simon y Cliff Shaw «Logic Theorist», considerado el primer programa de inteligencia artificial: demostró teoremas de los «Principia Mathematica», y para uno halló una prueba más elegante que la original. Después desarrollaron el «General Problem Solver» (GPS), que resolvía problemas mediante análisis de medios-fines. Formuló con Simon la hipótesis del «sistema de símbolos físicos» (1976): manipular símbolos sería condición necesaria y suficiente para la inteligencia. Al final de su vida creó «Soar», una arquitectura cognitiva unificada. Premio Turing en 1975 junto a Simon.",
+  alc:"Logic Theorist y GPS definieron el método de la IA temprana: la búsqueda heurística en espacios de problemas. La hipótesis del sistema de símbolos físicos fue el manifiesto filosófico de la IA simbólica durante décadas. Soar sigue usándose en investigación de arquitecturas cognitivas y modelado de la cognición.",
+  ctx:"Idea clave: la inteligencia como búsqueda. Para Newell, pensar es explorar de forma inteligente un enorme árbol de posibilidades, podando con heurísticas las ramas inútiles. Esa visión —resolver problemas como navegar un espacio de estados— sigue viva hoy en sistemas como AlphaGo, que combina búsqueda con redes neuronales.",
+  meta:"Investigador fundacional enfocado en entender la cognición, no en sus consecuencias sociales: por eso Riesgo y Regulación bajos y orientación neutral. Trabajaba en un entorno académico-militar donde compartir resultados era la norma (Apertura media), pero sin tomar postura sobre la gobernanza de una IA todavía incipiente." },
+{ n:"Herbert Simon", cat:"fundadores", era:"Pioneros fundacionales", hist:true, sub:"Pragmatismo conductual", ori:"Pragmático", ri:"Bajo", rg:"Baja", ap:"Media",
+  nac:"Milwaukee, Wisconsin, EE. UU.", dnd:"Estados Unidos", ins:"UC Berkeley · Illinois Institute of Technology · Carnegie Mellon (CMU)",
+  des:"Polímata estadounidense —economista, politólogo, psicólogo y científico de la computación—, profesor en Carnegie Mellon durante medio siglo. Una de las pocas personas reconocidas tanto en ciencias sociales como en computación; su obsesión fue entender cómo deciden las personas y las organizaciones con información y capacidad limitadas.",
+  hit:"Desarrolló la teoría de la «racionalidad limitada»: los humanos no optimizan (no eligen la mejor opción posible) sino que «satisfacen» (toman la primera opción suficientemente buena), porque su tiempo, información y cómputo mental son finitos. Por esa idea recibió el Premio Nobel de Economía en 1978. En paralelo, junto a Newell, creó Logic Theorist y GPS y ayudó a fundar la IA simbólica y la ciencia cognitiva. Premio Turing en 1975.",
+  alc:"La racionalidad limitada transformó la economía (origen de la economía conductual de Kahneman y Thaler), la teoría de la administración y el diseño de organizaciones. Su trabajo computacional ayudó a fundar la IA. Pocas personas han influido tan hondo en dos campos tan distintos a la vez.",
+  ctx:"Idea clave: inteligencia con recursos limitados. Mucho antes de que se hablara de «presupuesto de cómputo» en los modelos, Simon entendió que toda mente —humana o artificial— decide bajo restricciones de tiempo y memoria. Esa perspectiva es hoy central en la IA: no se trata de razonar perfectamente, sino lo bastante bien con los recursos disponibles.",
+  meta:"Pragmático por excelencia, a Simon le interesaba qué funcionaba para entender y mejorar la toma de decisiones, no advertir sobre peligros (Riesgo y Regulación bajos). La Apertura media refleja la cultura científica de su tiempo; su orientación «Pragmática» resume una carrera dedicada a soluciones realistas más que a posturas ideológicas." },
+{ n:"Arthur Samuel", cat:"fundadores", era:"Pre-IA histórica", hist:true, sub:"Aprendizaje automático temprano", ori:"Pro-automatización", ri:"Bajo", rg:"Baja", ap:"Media",
+  nac:"Emporia, Kansas, EE. UU.", dnd:"Estados Unidos", ins:"Universidad de Illinois · IBM · Stanford",
+  des:"Ingeniero electrónico estadounidense, pionero de la computación en IBM y luego profesor en Stanford. Es el padre del concepto de «aprendizaje automático»: en vez de programar a la máquina con todas las reglas, le enseñó a mejorar por su cuenta a partir de la experiencia.",
+  hit:"Acuñó el término «machine learning» en 1959 y, desde 1952, desarrolló para la IBM 701 un programa que jugaba a las damas (checkers) y —lo crucial— aprendía: ajustaba su evaluación de las jugadas tras cada partida y llegó a jugar mejor que su propio creador. Fue una de las primeras demostraciones de que un computador podía adquirir una habilidad sin ser programado para cada caso. Su programa usó tempranamente técnicas que hoy llamaríamos búsqueda con poda alfa-beta y una forma rudimentaria de aprendizaje por refuerzo.",
+  alc:"Su programa de damas fue una prueba de concepto histórica: mostró, dentro de una empresa y con hardware primitivo, que el software podía aprender de los datos. Esa idea —el corazón del machine learning— es hoy la tecnología dominante en IA, detrás de buscadores, recomendadores y grandes modelos de lenguaje.",
+  ctx:"Idea clave: programar el aprendizaje, no la solución. Samuel invirtió la lógica habitual: en lugar de decirle a la máquina QUÉ hacer en cada situación, le dio una forma de evaluar resultados y mejorar sola. Setenta años después, ese mismo principio —aprender de la experiencia en vez de seguir reglas fijas— es lo que separa la IA moderna de la programación tradicional.",
+  meta:"Ingeniero corporativo entusiasta del software que aprende, Samuel veía la automatización como progreso, no como amenaza (Riesgo y Regulación bajos, orientación «Pro-automatización»). Trabajaba dentro de IBM, donde el conocimiento se compartía solo en parte (Apertura media), en una época sin debate sobre abrir o cerrar la tecnología." },
+{ n:"Norbert Wiener", cat:"fundadores", era:"Pre-IA histórica", hist:true, sub:"Cibernética y control", ori:"Precautorio", ri:"Medio", rg:"Media", ap:"Media",
+  nac:"Columbia, Misuri, EE. UU.", dnd:"Estados Unidos", ins:"Harvard · Universidad de Gotinga · MIT",
+  des:"Matemático estadounidense, niño prodigio que se doctoró en Harvard a los 18 años. Trabajó en probabilidad, procesamiento de señales y balística, pero su gran aporte fue fundar la cibernética: la ciencia del control y la comunicación en animales y máquinas. Fue además uno de los primeros científicos en reflexionar públicamente sobre las consecuencias sociales y éticas de la automatización.",
+  hit:"En 1948 publicó «Cybernetics: or Control and Communication in the Animal and the Machine», que dio nombre y marco a un nuevo campo. Su idea central fue la retroalimentación (feedback): los sistemas —un termostato, un cerebro, una economía— se autorregulan comparando su resultado con un objetivo y corrigiendo el error. En 1950 publicó «The Human Use of Human Beings», donde advirtió que la automatización podía deshumanizar el trabajo y concentrar el poder, anticipando los debates actuales sobre IA y empleo.",
+  alc:"La cibernética influyó en la ingeniería de control, la neurociencia, la teoría de sistemas, la economía y la propia IA. El concepto de feedback es hoy ubicuo, desde el control industrial hasta el «aprendizaje por retroalimentación humana» (RLHF) con que se entrenan los grandes modelos de lenguaje. Su voz ética fue pionera.",
+  ctx:"Idea clave y advertencia temprana: la máquina como sistema con propósito. Wiener vio antes que nadie que máquinas y seres vivos podían describirse con las mismas matemáticas de control e información. Pero también fue el primer gran tecnólogo en advertir, preocupado, que delegar el control a las máquinas tenía riesgos sociales —una postura precautoria que hoy resuena en el debate sobre la seguridad de la IA.",
+  meta:"Aquí las etiquetas suben: Wiener fue el primer gran tecnólogo en ADVERTIR sobre los riesgos sociales de la automatización (Riesgo medio) y en sugerir que la sociedad debía encauzarla (Regulación media). Su orientación «Precautoria» lo distingue de los demás fundadores, mayormente neutrales u optimistas: anticipó, preocupado, debates que hoy son centrales." },
+/* ===== 2 · Arquitectos del Deep Learning ===== */
+{ n:"Geoffrey Hinton", cat:"deep", era:"Deep Learning y transición", hist:false, sub:"AI Safety / alarma existencial", ori:"Precautorio", ri:"Alto", rg:"Alta", ap:"Baja",
+  nac:"Wimbledon, Londres, Reino Unido", dnd:"Reino Unido, EE. UU. y Canadá", ins:"Carnegie Mellon · Universidad de Toronto · Google Brain",
+  des:"Psicólogo cognitivo e informático teórico enfocado en simular el comportamiento de las redes de neuronas biológicas en arquitecturas artificiales.",
+  hit:"Co-desarrolló el algoritmo de backpropagation (1986), recibió el Premio Turing (2018) y el Nobel de Física (2024). En 2023 dejó Google para advertir sobre los riesgos de los modelos generativos.",
+  alc:"Global: lideró la transición de Occidente desde la IA lógica hacia el procesamiento estadístico y conexionista contemporáneo." },
+{ n:"Yann LeCun", cat:"deep", era:"Deep Learning y transición", hist:false, sub:"Tecno-optimismo / open source", ori:"Pro-automatización", ri:"Medio", rg:"Baja", ap:"Alta",
+  nac:"Soisy-sous-Montmorency, Francia", dnd:"Francia y Estados Unidos", ins:"Universidad de Toronto · AT&T Bell Labs · NYU · Meta (Científico Jefe de IA)",
+  des:"Ingeniero y científico de la computación especializado en percepción computacional, reconocimiento de patrones visuales y procesamiento de imágenes.",
+  hit:"Creó las Redes Neuronales Convolucionales (CNN) con el sistema LeNet (1989), que automatizó la lectura de cheques bancarios. Premio Turing (2018).",
+  alc:"Industrial y perceptivo: reestructuró la visión artificial e influye en las plataformas de Meta y la navegación autónoma del automóvil." },
+{ n:"Yoshua Bengio", cat:"deep", era:"Deep Learning y transición", hist:false, sub:"Precaución estatal / regulación", ori:"Precautorio", ri:"Alto", rg:"Alta", ap:"Media",
+  nac:"París, Francia", dnd:"Canadá", ins:"MIT · AT&T Bell Labs · Universidad de Montreal · Mila",
+  des:"Científico de la computación enfocado en el aprendizaje de representaciones, los modelos probabilísticos secuenciales y el aprendizaje profundo.",
+  hit:"Pionero del uso de redes neuronales en el procesamiento de lenguaje natural. Premio Turing (2018) y firmante clave de tratados de seguridad sobre IA de frontera.",
+  alc:"Teórico y gubernamental: aportó bases de los modelos lingüísticos modernos y preside comités asesores de seguridad para naciones de la OCDE." },
+{ n:"Jürgen Schmidhuber", cat:"deep", era:"Deep Learning y transición", hist:false, sub:"Aceleracionismo / post-humanismo", ori:"Pro-automatización", ri:"Medio", rg:"Baja", ap:"Media",
+  nac:"Múnich, Alemania", dnd:"Alemania, Suiza y Arabia Saudita", ins:"Universidad Técnica de Múnich · IDSIA · Universidad de Lugano · KAUST",
+  des:"Científico computacional dedicado a las redes neuronales recurrentes, el aprendizaje continuo y la optimización algorítmica.",
+  hit:"Co-inventó la arquitectura recurrente LSTM (1997), que resolvió el problema del desvanecimiento del gradiente en datos secuenciales.",
+  alc:"Arquitectónico y secuencial: su software sirvió como base del reconocimiento de voz y la traducción de miles de millones de teléfonos durante dos décadas." },
+{ n:"Fei-Fei Li", cat:"deep", era:"Deep Learning y transición", hist:false, sub:"Human-Centered AI", ori:"Humanista", ri:"Medio", rg:"Media", ap:"Media",
+  nac:"Pekín, China", dnd:"Estados Unidos", ins:"Princeton · Stanford (codirectora del Instituto HAI) · Google Cloud",
+  des:"Científica de la computación experta en visión artificial, neurociencia cognitiva computacional y Big Data aplicado.",
+  hit:"Concibió y dirigió ImageNet (2009), base de más de 14 millones de imágenes etiquetadas que detonó el Deep Learning comercial.",
+  alc:"Masivo y comunitario: demostró el valor de la escala de datos y fundó AI4ALL para la inclusión ética en la industria." },
+{ n:"Andrew Ng", cat:"deep", era:"Deep Learning y transición", hist:false, sub:"Pragmatismo utilitario", ori:"Pragmático", ri:"Medio", rg:"Media", ap:"Alta",
+  nac:"Londres, Reino Unido", dnd:"Estados Unidos y China", ins:"Stanford · Google Brain (cofundador) · Baidu · Coursera · DeepLearning.AI",
+  des:"Investigador y educador en aprendizaje automático a gran escala, robótica y educación masiva abierta.",
+  hit:"Lideró «Google Cat» (2012), que permitió a redes neuronales identificar conceptos visuales en YouTube, e impulsó el entrenamiento con GPUs.",
+  alc:"Educativo e infraestructural: su plataforma ha formado a millones de ingenieros y desarrolladores en todo el mundo." },
+/* ===== 3 · Líderes de la Era Comercial ===== */
+{ n:"Sam Altman", cat:"comercial", era:"Era generativa y comercial", hist:false, sub:"Pragmatismo corporativo", ori:"Pragmático", ri:"Medio", rg:"Media", ap:"Baja",
+  nac:"Chicago, Illinois, EE. UU.", dnd:"Estados Unidos", ins:"Y Combinator (presidente) · OpenAI (CEO)",
+  des:"Ejecutivo, inversor y estratega enfocado en el financiamiento masivo y el despliegue a gran escala de sistemas de IA.",
+  hit:"Reestructuró OpenAI de laboratorio sin fines de lucro a empresa de «ganancia limitada», negoció la inversión de Microsoft y orquestó el lanzamiento global de ChatGPT (2022).",
+  alc:"Geopolítico y económico: su gestión influye en agendas legislativas y en la cadena de suministro global de semiconductores y energía." },
+{ n:"Demis Hassabis", cat:"comercial", era:"Era generativa y comercial", hist:false, sub:"Cientificismo progresista controlado", ori:"Pragmático", ri:"Medio", rg:"Media", ap:"Baja",
+  nac:"Londres, Reino Unido", dnd:"Reino Unido y Estados Unidos", ins:"University College de Londres · MIT · DeepMind (CEO/cofundador) · Google DeepMind",
+  des:"Diseñador de videojuegos, neurocientífico y empresario dedicado al aprendizaje por refuerzo profundo aplicado a las ciencias naturales.",
+  hit:"Lideró AlphaGo (venció al campeón mundial de Go en 2016) y AlphaFold, que predijo la estructura de casi todas las proteínas conocidas. Nobel de Química (2024).",
+  alc:"Ciencia de frontera: consolidó la IA como herramienta para acelerar la biología molecular, la medicina y la física de materiales." },
+{ n:"Ilya Sutskever", cat:"comercial", era:"Era generativa y comercial", hist:false, sub:"Seguridad / alineación", ori:"Precautorio", ri:"Alto", rg:"Alta", ap:"Baja",
+  nac:"Nizhni Nóvgorod, Rusia", dnd:"Canadá y Estados Unidos", ins:"Universidad de Toronto · Stanford · Google Brain · OpenAI (ex Científico Jefe) · Safe Superintelligence Inc. (SSI)",
+  des:"Científico de la computación que investiga los límites de escala de las redes profundas y los protocolos de control de sistemas hiperavanzados.",
+  hit:"Co-diseñó AlexNet (2012), dirigió la investigación detrás de GPT-4 y los modelos de razonamiento o1, y en 2024 fundó SSI para crear inteligencia avanzada segura.",
+  alc:"Teórico y de alineación: sus trabajos establecieron que aumentar la escala produce propiedades emergentes de inteligencia general." },
+{ n:"Dario Amodei", cat:"comercial", era:"Era generativa y comercial", hist:false, sub:"AI Safety / alineación empírica", ori:"Precautorio", ri:"Alto", rg:"Alta", ap:"Baja",
+  nac:"San Francisco, California, EE. UU.", dnd:"Estados Unidos", ins:"Stanford · Baidu · OpenAI (ex Dir. de Investigación) · Anthropic (CEO/cofundador)",
+  des:"Físico y científico de la computación dedicado a la seguridad empírica, la escalabilidad predecible y la evaluación de vulnerabilidades en modelos masivos.",
+  hit:"Dirigió el desarrollo de las primeras generaciones de modelos generativos en OpenAI y fundó Anthropic por diferencias sobre la seguridad, impulsando metodologías de RLHF.",
+  alc:"Sistémico y normativo: su trabajo define los marcos de evaluación de riesgos (cibernéticos, biológicos) para el despliegue de modelos de frontera." },
+{ n:"Daniela Amodei", cat:"comercial", era:"Era generativa y comercial", hist:false, sub:"Gobernanza corporativa ética", ori:"Precautorio", ri:"Medio", rg:"Media", ap:"Baja",
+  nac:"San Francisco, California, EE. UU.", dnd:"Estados Unidos", ins:"Stripe · OpenAI (ex VP de Seguridad) · Anthropic (presidenta/cofundadora)",
+  des:"Administradora y estratega operativa dedicada a la estructura institucional, la cultura corporativa y la gobernanza de capital en laboratorios de frontera.",
+  hit:"Diseñó la gestión de Anthropic bajo el modelo de Corporación de Beneficio Público (PBC), donde los inversores aceptan frenos técnicos si el software compromete el bienestar social.",
+  alc:"Operativo y de gobernanza: estableció un precedente que demuestra que se puede competir comercialmente priorizando la seguridad y la transparencia." },
+{ n:"Mustafa Suleyman", cat:"comercial", era:"Era generativa y comercial", hist:false, sub:"Tecno-realismo reformista", ori:"Precautorio", ri:"Medio", rg:"Alta", ap:"Media",
+  nac:"Londres, Reino Unido", dnd:"Reino Unido y Estados Unidos", ins:"DeepMind (cofundador) · Google (VP de Producto de IA) · Inflection AI (CEO) · Microsoft AI (CEO)",
+  des:"Activista social, empresario e investigador de producto enfocado en la interfaz humana de la IA, la ética de consumo masivo y la contención algorítmica.",
+  hit:"Dirigió las divisiones de aplicación social y ética médica de DeepMind, creó la IA conversacional Pi y en 2024 fue nombrado por Microsoft para liderar toda su estrategia de consumo de IA.",
+  alc:"Socio-tecnológico: influye en el diseño de interfaces conversacionales y promueve marcos de «contención activa» por parte de los Estados." },
+{ n:"Mira Murati", cat:"comercial", era:"Era generativa y comercial", hist:false, sub:"Tecno-realismo operativo", ori:"Pragmático", ri:"Medio", rg:"Media", ap:"Media",
+  nac:"Vlorë, Albania", dnd:"Estados Unidos", ins:"Tesla (Model X) · Leap Motion · OpenAI (ex CTO) · Thinking Machines Lab (CEO/fundadora)",
+  des:"Ingeniera mecánica y ejecutiva técnica enfocada en la gestión de ingeniería, el producto generativo multimedia y la transición segura del laboratorio al público.",
+  hit:"Dirigió el desarrollo de los lanzamientos clave de OpenAI —GPT-4, el generador de imágenes DALL·E y el modelo de video Sora— y luego fundó Thinking Machines Lab.",
+  alc:"Industrial y de producto: estandarizó el despliegue masivo e interactivo de modelos generativos a escala de consumo diario." },
+/* ===== 4 · Infraestructura y Hardware ===== */
+{ n:"Jensen Huang", cat:"infra", era:"Infraestructura de IA", hist:false, sub:"Capitalismo de infraestructura", ori:"Pro-industria", ri:"Medio", rg:"Baja", ap:"Media",
+  nac:"Tainan, Taiwán", dnd:"Estados Unidos", ins:"AMD · LSI Logic · NVIDIA (CEO/cofundador)",
+  des:"Ingeniero electrónico y ejecutivo industrial enfocado en microprocesadores de procesamiento paralelo y arquitecturas de hardware para supercomputación.",
+  hit:"Reorientó NVIDIA del chip gráfico al cómputo de tensores con la arquitectura CUDA (2006) y creó los aceleradores de IA Hopper (H100/H200) y Blackwell.",
+  alc:"Infraestructural y físico: proveyó el hardware indispensable sobre el cual se entrena y ejecuta toda la IA de frontera moderna." },
+{ n:"Greg Brockman", cat:"infra", era:"Infraestructura de IA", hist:false, sub:"Aceleracionismo de ingeniería", ori:"Pro-automatización", ri:"Medio", rg:"Baja", ap:"Media",
+  nac:"Thompson, Dakota del Norte, EE. UU.", dnd:"Estados Unidos", ins:"MIT · Stripe (CTO) · OpenAI (cofundador y presidente)",
+  des:"Ingeniero de sistemas y desarrollador de software a gran escala, especializado en clústeres de cómputo distribuidos y la robustez de infraestructuras críticas.",
+  hit:"Dirigió la ingeniería que convirtió las ideas de los investigadores de OpenAI en sistemas estables capaces de entrenar redes de billones de parámetros sin caídas.",
+  alc:"Ingeniería de software masiva: fijó las pautas técnicas para operar plataformas como ChatGPT de forma escalable y estable." },
+/* ===== 5 · Arquitectos Prácticos y Divulgación ===== */
+{ n:"Andrej Karpathy", cat:"practicos", era:"Era generativa y técnica", hist:false, sub:"Democratización educativa", ori:"Pro-apertura", ri:"Medio", rg:"Baja", ap:"Alta",
+  nac:"Bratislava, Eslovaquia", dnd:"Estados Unidos", ins:"Stanford · OpenAI (cofundador) · Tesla (ex Director de IA)",
+  des:"Científico de la computación experto en visión artificial aplicada, procesamiento profundo de imágenes y pedagogía del software de bajo nivel.",
+  hit:"Diseñó las redes convolucionales del Autopilot / Full Self-Driving de Tesla e implementó repositorios educativos abiertos de gran adopción como nanoGPT.",
+  alc:"Automotriz y educativo: desmitificó los modelos de lenguaje enseñando abiertamente los fundamentos de la programación de Transformers." },
+/* ===== 6 · Arquitectos de AGI ===== */
+{ n:"Shane Legg", cat:"agi", era:"Arquitectos de AGI", hist:false, sub:"Racionalismo AGI", ori:"Pragmático", ri:"Medio", rg:"Media", ap:"Baja",
+  nac:"Rotorua, Nueva Zelanda", dnd:"Suiza y Reino Unido", ins:"IDSIA · DeepMind (cofundador y Científico Jefe de AGI) · Google DeepMind",
+  des:"Investigador teórico enfocado en la definición matemática y la medición del aprendizaje inteligente transdisciplinar.",
+  hit:"Formalizó los parámetros de medición de la Inteligencia Artificial General (AGI) a inicios de los 2000 y dirige la hoja de ruta científica de Alphabet en ese ámbito.",
+  alc:"Teórico a largo plazo: mantiene el rumbo del principal laboratorio de Google orientado a un software con capacidades cognitivas humanas transversales." },
+{ n:"Peter Norvig", cat:"agi", era:"Arquitectos de AGI", hist:false, sub:"Racionalismo pragmático", ori:"Pragmático", ri:"Bajo", rg:"Baja", ap:"Alta",
+  nac:"San Diego, California, EE. UU.", dnd:"Estados Unidos", ins:"USC · NASA (Científico Computacional en Jefe) · Google (Dir. de Investigación) · Stanford",
+  des:"Científico de la computación enfocado en motores de búsqueda, análisis estadístico de texto masivo y la enseñanza unificada de la informática.",
+  hit:"Coescribió con Stuart Russell «Artificial Intelligence: A Modern Approach», el manual estándar de la disciplina usado por la mayoría de universidades del mundo.",
+  alc:"Académico y aeroespacial: formó generaciones de programadores bajo el paradigma de los «agentes inteligentes» y dirigió los primeros algoritmos de optimización de Google." },
+/* ===== 7 · Arquitectos de Modelos ===== */
+{ n:"Ashish Vaswani", cat:"modelos", era:"Arquitectos del Transformer", hist:false, sub:"Neutralidad científica / productividad", ori:"Pragmático", ri:"Bajo", rg:"Baja", ap:"Alta",
+  nac:"India", dnd:"Estados Unidos", ins:"USC · Google Brain · Adept AI (cofundador) · Essential AI (cofundador)",
+  des:"Científico de la computación enfocado en nuevas arquitecturas para el procesamiento secuencial rápido de datos masivos.",
+  hit:"Autor principal del paper de 2017 «Attention Is All You Need», donde co-inventó el mecanismo de auto-atención y la arquitectura Transformer.",
+  alc:"Algorítmico universal: rompió el estancamiento del lenguaje natural y creó la pieza sobre la que operan ChatGPT, Claude, Gemini, Llama y toda la IA generativa actual." },
+/* ===== 8 · Ética y Alineación ===== */
+{ n:"Amanda Askell", cat:"etica", era:"Filósofos y alineación", hist:false, sub:"Ética de la virtud / pragmatismo moral", ori:"Humanista", ri:"Medio", rg:"Media", ap:"Media",
+  nac:"Escocia, Reino Unido", dnd:"Estados Unidos", ins:"Universidad de Oxford · NYU · OpenAI · Anthropic",
+  des:"Filósofa analítica e investigadora moral enfocada en traducir teorías éticas en conducta y tono conversacional de los modelos de lenguaje.",
+  hit:"Figura central del trabajo de IA Constitucional y, sobre todo, del carácter y la personalidad de Claude: define cómo el asistente sigue principios escritos en lugar de depender solo de moderadores humanos.",
+  alc:"Ética aplicada e ingeniería del carácter: dio forma directa al tono reflexivo, la prudencia y la conducta del asistente conversacional Claude." },
+{ n:"Stuart Russell", cat:"etica", era:"Filósofos y alineación", hist:false, sub:"Humanismo deontológico de control", ori:"Precautorio", ri:"Alto", rg:"Alta", ap:"Media",
+  nac:"Portsmouth, Reino Unido", dnd:"Reino Unido y Estados Unidos", ins:"Universidad de Oxford · UC Berkeley (director del CHAI)",
+  des:"Científico de la computación enfocado en el control de los algoritmos de optimización y el problema de la alineación a largo plazo.",
+  hit:"Coautor del manual estándar de la disciplina y promotor de modelos donde las máquinas operan bajo «incertidumbre» sobre los deseos humanos para evitar acciones irreversibles.",
+  alc:"Académico y regulatorio: asesora a gobiernos y a la ONU impulsando prohibiciones sobre armamento autónomo y leyes de seguridad algorítmica." },
+{ n:"Nick Bostrom", cat:"etica", era:"Filósofos y alineación", hist:false, sub:"Longtermism / riesgo existencial", ori:"Precautorio", ri:"Alto", rg:"Alta", ap:"Media", sep:true,
+  nac:"Helsingborg, Suecia", dnd:"Reino Unido", ins:"London School of Economics · Universidad de Oxford (ex Dir. del Future of Humanity Institute)",
+  des:"Filósofo analítico enfocado en el riesgo existencial, el transhumanismo y las consecuencias de una superinteligencia desalineada.",
+  hit:"Publicó «Superinteligencia: caminos, peligros, estrategias» (2014) y desarrolló el experimento mental del «maximizador de clips».",
+  alc:"Macrofilosófico: sacó la seguridad ante la AGI de la ciencia ficción y moldeó las políticas de contingencia de OpenAI, DeepMind y Anthropic." },
+{ n:"Eliezer Yudkowsky", cat:"etica", era:"Filósofos y alineación", hist:false, sub:"Doomerismo existencial", ori:"Freno radical (doomer)", ri:"Alto", rg:"Alta", ap:"Baja",
+  nac:"Chicago, Illinois, EE. UU.", dnd:"Estados Unidos", ins:"Machine Intelligence Research Institute (MIRI)",
+  des:"Teórico y filósofo autodidacta enfocado en el análisis formal de la racionalidad y los límites de predictibilidad de los agentes artificiales autorreplicantes.",
+  hit:"Formuló las bases tempranas del problema de la alineación y la «IA amigable» a finales de los 90. Es el exponente público más radical: pide un freno internacional al entrenamiento de modelos que superen los límites actuales de cómputo.",
+  alc:"Contención extrema: influye en los comités de seguridad de Silicon Valley y lidera movimientos que piden moratorias tecnológicas estrictas." },
+/* ===== 9 · Filósofos de la Mente ===== */
+{ n:"John Searle", cat:"mente", era:"Filósofos de la mente", hist:false, sub:"Antirreduccionismo biológico", ori:"Crítico", ri:"Medio", rg:"Media", ap:"Media", sep:true,
+  nac:"Denver, Colorado, EE. UU.", dnd:"Estados Unidos", ins:"Universidad de Oxford · UC Berkeley",
+  des:"Filósofo del lenguaje y de la mente dedicado a la intencionalidad, la consciencia y la semántica frente al procesamiento mecánico de información.",
+  hit:"Propuso el experimento mental de la Habitación China (1980): manipular símbolos (sintaxis) jamás equivale a entender (semántica). Trazó la separación entre IA débil e IA fuerte.",
+  alc:"Filosofía de la mente: aportó el marco estándar para cuestionar la comprensión real de los grandes modelos de lenguaje." },
+{ n:"Hubert Dreyfus", cat:"mente", era:"Crítica fenomenológica", hist:true, sub:"Corporeísmo fenomenológico", ori:"Crítico", ri:"Medio", rg:"Media", ap:"Media", sep:true,
+  nac:"Terre Haute, Indiana, EE. UU.", dnd:"Estados Unidos", ins:"MIT · Universidad Brandeis · UC Berkeley",
+  des:"Filósofo existencial y fenomenólogo que aplicó la filosofía continental para auditar las promesas de los laboratorios de cómputo estadounidenses.",
+  hit:"Publicó «What Computers Can't Do» (1972), donde mostró el fracaso de programar la inteligencia humana basándose solo en reglas lógicas cerradas.",
+  alc:"Fenomenológico: anticipó el estancamiento de la IA simbólica y sentó las bases del enfoque de la cognición corporizada en la robótica moderna." },
+{ n:"David Chalmers", cat:"mente", era:"Filósofos de la mente", hist:false, sub:"Funcionalismo no reduccionista", ori:"Neutral", ri:"Medio", rg:"Media", ap:"Media", sep:true,
+  nac:"Sídney, Australia", dnd:"Australia y Estados Unidos", ins:"Universidad de Indiana · Universidad de Arizona · Universidad Nacional de Australia · NYU",
+  des:"Filósofo y científico cognitivo enfocado en los límites del cerebro, la experiencia subjetiva y la ontología de los entornos virtuales.",
+  hit:"Formuló el «problema duro de la consciencia» (1995) y analiza bajo qué condiciones una red neuronal de silicio podría albergar estados conscientes.",
+  alc:"Metafísico y de realidad digital: lidera los foros sobre el estatus y los futuros derechos de los agentes artificiales." },
+{ n:"Daniel Dennett", cat:"mente", era:"Filósofos de la mente", hist:true, sub:"Materialismo funcionalista", ori:"Neutral", ri:"Medio", rg:"Media", ap:"Media", sep:true,
+  nac:"Boston, Massachusetts, EE. UU.", dnd:"Estados Unidos", ins:"UC Irvine · Universidad Tufts (codirector del Centro de Estudios Cognitivos)",
+  des:"Filósofo de la ciencia y escritor materialista que explicó la mente y la consciencia desde una perspectiva evolutiva y biológica.",
+  hit:"Publicó «Consciousness Explained» (1991): la mente opera como procesos computacionales paralelos, y si una IA imita la conducta intencional, tiene un estatus cognitivo equivalente.",
+  alc:"Evolutivo y conductual: desmitificó la consciencia en la ciencia cognitiva y aportó el marco para diseñar agentes autónomos." },
+{ n:"Hilary Putnam", cat:"mente", era:"Pioneros conceptuales", hist:true, sub:"Funcionalismo estructuralista", ori:"Neutral", ri:"Bajo", rg:"Baja", ap:"Media", sep:true,
+  nac:"Chicago, Illinois, EE. UU.", dnd:"Estados Unidos", ins:"Princeton · MIT · Harvard",
+  des:"Filósofo, lógico y matemático que investigó el lenguaje, la filosofía de la ciencia y la relación entre el pensamiento y la materia.",
+  hit:"Formuló el Funcionalismo Computacional (años 60): los estados mentales se definen por su función en un sistema, no por su sustrato; la mente puede correr en neuronas o en silicio.",
+  alc:"Lógico y semántico: dio la base conceptual que validó filosóficamente la búsqueda de la AGI." },
+/* ===== 10 · Ética y Gobernanza ===== */
+{ n:"Luciano Floridi", cat:"gobernanza", era:"Ética y gobernanza", hist:false, sub:"Ecologismo de la infosfera", ori:"Regulacionista", ri:"Medio", rg:"Alta", ap:"Media",
+  nac:"Roma, Italia", dnd:"Reino Unido e Italia", ins:"Universidad de Oxford · Instituto Turing de Londres · Universidad de Bolonia · Universidad de Yale",
+  des:"Filósofo de la información experto en macroética de datos, gobernanza de infraestructuras digitales y el impacto del software en la sociedad.",
+  hit:"Fundó la Filosofía de la Información y acuñó el concepto de «infosfera». Asesor clave en la redacción de normativas tecnológicas europeas.",
+  alc:"Macroético e institucional: sustenta el marco ético-legal de la Unión Europea para la regulación de riesgos en la ley de IA (AI Act)." },
+{ n:"Shannon Vallor", cat:"gobernanza", era:"Ética y gobernanza", hist:false, sub:"Ética de la virtud aristotélica", ori:"Humanista", ri:"Medio", rg:"Media", ap:"Media",
+  nac:"Estados Unidos", dnd:"Estados Unidos y Reino Unido", ins:"Universidad de Santa Clara · Google (ética de IA) · Universidad de Edimburgo (directora del Centro de Futuros Tecnológicos)",
+  des:"Filósofa aplicada que investiga la relación entre el desarrollo tecnológico, el hábito moral y el florecimiento de las capacidades humanas.",
+  hit:"Publicó «Technology and the Virtues» (2016): adapta la ética clásica (aristotélica y confuciana) al diseño algorítmico, advirtiendo que delegar decisiones críticas al software debilita el juicio moral.",
+  alc:"Humanista y educativo: sus métodos se integran en la formación de ingenieros y en comités de ética corporativa de Europa y América." },
+{ n:"Kate Crawford", cat:"gobernanza", era:"Crítica política y ecológica", hist:false, sub:"Materialismo crítico político-ecológico", ori:"Crítica", ri:"Medio", rg:"Alta", ap:"Media",
+  nac:"Australia", dnd:"Australia y Estados Unidos", ins:"NYU · Microsoft Research · USC · AI Now Institute (cofundadora)",
+  des:"Académica sociopolítica dedicada a auditar los sesgos de los sistemas automáticos, el poder de las Big Tech y la cadena material de suministro tecnológico.",
+  hit:"Publicó «Atlas de la IA» (2021): la IA no está «en la nube», sino que es una industria pesada basada en minería destructiva en el Sur Global y trabajo precario de etiquetado de datos.",
+  alc:"Político y ecológico: reestructuró las metodologías de auditoría de privacidad y propiedad intelectual en los foros de regulación." },
+{ n:"Thomas Metzinger", cat:"gobernanza", era:"Neuroética y consciencia", hist:false, sub:"Escepticismo neuroético", ori:"Precautorio", ri:"Alto", rg:"Alta", ap:"Media",
+  nac:"Fráncfort del Meno, Alemania", dnd:"Alemania", ins:"Universidad de Frankfurt · Universidad de Maguncia · Grupo de Expertos de Alto Nivel en IA de la Comisión Europea",
+  des:"Filósofo analítico y neuroético que conecta la práctica clínica de la consciencia con el diseño normativo de la robótica cognitiva autónoma.",
+  hit:"Desarrolló la teoría de los modelos del «yo» y redactó pautas éticas para la Comisión Europea, proponiendo una moratoria frente a experimentos de software consciente para evitar «sufrimiento sintético».",
+  alc:"Neuroético y regulatorio: lidera los foros de bioética europeos que fijan los límites de experimentación en IA de frontera." },
+{ n:"Timnit Gebru", cat:"gobernanza", era:"Justicia algorítmica", hist:false, sub:"Descolonialismo tecnológico", ori:"Crítica", ri:"Medio", rg:"Alta", ap:"Media",
+  nac:"Adís Abeba, Etiopía", dnd:"Estados Unidos", ins:"Stanford · Apple · Google (ex co-líder de IA Ética) · DAIR (fundadora)",
+  des:"Científica de la computación e investigadora social enfocada en los sesgos discriminatorios, la equidad en el software comercial y la descentralización del control corporativo.",
+  hit:"Coautora de «On the Dangers of Stochastic Parrots» (2021), que detalló los sesgos de género y raza de los grandes modelos entrenados con datos crudos de internet.",
+  alc:"Derechos civiles: impulsó reformas sobre transparencia algorítmica y forzó cambios en herramientas de reconocimiento facial y bases de entrenamiento." }
+];
 
 function save(){ saveSet("iadLearned",learned); saveSet("iadQuiz",quizOK); saveSet("iadMilestones",milestones); saveSet("iadMedals",medals); saveSet("iadWords",wordsLearned); }
 
@@ -1444,7 +1737,7 @@ function speak(text){
 /* Unidades de lectura: cada selector es un "párrafo" natural de
    las pantallas con contenido (Aprender, Glosario, Tecnolecto y
    Vías). No se solapan, así que no hay texto repetido. */
-const SEL_LECTURA = ".cathead h2,.cathead p,.concept h3,.tech,.block,.intro,.wlead,.empty,.gitem h4,.def,.wen,.wes,.wdef";
+const SEL_LECTURA = ".cathead h2,.cathead p,.concept h3,.tech,.block,.intro,.wlead,.empty,.gitem h4,.def,.wen,.wes,.wdef,.pjt h3,.pjmeta,.pjrow,.pjblock p";
 
 /* Elementos cuyo texto es un término en INGLÉS → se pronuncian con
    voz inglesa (la chapita 🇬🇧 .tech y las palabras de Tecnolecto). */
@@ -1589,8 +1882,8 @@ function construirColaLectura(root){
   root = root || $("#app");
   const cola = [];
   root.querySelectorAll(SEL_LECTURA).forEach(el=>{
-    const git = el.closest(".gitem");
-    if(git && !git.classList.contains("open")) return; // glosario: solo lo expandido
+    const exp = el.closest(".gitem,.pj");
+    if(exp && !exp.classList.contains("open")) return; // glosario / personajes: solo lo expandido
     segmentarUnidad(el).forEach(s=>cola.push(s));
   });
   return cola;
@@ -1613,7 +1906,7 @@ function iniciarLectura(){
   if(!("speechSynthesis" in window)){ toast("🔇 Tu navegador no permite la voz"); return; }
   pararLectura(true);
   const cola = construirColaLectura();
-  if(!cola.length){ toast(state.view==="gloss" ? "👆 Abre uno o más términos del glosario para escucharlos" : "🔇 No hay texto para leer aquí"); return; }
+  if(!cola.length){ toast(state.view==="gloss" ? "👆 Abre uno o más términos del glosario para escucharlos" : state.view==="personajes" ? "👆 Abre una o más fichas para escucharlas" : "🔇 No hay texto para leer aquí"); return; }
   arrancarColaLectura(cola);
 }
 
@@ -1832,7 +2125,7 @@ function btnLeer(){ return `<button class="readaloud" data-a="read-aloud" title=
    ============================================================ */
 function render(){
   document.querySelectorAll("#nav button").forEach(b=>{
-    b.classList.toggle("on", b.dataset.v===state.view || ((state.view==="mod"||state.view==="resources") && b.dataset.v==="home"));
+    b.classList.toggle("on", b.dataset.v===state.view || ((state.view==="mod"||state.view==="resources"||state.view==="personajes") && b.dataset.v==="home"));
   });
   const app=$("#app");
   if(state.view==="home")     app.innerHTML=vHome();
@@ -1844,6 +2137,7 @@ function render(){
   if(state.view==="quiz")     app.innerHTML=vQuiz();
   if(state.view==="progress") app.innerHTML=vProgress();
   if(state.view==="resources")app.innerHTML=vResources();
+  if(state.view==="personajes")app.innerHTML=vPersonajes();
 }
 
 /* ---------- consola: grilla de módulos ---------- */
@@ -1869,6 +2163,11 @@ function vHome(){
     <p class="intro">Bienvenido a la <b>Consola de Aprendizaje</b>. Elige un módulo y abre cada concepto bajo sus 4 dimensiones: <b>qué es</b>, <b>cómo funciona por dentro</b>, <b>ejemplo real</b> y <b>para qué te sirve</b>. Cada concepto trae su <b>nombre en inglés</b> y un <b>link para profundizar</b>.</p>
     <div class="pathrec"><span class="pr-ic">🧭</span><span><b>Ruta recomendada:</b> avanza en orden, del <b>1</b> al <b>${MODS.length}</b>. Cada módulo se apoya en el anterior, así que seguir la secuencia te dará la base completa sin saltos.</span></div>
     <div class="grid">${cards}</div>
+    <button class="reshub" data-a="personajes">
+      <span class="em">👤</span>
+      <div><h3>Personajes de la IA</h3><p>Las 40 figuras —fundadores, científicos, filósofos y críticos— que dieron forma a la IA, en 10 categorías.</p></div>
+      <span class="rl-go">→</span>
+    </button>
     <a class="sisterapp" href="https://ia-para-mortales.vercel.app" target="_blank" rel="noopener">
       <span class="em">🌱</span>
       <div><div class="sub">App hermana · nivel inicial</div><h3>IA para Mortales</h3><p>¿Se te escapa algo de jerga o te falta base? Empieza por la versión sin tecnicismos y luego vuelve a este nivel intermedio.</p></div>
@@ -1897,6 +2196,129 @@ function vResources(){
     <div class="cathead"><span class="em">🔗</span><div><h2>Para profundizar</h2><p>Fuentes serias y duraderas para seguir aprendiendo. Se abren en una pestaña nueva.</p></div></div>
     ${groups}
     <p class="intro" style="margin-top:6px">Son <b>portadas y secciones</b> que siempre muestran lo último —no artículos sueltos—, por eso no se vencen. Ábrelas cuando tengas internet. 🌐</p>
+  </div>`;
+}
+
+/* ---------- 👤 Personajes de la IA ---------- */
+const PCATCOL = { fundadores:"#3b82f6", deep:"#10b981", comercial:"#f59e0b", infra:"#06b6d4", practicos:"#8b5cf6", agi:"#a78bfa", modelos:"#6366f1", etica:"#f43f5e", mente:"#ec4899", gobernanza:"#0ea5e9" };
+const pjNivel = v => /^(bajo|baja)$/i.test(v) ? 1 : /^(medio|media)$/i.test(v) ? 2 : 3;   // 1=bajo 2=medio 3=alto (color)
+/* Fuente curada y VERIFICADA por persona (oficial / vetada). Wikipedia solo
+   como último recurso para figuras muy recientes sin otra fuente sólida. */
+const PFUENTE = {
+  "Alan Turing":        ["https://plato.stanford.edu/entries/turing/", "Stanford Encyclopedia of Philosophy"],
+  "John McCarthy":      ["http://jmc.stanford.edu/", "Sitio oficial · Stanford"],
+  "Marvin Minsky":      ["https://www.britannica.com/biography/Marvin-Lee-Minsky", "Encyclopædia Britannica"],
+  "Allen Newell":       ["https://www.nasonline.org/wp-content/uploads/2024/06/newell-allen.pdf", "National Academy of Sciences"],
+  "Herbert Simon":      ["https://www.nobelprize.org/prizes/economic-sciences/1978/simon/facts/", "Premio Nobel"],
+  "Arthur Samuel":      ["https://history.computer.org/pioneers/samuel.html", "IEEE Computer Society"],
+  "Norbert Wiener":     ["https://www.britannica.com/biography/Norbert-Wiener", "Encyclopædia Britannica"],
+  "Geoffrey Hinton":    ["https://www.cs.toronto.edu/~hinton/", "Página académica · U. de Toronto"],
+  "Yann LeCun":         ["http://yann.lecun.com/", "Sitio oficial"],
+  "Yoshua Bengio":      ["https://yoshuabengio.org/", "Sitio oficial"],
+  "Jürgen Schmidhuber": ["https://people.idsia.ch/~juergen/", "Sitio oficial · IDSIA"],
+  "Fei-Fei Li":         ["https://profiles.stanford.edu/fei-fei-li", "Perfil oficial · Stanford"],
+  "Andrew Ng":          ["https://www.andrewng.org/", "Sitio oficial"],
+  "Sam Altman":         ["https://blog.samaltman.com/", "Blog oficial"],
+  "Demis Hassabis":     ["https://www.nobelprize.org/prizes/chemistry/2024/hassabis/facts/", "Premio Nobel"],
+  "Ilya Sutskever":     ["https://es.wikipedia.org/wiki/Ilya_Sutskever", "Wikipedia"],
+  "Dario Amodei":       ["https://www.darioamodei.com/", "Sitio oficial"],
+  "Daniela Amodei":     ["https://en.wikipedia.org/wiki/Daniela_Amodei", "Wikipedia (inglés)"],
+  "Mustafa Suleyman":   ["https://mustafa-suleyman.ai/", "Sitio oficial"],
+  "Mira Murati":        ["https://es.wikipedia.org/wiki/Mira_Murati", "Wikipedia"],
+  "Jensen Huang":       ["https://nvidianews.nvidia.com/bios/jensen-huang", "Biografía oficial · NVIDIA"],
+  "Greg Brockman":      ["https://blog.gregbrockman.com/", "Blog oficial"],
+  "Andrej Karpathy":    ["https://karpathy.ai/", "Sitio oficial"],
+  "Shane Legg":         ["https://www.vetta.org/", "Sitio oficial"],
+  "Peter Norvig":       ["https://norvig.com/", "Sitio oficial"],
+  "Ashish Vaswani":     ["https://en.wikipedia.org/wiki/Ashish_Vaswani", "Wikipedia (inglés)"],
+  "Amanda Askell":      ["https://askell.io/", "Sitio oficial"],
+  "Stuart Russell":     ["https://people.eecs.berkeley.edu/~russell/", "Página académica · UC Berkeley"],
+  "Nick Bostrom":       ["https://nickbostrom.com/", "Sitio oficial"],
+  "Eliezer Yudkowsky":  ["https://www.yudkowsky.net/", "Sitio oficial"],
+  "John Searle":        ["https://plato.stanford.edu/entries/chinese-room/", "Stanford Encyclopedia of Philosophy"],
+  "Hubert Dreyfus":     ["https://es.wikipedia.org/wiki/Hubert_Dreyfus", "Wikipedia"],
+  "David Chalmers":     ["https://consc.net/", "Sitio oficial"],
+  "Daniel Dennett":     ["https://ase.tufts.edu/cogstud/dennett/", "Página académica · Tufts"],
+  "Hilary Putnam":      ["https://plato.stanford.edu/entries/functionalism/", "Stanford Encyclopedia of Philosophy"],
+  "Luciano Floridi":    ["https://dec.yale.edu/people/luciano-floridi", "Página oficial · Yale"],
+  "Shannon Vallor":     ["https://www.shannonvallor.net/", "Sitio oficial"],
+  "Kate Crawford":      ["https://katecrawford.net/", "Sitio oficial"],
+  "Thomas Metzinger":   ["https://es.wikipedia.org/wiki/Thomas_Metzinger", "Wikipedia"],
+  "Timnit Gebru":       ["https://www.dair-institute.org/", "DAIR Institute"]
+};
+function pjFuente(p){
+  const f = PFUENTE[p.n];
+  return f ? { u:f[0], n:f[1] } : { u:"https://www.britannica.com/search?query="+encodeURIComponent(p.n), n:"Encyclopædia Britannica" };
+}
+function pjCard(p){
+  const cat = PCATS.find(c=>c.id===p.cat) || PCATS[0];
+  const col = PCATCOL[p.cat] || "#3b82f6";
+  const f = pjFuente(p);
+  const TIT = { Riesgo:"Qué tan peligrosa considera esta persona la IA avanzada", "Regulación":"Cuánto cree que el Estado debe regular la IA", Apertura:"Cuánto favorece modelos abiertos (open source)" };
+  const m = (lab,val)=>`<span class="mchip n${pjNivel(val)}" title="${esc((TIT[lab]||lab)+" · "+val)}"><span class="ml">${lab}</span>${esc(val)}</span>`;
+  return `<div class="pj" style="--cc:${col}">
+    <button class="pjhead" data-a="pj">
+      <span class="pjem">${cat.em}</span>
+      <span class="pjt"><h3>${esc(p.n)}</h3><div class="pjrole">${esc(cat.n)} · ${esc(p.sub)}</div></span>
+      <span class="cardread" data-a="read-one" role="button" tabindex="0" title="Leer esta ficha en voz alta" aria-label="Leer esta ficha en voz alta">🎧</span>
+      <span class="pjexp">›</span>
+    </button>
+    <div class="pjmetrics">
+      ${m("Riesgo",p.ri)} ${m("Regulación",p.rg)} ${m("Apertura",p.ap)}
+      <span class="mchip ori">🧭 ${esc(p.ori)}</span>
+      ${p.hist?`<span class="mchip hist">🕰️ Histórico</span>`:""}
+    </div>
+    <div class="pjbody">
+      ${p.meta?`<div class="pjmeta">🎯 <b>Por qué estas etiquetas:</b> ${esc(p.meta)}</div>`:""}
+      <div class="pjrow"><b>📍 Nació en:</b> ${esc(p.nac)}</div>
+      <div class="pjrow"><b>🌍 Trabajó en:</b> ${esc(p.dnd)}</div>
+      <div class="pjrow"><b>🏛️ Instituciones:</b> ${esc(p.ins)}</div>
+      <div class="pjblock"><b>👤 Quién es</b><p>${esc(p.des)}</p></div>
+      <div class="pjblock"><b>🏆 Hitos</b><p>${esc(p.hit)}</p></div>
+      <div class="pjblock"><b>🌐 Alcance</b><p>${esc(p.alc)}</p></div>
+      ${p.ctx?`<div class="pjblock"><b>💡 Idea clave o debate</b><p>${esc(p.ctx)}</p></div>`:""}
+      <div class="pjacts"><a class="pjsrc" href="${f.u}" target="_blank" rel="noopener">📚 Ver en ${esc(f.n)} ↗</a></div>
+    </div>
+  </div>`;
+}
+function pjFiltered(){
+  let list = PERSONAJES.slice();
+  if(state.pcat) list = list.filter(p=>p.cat===state.pcat);
+  if(state.pori) list = list.filter(p=>p.ori===state.pori);
+  const q = state.pq.trim().toLowerCase();
+  if(q) list = list.filter(p=>(p.n+" "+p.ins+" "+p.des+" "+p.hit+" "+p.sub+" "+p.nac+" "+p.dnd).toLowerCase().includes(q));
+  return list;
+}
+function pjListHTML(){
+  const list = pjFiltered();
+  if(!list.length) return `<div class="empty">Sin resultados… prueba con otro filtro o término 🔍</div>`;
+  return `<div class="pjcount">${list.length} ${list.length===1?"persona":"personas"}</div>${list.map(pjCard).join("")}`;
+}
+function vPersonajes(){
+  const catChips = `<button class="${state.pcat===""?"on":""}" data-a="pcat" data-id="">Todas (${PERSONAJES.length})</button>`
+    + PCATS.map(c=>`<button class="${state.pcat===c.id?"on":""}" data-a="pcat" data-id="${c.id}">${c.em} ${esc(c.n)}</button>`).join("");
+  const oris = [...new Set(PERSONAJES.map(p=>p.ori))];
+  const oriChips = `<button class="${state.pori===""?"on":""}" data-a="pori" data-id="">🧭 Toda orientación</button>`
+    + oris.map(o=>`<button class="${state.pori===o?"on":""}" data-a="pori" data-id="${esc(o)}">${esc(o)}</button>`).join("");
+  return `<div class="view" style="--cc:#6366f1">
+    <button class="back" data-a="back">← Volver a la consola</button>
+    <div class="cathead"><span class="em">👤</span><div><h2>Personajes de la IA</h2><p>40 figuras que dieron forma a la inteligencia artificial, en 10 categorías. Toca una ficha para abrirla.</p></div></div>
+    <div class="pjnote">⚖️ Las etiquetas de <b>Riesgo · Regulación · Apertura · Orientación</b> son una <b>lectura editorial</b> (interpretación del autor), no medidas objetivas. Los datos biográficos sí son verificables y enlazan a una fuente seria.</div>
+    <details class="pjlegend" open><summary>Cómo leer las 4 etiquetas (léelo primero)</summary>
+      <div class="pjlegbody">
+        <p>Cada ficha resume con cuatro etiquetas la postura de la persona frente a la IA. Son una <b>lectura editorial</b> (interpretación), no medidas exactas; en figuras históricas reflejan su <b>contexto</b> más que una declaración explícita. Dentro de cada ficha verás <b>«🎯 Por qué estas etiquetas»</b>, que explica el caso concreto.</p>
+        <p><b>🛡️ Riesgo</b> — cuánto peligro ve esta persona en la IA avanzada para la sociedad (manipulación, pérdida de control, daño masivo). <b>🟢 Bajo:</b> la considera una herramienta manejable. <b>🟡 Medio:</b> reconoce riesgos serios pero gestionables. <b>🔴 Alto:</b> teme daños graves o incluso existenciales si no se controla.</p>
+        <p><b>⚖️ Regulación</b> — cuánto papel cree que deben tener los gobiernos y las leyes. <b>🟢 Baja:</b> dejar que avance con poca intervención. <b>🟡 Media:</b> reglas equilibradas. <b>🔴 Alta:</b> controles fuertes, auditorías o incluso pausas obligatorias.</p>
+        <p><b>🔓 Apertura</b> — su postura sobre compartir los modelos. Uno <b>abierto</b> publica su código y sus «pesos» (lo aprendido) para que cualquiera lo use, estudie o modifique; uno <b>cerrado</b> se usa solo a través de la empresa. <b>Baja:</b> prefiere cerrados (más control y seguridad). <b>Alta:</b> prefiere abiertos (más transparencia y acceso).</p>
+        <p><b>🧭 Orientación</b> — su actitud general en una palabra: <i>Pragmático</i> (lo que funcione, caso por caso), <i>Precautorio</i> (cautela ante la duda), <i>Humanista</i> (las personas primero), <i>Pro-automatización / Pro-apertura</i> (acelerar y compartir), <i>Pro-industria</i> (impulsar el sector), <i>Crítico / Regulacionista</i> (señalar problemas y pedir reglas) o <i>Freno radical</i> (pedir detener el desarrollo).</p>
+        <p><b>Sobre los colores:</b> indican el <b>nivel</b> (🟢 bajo · 🟡 medio · 🔴 alto), <b>no</b> si algo es bueno o malo. La etiqueta <b>🕰️ Histórico</b> marca figuras ya fallecidas o de una era previa.</p>
+      </div>
+    </details>
+    ${btnLeer()}
+    <input class="search" id="pjsearch" placeholder="🔎 Buscar persona, institución o aporte…" value="${esc(state.pq)}">
+    <div class="pjchips">${catChips}</div>
+    <div class="pjchips">${oriChips}</div>
+    <div id="pjlist">${pjListHTML()}</div>
   </div>`;
 }
 
@@ -2297,7 +2719,7 @@ document.addEventListener("click",e=>{
   if(lector.activo && !["read-toggle","read-stop","read-aloud","read-one","read-speed","read-prev","read-next"].includes(act)) pararLectura();
 
   if(act==="read-aloud"){ iniciarLectura(); return; }
-  if(act==="read-one"){ e.stopPropagation(); const card=el.closest(".concept,.gitem,.wcard"); if(card){ if(card.classList.contains("gitem")) card.classList.add("open"); leerUna(card); } return; }
+  if(act==="read-one"){ e.stopPropagation(); const card=el.closest(".concept,.gitem,.wcard,.pj"); if(card){ if(card.classList.contains("gitem")||card.classList.contains("pj")) card.classList.add("open"); leerUna(card); } return; }
   if(act==="read-toggle"){ alternarPausaLectura(); return; }
   if(act==="read-prev"){ anteriorTrack(); return; }
   if(act==="read-next"){ siguienteTrack(); return; }
@@ -2310,6 +2732,10 @@ document.addEventListener("click",e=>{
   if(act==="mod-practice"){ state.view="mod"; state.mod=el.dataset.id; state.tab="practicar"; state.fcOrder=[]; state.fcIdx=0; state.fcFlip=false; tick(); render(); window.scrollTo(0,0); }
   if(act==="back"){ state.view="home"; state.mod=null; tick(); render(); window.scrollTo(0,0); }
   if(act==="resources"){ state.view="resources"; state.mod=null; tick(); render(); window.scrollTo(0,0); }
+  if(act==="personajes"){ state.view="personajes"; state.mod=null; tick(); render(); window.scrollTo(0,0); }
+  if(act==="pj"){ const c=el.closest(".pj"); if(c) c.classList.toggle("open"); return; }
+  if(act==="pcat"){ state.pcat=el.dataset.id; render(); window.scrollTo(0,0); }
+  if(act==="pori"){ state.pori=el.dataset.id; render(); window.scrollTo(0,0); }
   if(act==="tab"){ state.tab=el.dataset.t; state.fcFlip=false; tick(); render(); }
 
   if(act==="learn"||act==="fc-learn"){
@@ -2369,6 +2795,7 @@ document.addEventListener("click",e=>{
 document.addEventListener("input",e=>{
   if(e.target.id==="gsearch"){ state.gq=e.target.value; $("#glist").innerHTML=glossList(); }
   if(e.target.id==="wsearch"){ state.wq=e.target.value; $("#wlist").innerHTML=wordsList(); }
+  if(e.target.id==="pjsearch"){ state.pq=e.target.value; $("#pjlist").innerHTML=pjListHTML(); }
 });
 
 /* ============================================================
