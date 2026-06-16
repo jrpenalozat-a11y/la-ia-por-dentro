@@ -378,7 +378,7 @@ button:active{transform:scale(.98)}
     <div><h1>La IA por Dentro</h1><p>Academia intermedia</p></div>
   </div>
   <div class="actions">
-    <button class="icbtn" id="btnShare" data-a="share" title="Compartir esta app">🔗</button>
+    <button class="icbtn" id="btnShare" data-a="share" title="Compartir esta app" aria-label="Compartir esta app"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
     <button class="icbtn" id="btnSound" data-a="sound" title="Sonido">🔊</button>
     <button class="icbtn" id="btnDark" data-a="dark" title="Tema">☀️</button>
     <button class="installbtn" id="btnInstall" data-a="install" title="Descargar / instalar la app" hidden>⬇️ Descargar</button>
@@ -1910,7 +1910,7 @@ function vLearn(m){
       <header><span class="num">${i+1}</span>
         <div class="thd"><h3>${esc(tEs(c.termino))}</h3>${engChip(c)}</div>
         ${on?'<span class="ok">✅</span>':""}
-        <button class="cardread" data-a="read-one" title="Leer esta tarjeta en voz alta" aria-label="Leer esta tarjeta en voz alta">🔊</button></header>
+        <button class="cardread" data-a="read-one" title="Leer esta tarjeta en voz alta" aria-label="Leer esta tarjeta en voz alta">🎧</button></header>
       <div class="block"><b>🎯 ¿Qué es en verdad?</b><p>${esc(c.queEs)}</p></div>
       <div class="block"><b>⚙️ ¿Cómo funciona por dentro?</b><p>${esc(c.comoFunciona)}</p></div>
       <div class="block"><b>🌍 Ejemplo en el mundo real</b><p>${esc(c.ejemplo)}</p></div>
