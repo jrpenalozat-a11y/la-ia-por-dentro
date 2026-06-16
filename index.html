@@ -375,6 +375,7 @@ button:active{transform:scale(.98)}
     <div><h1>La IA por Dentro</h1><p>Academia intermedia</p></div>
   </div>
   <div class="actions">
+    <button class="icbtn" id="btnShare" data-a="share" title="Compartir esta app">🔗</button>
     <button class="icbtn" id="btnSound" data-a="sound" title="Sonido">🔊</button>
     <button class="icbtn" id="btnDark" data-a="dark" title="Tema">☀️</button>
     <button class="installbtn" id="btnInstall" data-a="install" title="Descargar / instalar la app" hidden>⬇️ Descargar</button>
@@ -2304,6 +2305,7 @@ document.addEventListener("click",e=>{
   if(act==="dark"){ toggleDark(); }
   if(act==="sound"){ toggleSound(); }
   if(act==="install"){ doInstall(); }
+  if(act==="share"){ doShare(); }
 });
 
 document.addEventListener("input",e=>{
@@ -2329,6 +2331,13 @@ const standalone=window.matchMedia("(display-mode: standalone)").matches||naviga
 window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); defPrompt=e; if(!standalone) $("#btnInstall").hidden=false; });
 if(!standalone) $("#btnInstall").hidden=false;   // mostrar siempre que no esté ya instalada
 window.addEventListener("appinstalled",()=>{ $("#btnInstall").hidden=true; toast("✅ ¡App instalada!"); });
+async function doShare(){
+  const url="https://la-ia-por-dentro.vercel.app";
+  const datos={ title:"La IA por Dentro", text:"Entiende la IA por dentro y aprende a crear apps — academia gratis. 🚀", url };
+  if(navigator.share){ try{ await navigator.share(datos); }catch(_){ } return; }
+  try{ await navigator.clipboard.writeText(url); toast("🔗 Enlace copiado: "+url); }
+  catch(_){ toast("Comparte este enlace: "+url); }
+}
 function doInstall(){
   if(defPrompt){ defPrompt.prompt(); defPrompt=null; return; }   // instalación nativa de 1 toque (Android/Chrome)
   if(isIOS){ toast("📲 Toca Compartir ⬆️ (abajo) y elige «Agregar a pantalla de inicio»"); return; }
