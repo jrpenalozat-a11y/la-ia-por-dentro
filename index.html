@@ -116,7 +116,18 @@ button:active{transform:scale(.98)}
 .modcard:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
 .modcard::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--cc,var(--blue))}
 .modcard .mhead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.modcard .em{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;flex:none;background:color-mix(in srgb,var(--cc,var(--blue)) 16%,transparent)}
+.modcard .em{position:relative;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;flex:none;background:color-mix(in srgb,var(--cc,var(--blue)) 16%,transparent)}
+.modcard .em::after{content:attr(data-step);position:absolute;top:-7px;left:-7px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:.66rem;color:#fff;background:var(--cc,var(--blue));border:2px solid var(--card);box-shadow:var(--shadow2)}
+.pathrec{display:flex;align-items:flex-start;gap:9px;margin:0 0 14px;padding:12px 14px;border-radius:13px;font-size:.83rem;line-height:1.5;color:var(--ink);background:color-mix(in srgb,var(--blue) 9%,var(--card));border:1px solid color-mix(in srgb,var(--blue) 30%,var(--line));box-shadow:var(--shadow2)}
+.pathrec .pr-ic{font-size:1.05rem;line-height:1.3;flex:none}
+.pathrec b{color:var(--blue)}
+.sisterapp{display:flex;align-items:center;gap:13px;width:100%;text-align:left;margin-top:12px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow2);text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s}
+.sisterapp:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.sisterapp .em{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;flex:none;background:var(--grad);color:#fff}
+.sisterapp .sub{font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.sisterapp h3{font-size:1rem}
+.sisterapp p{font-size:.8rem;color:var(--muted);line-height:1.42;margin-top:3px}
+.sisterapp .go{margin-left:auto;font-size:1.25rem;color:var(--muted);flex:none}
 .modcard h3{font-size:1rem;line-height:1.2}
 .modcard .n{font-size:.72rem;color:var(--muted)}
 .modcard .mdesc{font-size:.8rem;color:var(--muted);line-height:1.45;margin-bottom:11px}
@@ -259,6 +270,9 @@ button:active{transform:scale(.98)}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);z-index:95;max-width:90vw;padding:12px 18px;border-radius:13px;background:var(--ink);color:var(--bg2);font-size:.84rem;font-weight:600;box-shadow:var(--shadow);opacity:0;transition:all .35s;pointer-events:none;text-align:center}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .foot{text-align:center;font-size:.72rem;color:var(--muted);margin-top:34px;line-height:1.6}
+.foot .by{display:inline-block;margin-top:10px;font-size:.7rem;letter-spacing:.04em}
+.foot .by b{font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.foot .by .hb{opacity:.5;margin:0 5px}
 .empty{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 10px}
 
 /* ---------- lectura en voz alta (accesibilidad / baja visión) ---------- */
@@ -382,7 +396,7 @@ button:active{transform:scale(.98)}
 
   <main id="app"></main>
 
-  <footer class="foot">La IA por Dentro · academia intermedia · funciona sin internet una vez cargada<br>¿Recién empiezas? Mira primero la app hermana <b>IA para Mortales</b>.</footer>
+  <footer class="foot">La IA por Dentro · academia intermedia · funciona sin internet una vez cargada<br>¿Recién empiezas? Mira primero la app hermana <a href="https://ia-para-mortales.vercel.app" target="_blank" rel="noopener" style="color:var(--blue);font-weight:700;text-decoration:none">IA para Mortales ↗</a>.<br><span class="by"><span class="hb">✦</span>Creado por <b>Jaime Ricardo Peñaloza</b><span class="hb">✦</span></span></footer>
 </div>
 
 <!-- ===== Celebración ===== -->
@@ -1196,7 +1210,24 @@ const EN_TERM = {
    iadLearned · iadQuiz · iadMilestones · iadMedals
    iadDark · iadSound · iadStreak · sessionStorage: iadSplash
    ============================================================ */
-const MODS = DATA.categorias;
+const MODS = (()=>{
+  /* Ruta de aprendizaje recomendada (orden pedagógico por fases).
+     El CONTENIDO de cada módulo vive en DATA.categorias; aquí solo se define
+     EN QUÉ ORDEN se presentan. Reordenar esta lista reordena las tarjetas
+     sin afectar progreso, quiz ni audios (todo se guarda por id de módulo). */
+  const ORDEN = [
+    "anatomia-llm", "como-aprende",                      // Fase 1 · Qué es y cómo funciona
+    "ecosistema", "la-frontera",                         // Fase 2 · La IA moderna conectada
+    "etica", "arte-creatividad", "visiones",             // Fase 3 · Mirada crítica y humana
+    "logica-programacion", "taller-local", "versionar",  // Fase 4 · Bases para programar
+    "plataformas-hosting", "desplegar",                  // Fase 5 · Llevarlo al mundo
+    "construir-ia"                                       // Fase 6 · El gran final
+  ];
+  const byId = Object.fromEntries(DATA.categorias.map(m=>[m.id, m]));
+  // primero los listados en ORDEN; al final, por seguridad, cualquiera no listado
+  return [ ...ORDEN.map(id=>byId[id]).filter(Boolean),
+           ...DATA.categorias.filter(m=>!ORDEN.includes(m.id)) ];
+})();
 // fusiona la fuente seria y el término en inglés en cada concepto
 MODS.forEach(m=>m.conceptos.forEach(c=>{ if(FUENTES[c.termino]) c.fuente=FUENTES[c.termino]; if(EN_TERM[c.termino]) c.en=EN_TERM[c.termino]; }));
 const TOTAL = MODS.reduce((n,c)=>n+c.conceptos.length,0);
@@ -1762,12 +1793,12 @@ function render(){
 /* ---------- consola: grilla de módulos ---------- */
 function vHome(){
   const done=modsDone();
-  const cards=MODS.map(m=>{
+  const cards=MODS.map((m,mi)=>{
     const tot=m.conceptos.length, ok=m.conceptos.filter((_,i)=>learned.has(key(m,i))).length;
     const pct=Math.round(ok/tot*100), full=ok===tot;
     return `<button class="modcard" data-a="mod" data-id="${m.id}" style="--cc:${m.colorAcento}">
       ${full?'<span class="done">✅</span>':""}
-      <div class="mhead"><span class="em">${m.icono}</span><div><h3>${esc(m.titulo)}</h3><div class="n">${ok}/${tot} conceptos</div></div></div>
+      <div class="mhead"><span class="em" data-step="${mi+1}">${m.icono}</span><div><h3>${esc(m.titulo)}</h3><div class="n">${ok}/${tot} conceptos</div></div></div>
       <div class="mdesc">${esc(m.desc)}</div>
       <div class="mini"><i style="width:${pct}%"></i></div>
     </button>`;
@@ -1780,7 +1811,13 @@ function vHome(){
       ${done.length?`<span class="chip">🎓 ${done.length} módulo${done.length===1?"":"s"}</span>`:""}
     </div>
     <p class="intro">Bienvenido a la <b>Consola de Aprendizaje</b>. Elige un módulo y abre cada concepto bajo sus 4 dimensiones: <b>qué es</b>, <b>cómo funciona por dentro</b>, <b>ejemplo real</b> y <b>para qué te sirve</b>. Cada concepto trae su <b>nombre en inglés</b> y un <b>link para profundizar</b>.</p>
+    <div class="pathrec"><span class="pr-ic">🧭</span><span><b>Ruta recomendada:</b> avanza en orden, del <b>1</b> al <b>${MODS.length}</b>. Cada módulo se apoya en el anterior, así que seguir la secuencia te dará la base completa sin saltos.</span></div>
     <div class="grid">${cards}</div>
+    <a class="sisterapp" href="https://ia-para-mortales.vercel.app" target="_blank" rel="noopener">
+      <span class="em">🌱</span>
+      <div><div class="sub">App hermana · nivel inicial</div><h3>IA para Mortales</h3><p>¿Se te escapa algo de jerga o te falta base? Empieza por la versión sin tecnicismos y luego vuelve a este nivel intermedio.</p></div>
+      <span class="go">↗</span>
+    </a>
     <button class="reshub" data-a="resources">
       <span class="em">🔗</span>
       <div><h3>Para profundizar</h3><p>Estudios serios, medios especializados, laboratorios, robótica y ciencia — fuentes evergreen.</p></div>
