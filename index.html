@@ -153,9 +153,11 @@ button:active{transform:scale(.98)}
 .concept h3{font-size:1.04rem;line-height:1.25}
 .concept .tech{font-family:'JetBrains Mono';font-size:.72rem;color:var(--muted);margin-top:3px;display:inline-block;padding:2px 7px;border-radius:6px;background:color-mix(in srgb,var(--cc,var(--blue)) 12%,transparent)}
 .concept .ok{font-size:20px;flex:none}
-.concept .cardread{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1rem;background:color-mix(in srgb,var(--cc,var(--blue)) 14%,transparent);color:var(--cc,var(--blue));border:1px solid color-mix(in srgb,var(--cc,var(--blue)) 30%,var(--line));transition:filter .15s,transform .15s}
-.concept .cardread:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.concept .cardread:active{transform:scale(.92)}
+.cardread{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1rem;background:color-mix(in srgb,var(--cc,var(--blue)) 14%,transparent);color:var(--cc,var(--blue));border:1px solid color-mix(in srgb,var(--cc,var(--blue)) 30%,var(--line));transition:filter .15s,transform .15s;cursor:pointer}
+.cardread:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.cardread:active{transform:scale(.92)}
+.gitem .cardread{margin-left:auto}
+.wcard .cardread{width:30px;height:30px;font-size:.9rem}
 .block{padding:11px 13px;border-radius:12px;margin-bottom:8px;background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line)}
 .block b{display:flex;align-items:center;gap:6px;font-size:.69rem;letter-spacing:.04em;text-transform:uppercase;color:var(--cc,var(--blue));margin-bottom:5px;font-weight:700}
 .block p{font-size:.9rem;line-height:1.6}
@@ -1985,7 +1987,7 @@ function glossList(){
   if(q) items=items.filter(x=>(x.c.termino+" "+(x.c.en||"")+" "+x.c.queEs).toLowerCase().includes(q));
   if(!items.length) return `<div class="empty">Sin resultados… prueba con otro término 🔍</div>`;
   return items.map(x=>`<button class="gitem" data-a="gi" style="--cc:${x.m.colorAcento}">
-    <div class="row"><h4>${esc(tEs(x.c.termino))}</h4>${engChip(x.c)}<span class="gtag">${x.m.icono} ${esc(x.m.titulo)}</span>${learned.has(x.k)?"✅":""}</div>
+    <div class="row"><h4>${esc(tEs(x.c.termino))}</h4>${engChip(x.c)}<span class="gtag">${x.m.icono} ${esc(x.m.titulo)}</span>${learned.has(x.k)?"✅":""}<span class="cardread" data-a="read-one" role="button" tabindex="0" title="Leer este término en voz alta" aria-label="Leer este término en voz alta">🎧</span></div>
     <div class="def">${esc(x.c.queEs)}</div>
     <span class="glearn ${learned.has(x.k)?"on":""}" data-a="gloss-learn" data-k="${x.k}" role="button" tabindex="0">${learned.has(x.k)?"✅ Entendido":"✓ Marcar entendido"}</span>
     <div class="more">
@@ -2015,6 +2017,7 @@ function wordCard(w){
     <div class="wtop">
       <span class="wen">${esc(w.en)}</span>
       <span class="wsay" data-a="speak" data-t="${esc(w.en)}" role="button" tabindex="0" title="Escuchar en inglés">🔊</span>
+      <button class="cardread" data-a="read-one" title="Leer esta tarjeta en voz alta" aria-label="Leer esta tarjeta en voz alta">🎧</button>
       <span class="wpron">🗣️ "${esc(w.pron)}"</span>
       <span class="wtag" style="background:${grp.color}">${esc(grp.label)}</span>
     </div>
@@ -2294,7 +2297,7 @@ document.addEventListener("click",e=>{
   if(lector.activo && !["read-toggle","read-stop","read-aloud","read-one","read-speed","read-prev","read-next"].includes(act)) pararLectura();
 
   if(act==="read-aloud"){ iniciarLectura(); return; }
-  if(act==="read-one"){ e.stopPropagation(); const card=el.closest(".concept"); if(card) leerUna(card); return; }
+  if(act==="read-one"){ e.stopPropagation(); const card=el.closest(".concept,.gitem,.wcard"); if(card){ if(card.classList.contains("gitem")) card.classList.add("open"); leerUna(card); } return; }
   if(act==="read-toggle"){ alternarPausaLectura(); return; }
   if(act==="read-prev"){ anteriorTrack(); return; }
   if(act==="read-next"){ siguienteTrack(); return; }
