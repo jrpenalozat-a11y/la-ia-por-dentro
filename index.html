@@ -1518,7 +1518,21 @@ function obtenerTextoPuroParaLectura(idContenedor){
 /* ---------- controlador del reproductor ---------- */
 /* velocidades disponibles (rate de la Web Speech API) con su etiqueta */
 const VELS = [ {r:0.75,t:"🐢 0.75×"}, {r:1,t:"1×"}, {r:1.25,t:"1.25×"}, {r:1.5,t:"🐇 1.5×"} ];
-const lector = { cola:[], idx:0, activo:false, pausado:false, voz:null, el:null, vi:1, utter:null };
+const lector = { cola:[], idx:0, activo:false, pausado:false, voz:null, el:null, vi:1, utter:null, autoScroll:true, ignoraScroll:false, _ignT:null, _quietoT:null };
+
+/* El usuario tomó el control del scroll: dejamos de seguir el párrafo un rato.
+   Distinguimos su scroll del que provoca nuestro propio scrollIntoView (ignoraScroll). */
+window.addEventListener("scroll",()=>{
+  if(!lector.activo || lector.ignoraScroll) return;
+  lector.autoScroll=false;
+  clearTimeout(lector._quietoT);
+  lector._quietoT=setTimeout(()=>{ lector.autoScroll=true; },4000);   // si se queda quieto, retoma el seguimiento
+},{passive:true});
+/* ¿el inicio del bloque está cómodamente dentro de la pantalla? */
+function enPantalla(el){
+  const r=el.getBoundingClientRect(), h=window.innerHeight||document.documentElement.clientHeight;
+  return r.top>=60 && r.top<=h*0.8;
+}
 /* recordar la velocidad elegida entre sesiones */
 lector.vi = Math.min(Math.max(parseInt(localStorage.getItem("iadReadVel"),10)||1,0), VELS.length-1);
 
@@ -1572,7 +1586,7 @@ function iniciarLectura(){
   lector.voz = vozEspanol();
   lector.vozEn = vozIngles();
   if(!lector.voz) toast("🗣️ Sin voz en español: instálala en tu dispositivo para una mejor lectura");
-  lector.idx=0; lector.activo=true; lector.pausado=false;
+  lector.idx=0; lector.activo=true; lector.pausado=false; lector.autoScroll=true;
   mostrarBarraLectura();
   activarMediaSession();
   kaInicio(); wakeOn();
@@ -1754,7 +1768,15 @@ function mediaEstado(){ try{ if("mediaSession" in navigator) navigator.mediaSess
 /* resaltar el bloque que se está leyendo y traerlo a la vista */
 function resaltar(el){
   quitarResaltado(); lector.el=el;
-  if(el){ el.classList.add("reading"); try{ el.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){} }
+  if(!el) return;
+  el.classList.add("reading");
+  // solo lo traemos a la vista si seguimos en automático y el bloque quedó fuera de pantalla
+  if(lector.autoScroll && !enPantalla(el)){
+    lector.ignoraScroll=true;   // marca: el próximo scroll es nuestro, no del usuario
+    try{ el.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){}
+    clearTimeout(lector._ignT);
+    lector._ignT=setTimeout(()=>{ lector.ignoraScroll=false; },900);
+  }
 }
 function quitarResaltado(){ if(lector.el){ lector.el.classList.remove("reading"); lector.el=null; } }
 

@@ -1,6 +1,6 @@
 /* Service worker — La IA por Dentro
    Sube CACHE (iad-v1 → iad-v2…) al cambiar assets del núcleo. */
-const CACHE = "iad-v20";
+const CACHE = "iad-v21";
 const ASSETS = [
   "./",
   "./index.html",
