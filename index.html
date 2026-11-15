@@ -414,6 +414,129 @@ body:not(.dark) .block b{filter:brightness(.8)}
 .pjlegbody{padding:10px 0 12px}
 .pjlegbody p{font-family:var(--f-read);font-size:.94rem;line-height:1.55;color:var(--muted);margin-bottom:8px}
 .pjlegbody b{color:var(--ink)}
+.inl{font:inherit;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--sig);text-decoration-thickness:2px;text-underline-offset:3px}
+
+/* ---------- figuras: diagramas y ejemplos dentro del concepto ---------- */
+.fig{margin:2px 0 14px;padding:14px;border:1px dashed var(--line);border-radius:var(--radius-s);background:var(--panel2)}
+.fig figcaption,.fnote{font-size:.84rem;line-height:1.5;color:var(--muted);margin-top:10px}
+.fnote b{color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px}
+.fb{flex:1 1 96px;min-width:0;padding:8px 10px;border:1.5px solid var(--line);border-radius:var(--radius-s);background:var(--panel);font-size:.84rem;font-weight:700;line-height:1.25}
+.fb small{display:block;font-weight:500;color:var(--muted);font-size:.76rem;line-height:1.35;margin-top:3px}
+.fb.hi{border-color:var(--sig);box-shadow:inset 3px 0 0 var(--sig)}
+.fb.good{border-color:var(--good)}
+.fb.bad{border-color:var(--bad)}
+.fa{flex:none;align-self:center;font-style:normal;font-weight:800;color:var(--sig-text)}
+.fdown{text-align:center;color:var(--sig-text);font-weight:800;line-height:1.6}
+.floop{margin-top:8px;font-size:.82rem;font-weight:600;color:var(--sig-text)}
+.pb{display:grid;grid-template-columns:96px 1fr 48px;gap:8px;align-items:center;font-size:.84rem;margin-bottom:6px}
+.pb span{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pb b{text-align:right;font-variant-numeric:tabular-nums}
+.pbt{height:10px;border-radius:3px;background:var(--line);overflow:hidden}
+.pbt i{display:block;height:100%;background:var(--blue);transition:width .25s}
+.pbt i.hi{background:var(--sig)}
+.cbar{display:flex;gap:3px;height:34px}
+.cbar span{display:grid;place-items:center;min-width:22px;border-radius:4px;font-weight:800;font-size:.82rem;background:color-mix(in srgb,var(--blue) 32%,var(--panel))}
+.cbar span.c{background:var(--sig);color:var(--sig-ink)}
+.cbar span.e{background:none;border:1.5px dashed var(--line)}
+.cleg{margin:8px 0 0 20px;font-size:.82rem;line-height:1.6;color:var(--muted)}
+.figcode{font-family:var(--f-code);font-size:.78rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;padding:10px 12px;border-radius:var(--radius-s);background:var(--bg);border:1px solid var(--line)}
+.toks{display:flex;flex-wrap:wrap;gap:4px}
+.tk{font-family:var(--f-code);font-size:.82rem;padding:3px 6px;border-radius:4px;white-space:pre}
+.tk.t0{background:color-mix(in srgb,var(--sig) 30%,transparent)}
+.tk.t1{background:color-mix(in srgb,var(--blue) 30%,transparent)}
+.tk.t2{background:color-mix(in srgb,var(--good) 28%,transparent)}
+.tk.t3{background:color-mix(in srgb,var(--bad) 26%,transparent)}
+.figin{margin-bottom:10px}
+.frange{display:block;font-size:.86rem;font-weight:600;margin:8px 0 12px}
+.frange input{display:block;width:100%;margin-top:8px;accent-color:var(--sig)}
+.fq{font-family:var(--f-read);font-size:1rem;margin-bottom:4px}
+.figsvg{display:block;width:100%;height:auto;max-width:440px;margin:0 auto}
+.figsvg text{font-family:var(--f-ui);fill:var(--ink)}
+.figsvg .tap{cursor:pointer}
+.fbtns{display:flex;gap:6px;margin-top:8px}
+.fbtns button{padding:8px 12px;border:1px solid var(--line);border-radius:var(--radius-s);font-weight:600;font-size:.84rem;background:var(--panel)}
+.fbtns button:hover{border-color:var(--sig)}
+.moe{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.moe span{text-align:center;padding:8px 0;border:1.5px solid var(--line);border-radius:4px;font-size:.78rem;font-weight:700;color:var(--muted)}
+.moe span.on{border-color:var(--sig);color:var(--ink);background:color-mix(in srgb,var(--sig) 18%,transparent)}
+.harn{position:relative;border:1.5px dashed var(--sig);border-radius:var(--radius-s);padding:26px 10px 10px}
+.harn-t{position:absolute;top:5px;left:10px;font-size:.78rem;font-weight:700;color:var(--sig-text)}
+
+/* ---------- conexiones entre conceptos ---------- */
+.concept{scroll-margin-top:76px}
+.concept.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,60%{box-shadow:0 0 0 3px var(--sig)}100%{box-shadow:0 0 0 3px transparent}}
+.links{padding:12px 0 6px;border-top:1px solid var(--line)}
+.links em,.msh-sec em,.msh-path em{display:block;font-style:normal;font-size:.8rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+.lk-row{margin-bottom:8px}
+.lk{display:inline-block;text-align:left;padding:6px 11px;margin:0 6px 6px 0;border:1px solid var(--line);border-radius:999px;font-size:.82rem;font-weight:600;line-height:1.25}
+.lk:hover{border-color:var(--sig)}
+.lk.in{border-left:3px solid var(--blue)}
+.lk.out{border-left:3px solid var(--sig)}
+.lk.cur{background:var(--sig);color:var(--sig-ink);border-color:var(--sig)}
+.lk.map{border-style:dashed}
+
+/* ---------- mapa: el grafo de conceptos ---------- */
+.mapview .pagetitle{margin-top:18px}
+.mapview .intro{margin:8px 0 12px;font-size:.95rem;line-height:1.5}
+.mapbox{position:relative;height:calc(100dvh - 286px);min-height:430px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:color-mix(in srgb,var(--panel) 55%,transparent);touch-action:none}
+@media(min-width:960px){.mapbox{height:calc(100vh - 236px)}}
+#mapsvg{display:block;width:100%;height:100%;cursor:grab;-webkit-user-select:none;user-select:none}
+#mapsvg:active{cursor:grabbing}
+#mapg{transform-origin:0 0}
+#mapsvg text{font-family:var(--f-ui);fill:var(--ink);pointer-events:none}
+.mroute{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:3 8}
+.e{stroke:var(--muted);stroke-width:1.2;opacity:.2}
+.e.same{opacity:.42}
+.e.on-in{stroke:var(--blue);stroke-width:2.6;opacity:1}
+.e.on-out{stroke:var(--sig);stroke-width:2.6;opacity:1}
+.has-sel .e:not(.on-in):not(.on-out){opacity:.05}
+.mm{cursor:pointer}
+.mm .ring{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:2 6}
+.mm .ring.full{stroke:var(--sig);stroke-dasharray:none}
+.mm .hub{fill:transparent}
+.mm .mt{font-size:15px;font-weight:800;font-stretch:108%;text-anchor:middle}
+.mm .mc{font-size:11px;font-weight:600;fill:var(--muted)!important;text-anchor:middle}
+.far .mm .mt{font-size:24px}
+.far .mm .mc{display:none}
+.n{cursor:pointer}
+.n .hit{fill:transparent}
+.n .d{fill:var(--bg);stroke:var(--cc);stroke-width:2.6}
+.n.ok .d{fill:var(--sig);stroke:var(--sig)}
+.n .halo{fill:none;stroke:var(--ink);stroke-width:2;opacity:0}
+.n.sel .halo{opacity:1}
+.n .nl{font-size:12.5px;font-weight:600}
+.far .n .nl{display:none}
+.has-sel .n:not(.sel):not(.lit){opacity:.22}
+.has-sel .mm{opacity:.4}
+.mapctl{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:6px}
+.mapctl button{width:40px;height:40px;border-radius:var(--radius-s);border:1px solid var(--line);background:var(--panel);font-weight:800;font-size:1.1rem}
+.mapctl button.txt{font-size:.68rem;font-weight:700;line-height:1.1}
+.mapctl button:hover{border-color:var(--sig)}
+.maplegend{position:absolute;left:10px;right:10px;bottom:10px;display:grid;grid-template-columns:1fr 1fr;gap:0 12px;padding:7px 10px;border-radius:var(--radius-s);background:color-mix(in srgb,var(--bg) 86%,transparent);border:1px solid var(--line);font-size:.76rem;line-height:1.6;color:var(--muted);pointer-events:none}
+.maplegend[hidden]{display:none}
+.maplegend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:2px solid var(--muted)}
+.maplegend i.k{background:var(--sig);border-color:var(--sig)}
+.maplegend i.b{border:0;height:3px;border-radius:0;width:14px;background:var(--blue);vertical-align:3px}
+.maplegend i.y{border:0;height:3px;border-radius:0;width:14px;background:var(--sig);vertical-align:3px}
+.mapsheet{position:absolute;left:0;right:0;bottom:0;max-height:52%;overflow:auto;padding:12px 16px 16px;background:var(--panel);border-top:2px solid var(--sig);touch-action:pan-y;overscroll-behavior:contain}
+.mapsheet[hidden]{display:none}
+.msh-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.msh-x{width:34px;height:34px;border:1px solid var(--line);border-radius:var(--radius-s);flex:none}
+.mapsheet h3{font-size:1.25rem;font-weight:800;font-stretch:108%;line-height:1.2;margin:8px 0 6px}
+.msh-def{font-family:var(--f-read);font-size:.96rem;line-height:1.55;color:var(--muted);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px}
+.msh-path{margin-bottom:10px}
+.msh-path i{font-style:normal;color:var(--sig-text);font-weight:800;margin-right:6px}
+.msh-sec{margin-bottom:10px}
+.msh-none{font-size:.86rem;color:var(--muted);margin-bottom:10px}
+.mrel{display:block;width:100%;text-align:left;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:var(--radius-s);border-left:3px solid var(--blue)}
+.mrel.out{border-left-color:var(--sig)}
+.mrel b{display:block;font-size:.92rem}
+.mrel span{display:block;font-family:var(--f-read);font-size:.88rem;line-height:1.45;color:var(--muted);margin-top:2px}
+.mrel:hover{border-color:var(--sig)}
+.tabs{grid-template-columns:repeat(6,1fr)}
+@media(max-width:420px){.tabs button{font-size:.66rem}}
 </style>
 </head>
 <body class="dark">
@@ -451,6 +574,7 @@ body:not(.dark) .block b{filter:brightness(.8)}
 <div class="shell">
   <nav class="tabs" id="nav" aria-label="Secciones">
     <button data-a="nav" data-v="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v2a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v2"/></svg>Ruta</button>
+    <button data-a="nav" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="8" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7.1 6.5 16.8 7.6M6.2 7.8l4.6 8.3M17.8 9.9l-4.6 6.2"/></svg>Mapa</button>
     <button data-a="nav" data-v="practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="13" height="14" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v12"/></svg>Práctica</button>
     <button data-a="nav" data-v="gloss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>Glosario</button>
     <button data-a="nav" data-v="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>Desafío</button>
@@ -502,10 +626,10 @@ const DATA = { categorias: [
   { termino:"Ventana de Contexto (Context Window)",
     queEs:"Es el límite máximo de información (texto, código o archivos) que un modelo puede tener «a la vista» mientras genera una respuesta. Se mide en tokens e incluye tanto lo que tú escribes como lo que el modelo responde.",
     comoFunciona:"Funciona como la memoria de trabajo del modelo: todo lo de la conversación se acumula en esa ventana. Cuando el total supera el límite, el sistema descarta lo más antiguo (o lo resume) para hacer espacio. Por eso, en chats muy largos, el modelo «olvida» lo del principio: literalmente salió de su ventana.",
-    ejemplo:"Cuando subes un PDF de 50 páginas a Claude o Gemini y pides un resumen, el documento entero debe caber en la ventana para que el modelo lo lea de una pasada. Los modelos actuales manejan ventanas de cientos de miles de tokens, equivalentes a libros completos.",
+    ejemplo:"Cuando subes un PDF de 50 páginas a Claude o Gemini y pides un resumen, el documento entero debe caber en la ventana para que el modelo lo lea de una pasada. A fines de 2026, los modelos de punta manejan ventanas de alrededor de un millón de tokens, equivalentes a varios libros completos; aun así, con contextos muy largos la calidad puede bajar, así que cargar solo lo necesario sigue siendo buena práctica.",
     paraQueSirve:"Saber cuánto cabe te ayuda a diseñar interacciones que no pierdan el hilo y a controlar costos: en las APIs se cobra por token procesado, así que mientras más contexto arrastras en cada llamada, más pagas. Aprender a resumir el contexto es una habilidad de eficiencia real." },
   { termino:"Tokens",
-    queEs:"Un token es la unidad mínima en que el modelo divide el texto para procesarlo. No son exactamente palabras: pueden ser palabras cortas, fragmentos de palabra, signos o espacios. Como referencia, en español 1 token ≈ 3-4 caracteres y 1.000 tokens ≈ 750 palabras.",
+    queEs:"Un token es la unidad mínima en que el modelo divide el texto para procesarlo. No son exactamente palabras: pueden ser palabras cortas, fragmentos de palabra, signos o espacios. Como referencia, 1 token ≈ 3-4 caracteres y 1.000 tokens equivalen a unas 550-750 palabras, según el idioma y el tokenizador de cada modelo (los más nuevos tienden a gastar más tokens para el mismo texto).",
     comoFunciona:"Antes de «entender» nada, tu texto pasa por un tokenizador que lo corta en piezas y las convierte en números: el modelo siempre trabaja con números, nunca con letras. Tanto tu mensaje (input) como la respuesta (output) cuentan como tokens, y normalmente el output se cobra más caro que el input.",
     ejemplo:"Una empresa con un chatbot de soporte estima sus costos así: si cada conversación usa ~1.500 tokens de entrada y ~500 de salida, y la API cobra US$3 por millón de entrada y US$15 por millón de salida, puede calcular casi al centavo cuánto le cuesta atender a 10.000 clientes al mes.",
     paraQueSirve:"Pensar en tokens es pensar en presupuesto. Te permite estimar costos antes de lanzar un producto, elegir el modelo adecuado (los más potentes cuestan más por token) y optimizar prompts para gastar menos sin perder calidad. Es la diferencia entre un proyecto rentable y uno que se dispara en la factura." },
@@ -522,7 +646,7 @@ const DATA = { categorias: [
   { termino:"Temperatura y Top-P",
     queEs:"Son dos perillas que controlan cuán creativa o predecible es la respuesta. La temperatura regula el nivel de «riesgo» al elegir la siguiente palabra; Top-P (muestreo por núcleo) limita el conjunto de palabras candidatas a las más probables.",
     comoFunciona:"En cada paso, el modelo calcula la probabilidad de muchas palabras posibles. Con temperatura baja (cerca de 0) casi siempre elige la más probable: respuestas seguras y repetibles. Con temperatura alta explora opciones menos probables: más variedad, pero más riesgo de incoherencia. Top-P es complementario: considera solo las palabras que suman, por ejemplo, el 90% de probabilidad, y descarta la cola improbable.",
-    ejemplo:"Para extraer datos de una factura o responder algo legal, conviene temperatura baja (precisión, cero invención). Para generar nombres de marca, eslóganes o ideas de contenido, una temperatura más alta produce alternativas frescas. Muchos «playgrounds» de API exponen ambas perillas.",
+    ejemplo:"Para extraer datos de una factura o responder algo legal, conviene temperatura baja (precisión, cero invención). Para generar nombres de marca, eslóganes o ideas de contenido, una temperatura más alta produce alternativas frescas. Ojo: varios de los modelos más nuevos que razonan fijan estos valores y ya no dejan cambiarlos (ahí el control pasa por el prompt y por el nivel de «esfuerzo»); las perillas siguen disponibles en los modelos abiertos y en muchos modelos clásicos.",
     paraQueSirve:"Dominar estas perillas te da control fino sobre el modelo sin reentrenarlo. Sabrás por qué a veces una IA responde plana y otras delira, y podrás calibrarla según la tarea: rigurosa para datos, creativa para ideas. Es ajuste de comportamiento gratis y al instante." },
   { termino:"Modelos de Código Abierto (Open Source) vs Cerrados",
     queEs:"Los modelos abiertos publican sus pesos para que cualquiera los descargue, ejecute y modifique (Llama, Mistral, DeepSeek). Los cerrados se usan solo a través de la API de la empresa, sin acceso a su interior (GPT, Claude, Gemini).",
@@ -538,7 +662,7 @@ const DATA = { categorias: [
   { termino:"Entrenamiento vs Inferencia",
     queEs:"Son las dos fases de vida de un modelo. El entrenamiento es el proceso (largo y costoso) donde el modelo aprende ajustando sus parámetros con enormes cantidades de datos. La inferencia es el uso ya entrenado: cada vez que le preguntas y responde.",
     comoFunciona:"Durante el entrenamiento, el modelo ve millones de ejemplos, predice, mide su error y corrige sus parámetros una y otra vez; ocurre una sola vez (con actualizaciones ocasionales) y consume meses de cómputo en GPUs. En inferencia, los parámetros están congelados: el modelo solo aplica lo aprendido, en milisegundos o segundos.",
-    ejemplo:"Entrenar un modelo grande puede costar millones de dólares y semanas de cálculo en miles de GPUs. Pero responderte a ti (inferencia) cuesta una fracción mínima. Por eso un modelo «no sabe» lo que pasó tras su fecha de entrenamiento: aprendió hasta ahí, y lo nuevo hay que dárselo en el prompt.",
+    ejemplo:"Entrenar un modelo de punta puede costar decenas o cientos de millones de dólares y meses de cálculo en miles de GPUs. Pero responderte a ti (inferencia) cuesta una fracción mínima. Por eso un modelo «no sabe» lo que pasó tras su fecha de entrenamiento: aprendió hasta ahí, y lo nuevo hay que dárselo en el prompt.",
     paraQueSirve:"Distinguir ambas fases aclara mitos («la IA aprende de todo lo que le digo al instante» — en general, no) y explica los costos: entrenar es la gran inversión; servir respuestas es el gasto recurrente. Es clave para entender por qué existen modelos con «fecha de corte» de conocimiento." },
   { termino:"Fine-Tuning (Ajuste Fino)",
     queEs:"Es tomar un modelo ya entrenado y darle un entrenamiento adicional, más corto, con datos específicos de un dominio o estilo, para especializarlo sin construirlo desde cero.",
@@ -588,13 +712,13 @@ const DATA = { categorias: [
   { termino:"Orquestadores de Datos (LangChain / LlamaIndex)",
     queEs:"Son herramientas (frameworks) que ayudan a conectar y coordinar las piezas de una aplicación de IA: el modelo, las fuentes de datos, la memoria, las herramientas y la lógica de los pasos. Actúan como el «director de orquesta».",
     comoFunciona:"En lugar de programar a mano cada conexión (llamar al modelo, buscar en la base vectorial, formatear el prompt, encadenar pasos), el orquestador ofrece bloques listos que se ensamblan. Tú defines el flujo —«recupera contexto, arma el prompt, llama al modelo, valida la salida»— y el framework gestiona los detalles repetitivos.",
-    ejemplo:"LangChain y LlamaIndex son los más conocidos. Con ellos, un equipo arma un asistente con RAG en días en vez de semanas: el orquestador ya trae integraciones con bases vectoriales, modelos y cargadores de documentos.",
+    ejemplo:"LangChain (con LangGraph para agentes) y LlamaIndex son los más conocidos; hoy conviven con los kits para agentes que publican los propios laboratorios, y muchos equipos optan por llamar a la API directamente. Con ellos, un equipo arma un asistente con RAG en días en vez de semanas: el orquestador ya trae integraciones con bases vectoriales, modelos y cargadores de documentos.",
     paraQueSirve:"Saber que existen estas capas de «pegamento» aclara cómo se construyen las apps de IA serias por dentro. Aunque no programes, entender el rol del orquestador te permite hablar con equipos técnicos y dimensionar qué tan complejo es un proyecto." },
   { termino:"Arquitectura RAG (Generación Aumentada por Recuperación)",
     queEs:"RAG (Retrieval-Augmented Generation) es una técnica que le da al modelo información externa y actualizada en el momento de responder, en lugar de depender solo de lo que memorizó al entrenarse.",
     comoFunciona:"Ante una pregunta, el sistema primero recupera los fragmentos más relevantes desde una base de conocimiento (a menudo vectorial), los inserta en el prompt como contexto y luego pide al modelo que responda basándose en ellos. Así combina la fluidez del modelo con datos frescos y verificables, y reduce las alucinaciones porque el modelo «tiene la fuente a la vista».",
-    ejemplo:"Es la arquitectura más usada en asistentes empresariales: un banco conecta su modelo a sus políticas internas para que el chatbot responda con la normativa vigente y cite el documento. NotebookLM, que responde solo sobre los archivos que subes, es RAG en estado puro.",
-    paraQueSirve:"RAG es hoy la forma más práctica y económica de tener una IA que conoce TUS datos y se mantiene actualizada sin reentrenar. Entenderlo te da la receta para pasar de un chatbot genérico a uno que de verdad sirve a tu negocio." },
+    ejemplo:"Es la arquitectura más usada en asistentes empresariales: un banco conecta su modelo a sus políticas internas para que el chatbot responda con la normativa vigente y cite el documento. NotebookLM, que responde solo sobre los archivos que subes, es un buen ejemplo de la misma idea: responder solo con las fuentes a la vista.",
+    paraQueSirve:"RAG sigue siendo una forma práctica y económica de tener una IA que conoce TUS datos (cuando los documentos son pocos, hoy también sirve cargarlos enteros en la ventana de contexto o dejar que un agente los busque) y se mantiene actualizada sin reentrenar. Entenderlo te da la receta para pasar de un chatbot genérico a uno que de verdad sirve a tu negocio." },
   { termino:"Modelos MoE (Mixture of Experts / Mezcla de Expertos)",
     queEs:"Es una arquitectura donde el modelo, en lugar de ser un único bloque gigante, se divide en muchos «expertos» especializados, y para cada entrada activa solo unos pocos en vez de todos.",
     comoFunciona:"Un componente llamado «enrutador» (router) decide, token a token, qué expertos son los más adecuados y envía el trabajo solo a ellos. Así el modelo puede tener una capacidad total enorme (muchos parámetros) pero usar solo una fracción en cada respuesta, ganando velocidad y ahorrando cómputo sin perder calidad.",
@@ -654,7 +778,7 @@ const DATA = { categorias: [
   { termino:"Propiedad Intelectual y Copyright en IA",
     queEs:"Es el debate legal sobre dos cosas: con qué derecho se entrenaron los modelos usando obras de terceros (textos, imágenes, música) y a quién pertenece lo que la IA genera.",
     comoFunciona:"Los modelos aprendieron de enormes cantidades de contenido, mucho protegido por derechos de autor, a menudo sin permiso explícito. Eso abrió demandas de artistas, medios y escritores. Por el otro lado, la autoría de lo generado por IA es incierta: varias jurisdicciones no reconocen copyright a obras sin intervención humana significativa, y las reglas cambian según el país.",
-    ejemplo:"Medios de prensa y artistas han demandado a empresas de IA por entrenar con su trabajo. A la vez, un creador que usa imágenes generadas para su negocio puede descubrir que no puede registrarlas como propias en ciertos países. Las plataformas responden con filtros y acuerdos de licencia.",
+    ejemplo:"Medios de prensa y artistas han demandado a empresas de IA por entrenar con su trabajo, y ya hay primeros resultados: en Estados Unidos, jueces de primera instancia consideraron «uso justo» entrenar con libros comprados legalmente, pero no con copias pirateadas (Anthropic acordó pagar unos US$1.500 millones a autores por eso). Todavía no hay una regla definitiva: otros casos siguen abiertos y cada país resuelve distinto. A la vez, un creador que usa imágenes generadas para su negocio puede descubrir que no puede registrarlas como propias en ciertos países. Las plataformas responden con filtros y acuerdos de licencia.",
     paraQueSirve:"Si creas o usas contenido (textos, diseño, música, código), este tema afecta directamente tus derechos y riesgos. Entenderlo te ayuda a usar la IA con criterio legal: revisar licencias, declarar el uso de IA cuando corresponde y no asumir que «lo generé, es mío»." },
   { termino:"Deepfakes y Desinformación Sintética",
     queEs:"Un deepfake es contenido (video, audio o imagen) falsificado con IA de forma tan realista que parece auténtico. La desinformación sintética es el uso de IA para fabricar mentiras convincentes a gran escala.",
@@ -669,7 +793,7 @@ const DATA = { categorias: [
   { termino:"Alineamiento de Modelos (Gobernanza y seguridad)",
     queEs:"El alineamiento es el desafío de lograr que un modelo haga lo que realmente queremos —respetando nuestros valores e intenciones— y no una interpretación literal o distorsionada del objetivo.",
     comoFunciona:"Se moldea el comportamiento del modelo con técnicas como el aprendizaje por refuerzo con retroalimentación humana (RLHF), reglas o «constituciones» de principios, y filtros de seguridad. El reto de fondo es que es difícil especificar perfectamente lo que queremos: un objetivo mal puesto puede llevar al modelo a optimizar lo equivocado con eficiencia (como maximizar interacción volviéndose adictivo).",
-    ejemplo:"Que un chatbot sea útil pero se niegue a dar instrucciones peligrosas, mantenga un tono respetuoso y reconozca cuando no sabe, es resultado de trabajo de alineamiento. A nivel país, leyes como el AI Act europeo añaden gobernanza: clasifican usos por riesgo y exigen transparencia.",
+    ejemplo:"Que un chatbot sea útil pero se niegue a dar instrucciones peligrosas, mantenga un tono respetuoso y reconozca cuando no sabe, es resultado de trabajo de alineamiento. A nivel país, leyes como el AI Act europeo añaden gobernanza: clasifican usos por riesgo y exigen transparencia. Su aplicación es gradual: las prohibiciones y las reglas para modelos de uso general ya rigen, mientras que las obligaciones para sistemas de alto riesgo se postergaron hacia 2027 y 2028. En Chile, el proyecto de ley de IA seguía en trámite en el Congreso a fines de 2026.",
     paraQueSirve:"El alineamiento conecta lo técnico con lo ético y es central en el debate sobre IA segura. Entenderlo te permite evaluar con criterio los anuncios de «IA responsable», comprender por qué un modelo se niega a ciertas cosas y participar informado en la conversación sobre cómo gobernar esta tecnología." }
 ]},
 
@@ -690,17 +814,17 @@ const DATA = { categorias: [
   { termino:"MCP (Model Context Protocol)",
     queEs:"Es un estándar abierto que define una forma común para que los modelos de IA se conecten a herramientas, datos y servicios externos. Se le suele llamar «el USB-C de la IA»: un mismo enchufe para todo.",
     comoFunciona:"En lugar de programar a mano cada integración entre un modelo y cada herramienta (tu correo, tu base de datos, tu calendario), MCP define un protocolo único. Un «servidor MCP» expone una herramienta o fuente de datos siguiendo ese estándar, y cualquier modelo compatible puede usarla sin código a medida. Estandariza el «cómo se enchufan» las piezas.",
-    ejemplo:"Gracias a MCP, un asistente puede conectarse a tu repositorio de código, a una base de datos o a una app de diseño usando el mismo mecanismo, y esos conectores se comparten entre herramientas. Anthropic lo propuso a fines de 2024 y fue adoptado ampliamente por la industria.",
+    ejemplo:"Gracias a MCP, un asistente puede conectarse a tu repositorio de código, a una base de datos o a una app de diseño usando el mismo mecanismo, y esos conectores se comparten entre herramientas. Anthropic lo propuso a fines de 2024; lo adoptaron OpenAI, Google y Microsoft, entre otros, y desde fines de 2025 lo administra una fundación neutral bajo la Linux Foundation, de modo que ya no depende de una sola empresa.",
     paraQueSirve:"MCP explica cómo los agentes están dejando de ser islas para conectarse a todo de forma ordenada. Conocerlo te da la clave de por qué los asistentes son cada vez más capaces de «hacer cosas» en tus propias herramientas, y hacia dónde va la interoperabilidad." },
   { termino:"Modelos que Razonan (Reasoning)",
     queEs:"Son modelos diseñados para «pensar antes de responder»: en vez de soltar la primera respuesta, generan una cadena interna de pasos de razonamiento. Destacan en matemáticas, lógica, código y problemas que requieren varios pasos.",
     comoFunciona:"Se les da más «tiempo de cómputo» en el momento de responder (test-time compute): el modelo explora, prueba caminos, se corrige y recién entonces entrega la respuesta. Es la diferencia entre contestar de memoria y pensar el problema en un borrador. A veces ese borrador (cadena de pensamiento) queda oculto y solo ves la conclusión.",
-    ejemplo:"Familias de modelos «de razonamiento» (como la serie «o» de OpenAI o los modos de pensamiento extendido de Claude y Gemini) resuelven problemas de olimpiadas de matemáticas o depuran código complejo donde los modelos clásicos fallaban.",
+    ejemplo:"Los primeros modelos «de razonamiento» fueron una línea aparte (como la serie «o» de OpenAI, ya en retiro). A fines de 2026 el razonamiento viene integrado en casi todos los modelos de punta, que deciden solos cuánto pensar o te dejan regular el nivel de esfuerzo. Estos modelos resuelven problemas de olimpiadas de matemáticas o depuran código complejo donde los modelos clásicos fallaban.",
     paraQueSirve:"Marca un cambio de enfoque: ya no solo importa entrenar más grande, sino dejar pensar más en el momento. Saber distinguir cuándo necesitas un modelo que razone (problemas complejos) de uno rápido (tareas simples) te hace elegir mejor la herramienta y el costo." },
   { termino:"Computer Use (uso del computador)",
     queEs:"Es la capacidad de un modelo de operar un computador como lo haría una persona: ver la pantalla, mover el cursor, hacer clic, escribir y navegar por aplicaciones, en lugar de depender de que cada app tenga una API.",
-    comoFunciona:"El modelo recibe una captura de la pantalla, decide la siguiente acción (clic en tal botón, escribir tal texto), la ejecuta, observa el nuevo estado y repite. Combina visión (entender la pantalla) con acción (controlar teclado y ratón) en un ciclo. Es lento y aún comete errores, pero abre la puerta a automatizar cualquier programa, tenga API o no.",
-    ejemplo:"Pedirle «rellena este formulario en una web antigua y descarga el comprobante»: el agente abre el navegador, ve los campos, los completa y guarda el archivo, todo controlando la interfaz como un humano. Varios laboratorios ya ofrecen versiones de esto.",
+    comoFunciona:"El modelo recibe una captura de la pantalla, decide la siguiente acción (clic en tal botón, escribir tal texto), la ejecuta, observa el nuevo estado y repite. Combina visión (entender la pantalla) con acción (controlar teclado y ratón) en un ciclo. Mejoró mucho —a fines de 2026 los mejores agentes rinden a la par de una persona en pruebas de tareas cortas—, pero sigue siendo más lento que una API y falla en tareas largas; aun así, abre la puerta a automatizar cualquier programa, tenga API o no.",
+    ejemplo:"Pedirle «rellena este formulario en una web antigua y descarga el comprobante»: el agente abre el navegador, ve los campos, los completa y guarda el archivo, todo controlando la interfaz como un humano. Los principales laboratorios ya lo ofrecen dentro de sus asistentes y navegadores con IA.",
     paraQueSirve:"Es uno de los caminos hacia la automatización del trabajo de oficina, incluso en sistemas viejos sin integración. Entender sus límites actuales (lentitud, errores, riesgos de seguridad) te permite evaluar con realismo qué se puede automatizar hoy y qué todavía no." },
   { termino:"Ingeniería de Contexto (Context Engineering)",
     queEs:"Es la disciplina de decidir qué información, herramientas y memoria entran en la ventana de contexto del modelo en cada momento, para que un agente actúe bien. Es el siguiente paso, más amplio, de la «ingeniería de prompts».",
@@ -710,7 +834,7 @@ const DATA = { categorias: [
   { termino:"Modelos del Mundo (World Models)",
     queEs:"Son modelos de IA que aprenden cómo se comporta el mundo físico —objetos que caen, chocan o se mueven— para predecir qué pasará después de una acción. Si un LLM predice la siguiente palabra, un modelo del mundo predice el siguiente estado de una escena.",
     comoFunciona:"Se entrenan con enormes cantidades de video y datos de sensores, y construyen una representación interna del entorno. Con ella pueden simular: «si el robot empuja esta caja, ¿qué pasa?». Eso permite planificar antes de actuar y generar escenarios sintéticos para entrenar robots y autos autónomos sin arriesgar nada en el mundo real.",
-    ejemplo:"Plataformas como NVIDIA Cosmos ofrecen modelos del mundo para simular tráfico, clima y peatones, y así entrenar y probar autos autónomos y robots en ambientes virtuales antes de sacarlos a la calle. Investigadores como Yann LeCun defienden que este enfoque es clave para llegar a una inteligencia más general.",
+    ejemplo:"Plataformas como NVIDIA Cosmos ofrecen modelos del mundo para simular tráfico, clima y peatones, y así entrenar y probar autos autónomos y robots en ambientes virtuales antes de sacarlos a la calle. Investigadores como Yann LeCun —que dejó Meta para fundar una empresa dedicada a esto— defienden que este enfoque es clave para llegar a una inteligencia más general, y Google DeepMind ya muestra mundos interactivos generados en tiempo real (Genie).",
     paraQueSirve:"Es la pieza que conecta la IA del lenguaje con la «IA física»: robots, vehículos y máquinas que actúan en el mundo. Entenderlo te ayuda a seguir la próxima ola, que va más allá del chat, y a distinguir lo que ya funciona (simular para entrenar) de lo que todavía es promesa (robots generalistas en tu casa)." }
 ]},
 
@@ -721,7 +845,7 @@ const DATA = { categorias: [
   { termino:"Seguridad ante todo (Safety-first)",
     queEs:"Es la postura de que, dado el poder creciente de la IA, la prioridad debe ser desarrollarla de forma segura y controlable, aunque eso implique ir con más cuidado. Es la filosofía declarada de laboratorios como Anthropic.",
     comoFunciona:"En la práctica se traduce en invertir fuerte en investigación de seguridad y alineamiento antes y durante el desarrollo: técnicas como la «IA Constitucional» (darle al modelo principios escritos que debe respetar), pruebas de riesgo, «equipos rojos» que intentan romper el modelo y despliegue escalonado. La idea: capacidad y seguridad deben crecer juntas.",
-    ejemplo:"Que un modelo se niegue a ayudar a fabricar armas, explique su razonamiento o tenga políticas públicas de uso responsable son frutos de esta postura. Anthropic, creadora de Claude (y de esta app), nació con la seguridad como misión central.",
+    ejemplo:"Que un modelo se niegue a ayudar a fabricar armas, explique su razonamiento o tenga políticas públicas de uso responsable son frutos de esta postura. Anthropic, creadora de Claude (el modelo con el que se construyó esta app), nació con la seguridad como misión central.",
     paraQueSirve:"Te da un marco para evaluar a los actores del sector: ¿qué prioriza cada uno? Entender esta visión te permite leer con criterio los debates sobre «IA responsable» y distinguir el compromiso real de la fachada de marketing." },
   { termino:"Aceleracionismo (e/acc)",
     queEs:"Es la postura opuesta en énfasis: sostiene que la IA traerá tanta abundancia y progreso que lo correcto es acelerar su desarrollo y despliegue, y que frenar por miedo también tiene un costo. «e/acc» significa aceleracionismo efectivo.",
@@ -731,7 +855,7 @@ const DATA = { categorias: [
   { termino:"Abierto vs Cerrado (filosofías)",
     queEs:"Es el debate sobre si los modelos potentes deben publicarse abiertos (cualquiera puede descargarlos, estudiarlos y modificarlos) o mantenerse cerrados (controlados por la empresa, accesibles solo por API). No es solo técnico: es una postura sobre quién debe controlar la IA.",
     comoFunciona:"Quienes defienden lo abierto argumentan que la transparencia acelera la ciencia, evita la concentración de poder y permite auditar los modelos; su riesgo es que también facilita usos maliciosos. Quienes defienden lo cerrado priorizan el control de seguridad y el negocio; su riesgo es concentrar un poder enorme en pocas manos y limitar el escrutinio externo.",
-    ejemplo:"Meta libera Llama con pesos abiertos; Anthropic y OpenAI mantienen sus mejores modelos cerrados tras una API; DeepSeek sacudió el tablero liberando modelos potentes. Cada decisión refleja una filosofía distinta sobre el equilibrio entre apertura, seguridad y poder.",
+    ejemplo:"Meta liberó por años su familia Llama con pesos abiertos, pero en 2026 lanzó cerrado su modelo más avanzado; Anthropic y OpenAI mantienen sus mejores modelos tras una API, aunque OpenAI también publicó modelos abiertos más pequeños; DeepSeek sacudió el tablero liberando modelos potentes. Las posturas no son fijas: cambian con la estrategia de cada empresa. Cada decisión refleja una filosofía distinta sobre el equilibrio entre apertura, seguridad y poder.",
     paraQueSirve:"Esta tensión definirá quién controla una de las tecnologías más importantes del siglo: ¿pocas empresas o toda la humanidad? Entender ambos lados te permite participar con criterio en uno de los debates de poder más relevantes de la década." },
   { termino:"La Hipótesis del Escalado (Scaling)",
     queEs:"Es la idea de que gran parte del progreso de la IA proviene simplemente de escalar: más datos, más parámetros y más cómputo producen modelos predeciblemente mejores, a veces con capacidades nuevas que «emergen» sin haber sido programadas.",
@@ -746,7 +870,7 @@ const DATA = { categorias: [
   { termino:"Superinteligencia y Control",
     queEs:"Es la hipótesis y el desafío de una IA muy superior a la humana en todo (superinteligencia o ASI) y el problema de cómo mantener bajo control algo más capaz que nosotros. Hoy es especulación seria: varios laboratorios dedican equipos a prepararse, por si acaso.",
     comoFunciona:"El reto central es de «superalineamiento»: ¿cómo supervisas y corriges a un sistema más inteligente que tú, que podría encontrar formas de cumplir sus objetivos que no anticipaste? Se investigan técnicas para que sistemas más débiles supervisen a otros más fuertes, para hacer a los modelos interpretables y para que conserven los valores humanos aunque mejoren.",
-    ejemplo:"Empresas han creado equipos de «superalineamiento» y filósofos debaten escenarios en serio; a la vez, otros expertos consideran que es preocuparse por algo demasiado lejano. La discusión no es solo ciencia ficción: moviliza recursos y políticas reales.",
+    ejemplo:"Laboratorios han creado (y a veces disuelto) equipos de «superalineamiento», hay empresas que declaran la superinteligencia como su meta explícita y filósofos debaten escenarios en serio; a la vez, otros expertos consideran que es preocuparse por algo demasiado lejano. La discusión no es solo ciencia ficción: moviliza recursos y políticas reales.",
     paraQueSirve:"Te ayuda a distinguir entre los riesgos reales de HOY (sesgos, deepfakes, privacidad) y los debates de largo plazo (superinteligencia), que son distintos y a veces se mezclan en el ruido mediático. Ambos importan, pero conviene no confundirlos." }
 ]},
 
@@ -757,17 +881,17 @@ const DATA = { categorias: [
   { termino:"IA en el Cine y el Audiovisual",
     queEs:"Es el conjunto de herramientas de IA que asisten o generan partes de una producción audiovisual: desde generar video a partir de texto hasta efectos visuales, doblaje, restauración y rejuvenecimiento digital de actores.",
     comoFunciona:"Modelos generativos de video (entrenados con millones de clips) crean escenas a partir de una descripción; otros separan, limpian o amplían imagen y sonido. En la práctica se usan como apoyo: previsualizar tomas (storyboards animados), generar fondos, doblar a otros idiomas sincronizando labios o restaurar películas antiguas. El director sigue decidiendo qué entra al corte final.",
-    ejemplo:"Generadores como Sora (OpenAI), Veo (Google) y Runway producen clips cada vez más realistas; estudios usan IA para doblaje multilingüe conservando la voz del actor, o para envejecer y rejuvenecer personajes. Las huelgas de Hollywood de 2023 pusieron estas herramientas en el centro del debate.",
+    ejemplo:"Generadores como Veo (Google) y Runway producen clips cada vez más realistas (Sora, de OpenAI, fue el más comentado hasta que la empresa lo discontinuó en 2026); estudios usan IA para doblaje multilingüe conservando la voz del actor, o para envejecer y rejuvenecer personajes. Las huelgas de Hollywood de 2023 pusieron estas herramientas en el centro del debate.",
     paraQueSirve:"Entender qué puede (y qué no) hacer la IA en cine te permite usarla como acelerador creativo —prototipar ideas barato y rápido— y, a la vez, leer con criterio el debate sobre el trabajo de actores, dobladores y técnicos. Saber dónde está la línea es clave para usarla con respeto al oficio." },
   { termino:"IA en la Música",
     queEs:"Son herramientas de IA que componen, producen o transforman música: generar canciones completas desde una descripción, separar instrumentos de una grabación, masterizar audio o clonar voces.",
     comoFunciona:"Modelos entrenados con enormes cantidades de música aprenden patrones de melodía, ritmo y timbre, y generan audio nuevo a partir de un texto («una cumbia alegre con piano»). Otras herramientas hacen tareas concretas: aislar la voz de una pista, limpiar ruido, sugerir acordes o igualar el volumen profesional (mastering). El músico decide qué conserva y cómo lo integra a su obra.",
-    ejemplo:"Suno y Udio generan canciones con letra y voz en segundos; las herramientas de separación de pistas (stems) permiten remezclar; el mastering con IA acerca una maqueta casera a un sonido profesional. A la vez, la clonación de voces de cantantes sin permiso abrió fuertes debates legales y éticos.",
+    ejemplo:"Suno y Udio generan canciones con letra y voz en segundos; las herramientas de separación de pistas (stems) permiten remezclar; el mastering con IA acerca una maqueta casera a un sonido profesional. A la vez, la clonación de voces sin permiso y el entrenamiento con música protegida llevaron a demandas de las discográficas, varias de las cuales se han ido cerrando desde 2025 con acuerdos de licencia.",
     paraQueSirve:"Para un creador, estas herramientas democratizan la producción: puedes maquetar, experimentar y pulir sin un estudio caro. Entenderlas te ayuda a aprovecharlas como instrumento y a tomar postura informada frente a temas sensibles como la clonación de voz y el uso de música protegida para entrenar." },
   { termino:"IA en las Artes Visuales (Diseño)",
     queEs:"Son los generadores y editores de imagen por IA: crear ilustraciones desde texto, transformar estilos, expandir o retocar imágenes, y asistir en diseño gráfico, concept art y prototipado visual.",
     comoFunciona:"A partir de una descripción, el modelo genera una imagen explorando el «mapa» de significados visuales que aprendió; puedes guiarlo con referencias, máscaras o bocetos. Sirve para producir variaciones rápidas, fondos, mockups o concept art. Aprendió de millones de imágenes —muchas de artistas—, lo que está en el corazón del debate sobre consentimiento y derechos.",
-    ejemplo:"Midjourney, DALL·E y Stable Diffusion producen imágenes en segundos (y por años batallaron con detalles como las manos de seis dedos). Diseñadores los usan para explorar ideas antes de pulir a mano; ilustradores han denunciado el entrenamiento con su trabajo sin permiso.",
+    ejemplo:"Midjourney, Stable Diffusion y los generadores integrados en ChatGPT y Gemini producen imágenes en segundos (DALL·E, uno de los pioneros, fue retirado por OpenAI en 2026 y reemplazado por sus modelos GPT Image) (y por años batallaron con detalles como las manos de seis dedos). Diseñadores los usan para explorar ideas antes de pulir a mano; ilustradores han denunciado el entrenamiento con su trabajo sin permiso.",
     paraQueSirve:"Bien usadas, aceleran la exploración y bajan la barrera para visualizar ideas. Entender cómo funcionan te ayuda a integrarlas a tu proceso sin renunciar a tu criterio, y a desconfiar de lo que ves: si la IA crea imágenes perfectas, no toda «foto» que circula es real." },
   { termino:"La IA como Instrumento (no Autor)",
     queEs:"Es el enfoque de tratar a la IA como una herramienta más al servicio del artista —como lo fueron la cámara, el sintetizador o Photoshop— y no como el autor de la obra. La visión y las decisiones siguen siendo humanas.",
@@ -803,7 +927,7 @@ const DATA = { categorias: [
   { termino:"Runtime y Entorno (Node.js, Python)",
     queEs:"Un runtime es el programa que ejecuta tu código en una máquina. Para que un proyecto corra, tu computador necesita el runtime correcto instalado: Node.js para JavaScript, el intérprete de Python para Python, etc.",
     comoFunciona:"El código fuente por sí solo no hace nada; necesita algo que lo «lea y ejecute». Ese es el runtime. Instalas la versión adecuada en tu PC y, a partir de ahí, puedes correr el proyecto localmente. Un mismo código puede comportarse distinto si el runtime o su versión cambian (de ahí los famosos «en mi máquina sí funcionaba»).",
-    ejemplo:"Para correr una app web moderna instalas Node.js; para un script de datos o IA, Python. Las guías suelen decir «requiere Node 18+» o «Python 3.10»: están hablando del runtime y su versión.",
+    ejemplo:"Para correr una app web moderna instalas Node.js; para un script de datos o IA, Python. Las guías suelen decir «requiere Node 22 o superior» o «Python 3.12»: están hablando del runtime y su versión.",
     paraQueSirve:"Entender el runtime explica por qué hay que «instalar cosas» antes de correr un proyecto, y por qué a veces algo funciona en un computador y no en otro. Es la base del entorno de desarrollo." },
   { termino:"Dependencias y Paquetes (npm, pip)",
     queEs:"Las dependencias son piezas de código hechas por otros (librerías) que tu proyecto reutiliza en vez de programar todo de cero. Los gestores de paquetes (npm para JavaScript, pip para Python) las descargan e instalan por ti.",
@@ -873,7 +997,7 @@ const DATA = { categorias: [
     paraQueSirve:"Es la forma más rápida y barata (a menudo gratis) de poner una web online hoy. Conocer las alternativas te deja elegir por precio, velocidad, límites del plan gratis y facilidad de uso." },
   { termino:"Plataformas Full-Stack (Render, Railway, Fly.io)",
     queEs:"Son plataformas para apps que necesitan más que un frontend: un servidor corriendo todo el tiempo, una base de datos, tareas en segundo plano. Un escalón más que el hosting de webs estáticas.",
-    comoFunciona:"Despliegan tu backend (el servidor y la lógica) y suelen ofrecer bases de datos administradas, todo conectado a tu repo. Apuntan a ser más simples que las grandes nubes: menos configuración, despliegue casi de un clic. Tienen capa gratuita limitada y planes que crecen con el uso.",
+    comoFunciona:"Despliegan tu backend (el servidor y la lógica) y suelen ofrecer bases de datos administradas, todo conectado a tu repo. Apuntan a ser más simples que las grandes nubes: menos configuración, despliegue casi de un clic. Lo gratuito aquí es acotado y cambia seguido: a fines de 2026 Render conserva opciones gratis básicas, Railway da un crédito de prueba y Fly.io solo ofrece una prueba breve a las cuentas nuevas. Conviene revisar la página de precios antes de elegir.",
     ejemplo:"Una app con login, base de datos y API propia podría vivir en Render o Railway sin la complejidad de AWS. Fly.io destaca por correr tu app cerca de los usuarios en varias regiones del mundo.",
     paraQueSirve:"Cubren el punto medio entre «una web estática» y «la nube empresarial completa». Saber que existen te evita pensar que solo hay Vercel (para webs) o AWS (complejo): hay opciones intermedias y amables." },
   { termino:"Las Grandes Nubes (AWS, Google Cloud, Azure)",
@@ -889,7 +1013,7 @@ const DATA = { categorias: [
   { termino:"Gratis vs Pago (Free Tier)",
     queEs:"Casi todas estas plataformas ofrecen un nivel gratuito («free tier») con límites, y planes pagos que crecen con el uso. Entender qué es gratis y cuándo empiezas a pagar es clave para no llevarte sorpresas.",
     comoFunciona:"El plan gratis suele alcanzar de sobra para proyectos personales, prototipos y tráfico bajo. Pagas cuando superas ciertos límites (visitas, almacenamiento, cómputo, usuarios) o quieres funciones de equipo y soporte. El modelo típico es «empieza gratis, paga al escalar»: por suscripción o por uso.",
-    ejemplo:"Publicar estas academias en Vercel es gratis porque son estáticas y de tráfico moderado. Una app con miles de usuarios activos y base de datos grande terminaría en un plan pago. Ojo con los servicios de pago por uso: sin límites configurados, una factura puede crecer rápido.",
+    ejemplo:"Publicar estas academias en Vercel es gratis porque son estáticas, de tráfico moderado y sin fines comerciales (el plan gratuito de Vercel es para proyectos personales). Una app con miles de usuarios activos y base de datos grande terminaría en un plan pago. Ojo con los servicios de pago por uso: sin límites configurados, una factura puede crecer rápido.",
     paraQueSirve:"Te permite construir y publicar hoy sin gastar, y planificar costos antes de crecer. Saber leer los límites del plan gratis y poner topes de gasto es una habilidad práctica que evita facturas sorpresa." }
 ]},
 
@@ -936,7 +1060,7 @@ const DATA = { categorias: [
   { termino:"Asistentes de Código (Copilot, Cursor, Claude Code)",
     queEs:"Son herramientas de IA integradas al editor que escriben, completan, explican y corrigen código mientras programas. No reemplazan al desarrollador: lo aceleran, como un copiloto.",
     comoFunciona:"Mientras escribes, el asistente sugiere la siguiente línea o un bloque completo según el contexto de tu proyecto; puedes pedirle en lenguaje natural «crea una función que valide correos» y la escribe. Los más avanzados (modo «agente») abren archivos, hacen cambios en varios a la vez, ejecutan pruebas y corrigen errores solos, con tu supervisión.",
-    ejemplo:"GitHub Copilot autocompleta dentro de VS Code; Cursor es un editor entero centrado en IA; Claude Code trabaja desde la terminal como un agente. (De hecho, estas dos academias se construyeron con Claude Code.)",
+    ejemplo:"GitHub Copilot nació autocompletando dentro de VS Code y hoy también trabaja como agente; Cursor es un editor entero centrado en IA; Claude Code y Codex (de OpenAI) funcionan como agentes desde la terminal, el editor o la web. (De hecho, estas dos academias se construyeron con Claude Code.)",
     paraQueSirve:"Cambian la velocidad y quién puede programar: tareas que tomaban horas se hacen en minutos, y personas con poca experiencia logran más. Entenderlos te muestra hacia dónde va el oficio: de escribir cada línea a dirigir y revisar." },
   { termino:"Generadores de Apps · Vibe Coding",
     queEs:"Son herramientas donde describes la app o web que quieres en lenguaje natural y la IA genera el código y la interfaz funcionando, lista para ver y ajustar. «Vibe coding» es construir guiándose por la idea, sin escribir el código a mano.",
@@ -1402,7 +1526,7 @@ const QUIZTOTAL = TOTAL;
 const key = (mod,i)=>mod.id+"-"+i;
 
 /* ============================================================
-   💻 CÓDIGO — banco de 100 palabras (inglés técnico) con audio.
+   💻 CÓDIGO — banco de palabras (inglés técnico) con audio.
    Grupos: ia · prog · deploy. Cada una: { g, en, pron, es, que }
    Explicaciones más extensas (nivel intermedio). Independiente de DATA.
    ============================================================ */
@@ -1514,7 +1638,28 @@ const WORDS = [
   { g:"deploy", en:"CDN", pron:"si-di-en", es:"red de distribución de contenido", que:"Red de servidores repartidos por el mundo que sirven tus archivos desde el nodo más cercano al usuario, bajando la latencia. Vercel y Netlify publican tu sitio en su CDN automáticamente." },
   { g:"deploy", en:"HTTPS / SSL", pron:"éich-ti-ti-pi-es / es-es-el", es:"conexión cifrada", que:"HTTPS es HTTP sobre TLS/SSL: cifra el tráfico entre navegador y servidor y verifica la identidad del sitio. Obligatorio para PWA, service workers y para proteger datos." },
   { g:"deploy", en:"PWA", pron:"pi-dóbliu-éi", es:"aplicación web progresiva", que:"Web que, con manifest y service worker, se instala como app, funciona offline y se siente nativa. Estas tres academias son PWA: sin tienda, sin build, multiplataforma." },
-  { g:"deploy", en:"service worker", pron:"SÉR-vis UÓR-ker", es:"trabajador de servicio", que:"Script que corre en segundo plano entre la app y la red, interceptando peticiones para cachear y servir offline. Es lo que hace que una PWA abra sin internet; su versión de caché se sube al cambiar assets." }
+  { g:"deploy", en:"service worker", pron:"SÉR-vis UÓR-ker", es:"trabajador de servicio", que:"Script que corre en segundo plano entre la app y la red, interceptando peticiones para cachear y servir offline. Es lo que hace que una PWA abra sin internet; su versión de caché se sube al cambiar assets." },
+  // Noviembre 2026: agentes en producción, eficiencia y costos
+  { g:"ia", en:"harness", pron:"JÁR-nes", es:"arnés", que:"Todo lo que rodea al modelo para que funcione como agente: el bucle de trabajo, las herramientas, los permisos, la memoria y el manejo del contexto. El mismo modelo rinde muy distinto según su harness; por eso se evalúa el conjunto y no solo el modelo." },
+  { g:"ia", en:"eval", pron:"i-VAL", es:"evaluación", que:"Prueba repetible que mide un sistema de IA con casos y criterios fijos. Se corre con cada cambio de prompt, de modelo o de herramienta para saber si mejoró o empeoró. Sin evals, ajustar un sistema es adivinar." },
+  { g:"ia", en:"benchmark", pron:"BÉNCH-mark", es:"prueba comparativa", que:"Conjunto público y estándar de tareas para comparar modelos entre sí. Sirve para orientarse, pero se satura rápido y no reemplaza a tus propias evals: un modelo puede liderar un benchmark y fallar en tu caso." },
+  { g:"ia", en:"cache hit", pron:"cash jit", es:"acierto de caché", que:"Cuando el inicio de tu prompt coincide exactamente con uno ya procesado y el proveedor lo reutiliza: se cobra con descuento fuerte y responde más rápido. Lo contrario es un cache miss; basta cambiar un carácter al principio para provocarlo." },
+  { g:"ia", en:"routing", pron:"RÚ-ting", es:"enrutamiento", que:"Decidir qué modelo atiende cada petición: uno chico y barato para lo simple, uno grande para lo difícil. Bien hecho baja la cuenta sin que el usuario note diferencia; mal hecho manda preguntas complejas al modelo equivocado." },
+  { g:"ia", en:"batch", pron:"bach", es:"lote", que:"Grupo de peticiones que se envían juntas para procesarse sin apuro, normalmente dentro de un día, a cambio de un precio bastante menor. Ideal para clasificar, resumir o traducir grandes volúmenes cuando nadie espera la respuesta en vivo." },
+  { g:"ia", en:"subagent", pron:"sab-ÉI-yent", es:"subagente", que:"Agente auxiliar que el agente principal lanza para una tarea acotada, con su propio contexto. Devuelve solo un resumen, así el contexto principal no se llena de detalles. Permite además trabajar en paralelo." },
+  { g:"ia", en:"skill", pron:"skil", es:"habilidad empaquetada", que:"Carpeta con instrucciones, ejemplos y archivos que un agente carga solo cuando la tarea lo pide. Le enseña tu forma de hacer algo sin gastar contexto el resto del tiempo." },
+  { g:"ia", en:"guardrail", pron:"GÁRD-reil", es:"barrera de seguridad", que:"Control que rodea al modelo para limitar lo que recibe o lo que hace: filtros de entrada y salida, listas de acciones permitidas, confirmación humana antes de pasos irreversibles. No depende de que el modelo «se porte bien»." },
+  { g:"ia", en:"prompt injection", pron:"promt in-YÉK-shon", es:"inyección de instrucciones", que:"Ataque en que un texto externo (una página web, un correo, un documento) trae instrucciones escondidas para desviar al agente. La defensa de fondo es tratar todo lo leído como dato y nunca como orden, y limitar los permisos." },
+  { g:"ia", en:"tool call", pron:"tul col", es:"llamada a herramienta", que:"Mensaje estructurado con el que el modelo pide ejecutar una función externa: buscar, leer un archivo, consultar una base. El modelo no ejecuta nada por sí mismo; el harness corre la herramienta y le devuelve el resultado." },
+  { g:"ia", en:"MCP", pron:"em-si-pi", es:"protocolo de contexto de modelo", que:"Model Context Protocol: estándar abierto para conectar modelos con herramientas y datos. Un servidor MCP expone sus funciones una vez y cualquier asistente compatible puede usarlas, sin integraciones a medida." },
+  { g:"ia", en:"reasoning", pron:"RÍ-so-ning", es:"razonamiento", que:"Fase en que el modelo genera un borrador interno paso a paso antes de responder. Mejora la precisión en problemas difíciles a cambio de más tokens y más espera; muchos modelos dejan regular cuánto esfuerzo dedicarle." },
+  { g:"ia", en:"grounding", pron:"GRÁUN-ding", es:"anclaje en fuentes", que:"Obligar a la respuesta a apoyarse en documentos o datos concretos, idealmente con cita. Es la idea detrás de RAG y la principal defensa práctica contra las alucinaciones." },
+  { g:"ia", en:"on-device", pron:"on di-VÁIS", es:"en el dispositivo", que:"Modelo que corre en el propio teléfono o computador, sin enviar nada a un servidor. Gana en privacidad, costo y funcionamiento sin conexión; pierde en capacidad frente a los modelos grandes de la nube." },
+  { g:"ia", en:"open weights", pron:"ÓU-pen uéits", es:"pesos abiertos", que:"Modelo cuyos parámetros se pueden descargar y ejecutar por cuenta propia. No siempre es «open source» completo: la licencia puede restringir usos y los datos de entrenamiento suelen quedar cerrados." },
+  { g:"prog", en:"latency", pron:"LÉI-ten-si", es:"latencia", que:"El tiempo entre enviar la petición y recibir la respuesta. En IA se mira sobre todo el tiempo hasta el primer token, porque es lo que el usuario siente como «rápido» o «lento»." },
+  { g:"prog", en:"throughput", pron:"ZRÚ-put", es:"caudal de trabajo", que:"Cuánto trabajo procesa un sistema por unidad de tiempo: peticiones por segundo o tokens por segundo. Latencia baja y throughput alto no son lo mismo; a veces se sacrifica una por la otra." },
+  { g:"prog", en:"rate limit", pron:"réit LÍ-mit", es:"límite de uso", que:"Tope de peticiones o tokens por minuto que impone un proveedor. Al pasarlo, la API responde con el error 429 y hay que esperar y reintentar; un buen cliente lo maneja solo." },
+  { g:"prog", en:"streaming", pron:"STRÍ-ming", es:"respuesta en flujo", que:"Recibir la respuesta a medida que se genera, token por token, en vez de esperar el texto completo. No acorta el tiempo total, pero la espera se siente mucho menor." }
 ];
 const WTOTAL = WORDS.length;
 const wkey = w => w.en;   // clave de progreso = término inglés (único)
@@ -2300,11 +2445,471 @@ function actualizarBarraLectura(){
 function btnLeer(){ return `<button class="readaloud" data-a="read-aloud" title="Escuchar en voz alta">🔊 Leer en voz alta</button>`; }
 
 /* ============================================================
+   CONEXIONES — el grafo de conceptos
+   «X>Y|razón»: entender X ayuda a entender Y. La letra es el módulo
+   (ver SIG) y el número, el índice del concepto dentro del módulo.
+   Como el progreso, depende del índice: los conceptos nuevos van AL FINAL.
+   ============================================================ */
+const SIG = { A:"anatomia-llm", B:"como-aprende", C:"ecosistema", D:"logica-programacion", E:"etica", F:"la-frontera", G:"visiones", H:"arte-creatividad", I:"taller-local", J:"versionar", K:"plataformas-hosting", L:"desplegar", M:"construir-ia", N:"agentes-produccion", O:"eficiencia" };
+const SIGR = Object.fromEntries(Object.entries(SIG).map(([a,b])=>[b,a]));
+const gk = s => SIG[s[0]]+"-"+s.slice(1);
+const LINKS = [
+  // Anatomía de un LLM
+  "A1>A0|La ventana de contexto se mide en tokens, no en palabras.",
+  "A1>A3|Cada token se convierte en un vector antes de entrar al modelo.",
+  "A1>A4|La temperatura decide cómo se elige el próximo token.",
+  "A2>A5|Un modelo abierto publica sus parámetros; uno cerrado los guarda.",
+  "A2>B0|Entrenar es ajustar los parámetros; inferir es usarlos ya fijos.",
+  "A4>E0|Elegir por probabilidad explica por qué a veces inventa con total seguridad.",
+  "A3>C1|Una base vectorial guarda y compara embeddings.",
+  "A0>C4|RAG mete en la ventana solo los trozos que sirven.",
+  "A0>F5|La ingeniería de contexto administra lo que cabe en la ventana.",
+  "A0>N1|La memoria guarda fuera de la ventana lo que no cabe en ella.",
+  "A1>O0|El caché abarata los tokens que se repiten en cada llamada.",
+  "A1>F3|Razonar es generar tokens de borrador antes de responder.",
+  "A2>O2|Cuantizar es guardar cada parámetro con menos precisión.",
+  "A2>C5|La mezcla de expertos activa solo una parte de los parámetros.",
+  "A2>G3|La hipótesis del escalado apuesta a más parámetros, datos y cómputo.",
+  "A5>G2|La diferencia técnica entre abierto y cerrado se vuelve un debate de filosofías.",
+  "A5>O4|Los modelos abiertos son los que puedes correr en tu propio equipo.",
+  // Cómo aprende
+  "B5>B4|El descenso del gradiente baja por la pendiente de la pérdida.",
+  "B4>B0|Entrenar es repetir ese descenso millones de veces.",
+  "B0>B1|El ajuste fino es un entrenamiento corto sobre un modelo ya hecho.",
+  "B0>B2|El sobreajuste aparece cuando el entrenamiento memoriza en vez de aprender.",
+  "B0>B3|El modelo hereda los sesgos de los datos con que se entrena.",
+  "B0>E0|El modelo solo sabe lo que vio al entrenar; el resto lo completa.",
+  "B0>F6|Un modelo del mundo se entrena con video y simulación, no solo con texto.",
+  "B1>O3|Destilar es entrenar un modelo chico con las respuestas de uno grande.",
+  "B2>N2|Las evals miden si el sistema generaliza o solo memorizó.",
+  "B3>E5|Corregir sesgos es parte de alinear un modelo.",
+  // Ecosistema
+  "C0>D5|REST y JSON son el formato concreto en que hablan casi todas las APIs.",
+  "C0>C2|Un agente actúa llamando herramientas a través de APIs.",
+  "C0>C3|Un orquestador encadena llamadas a APIs, modelos y datos.",
+  "C0>F2|MCP es un estándar para conectar modelos con herramientas y datos.",
+  "C0>M4|Meter IA en tu app es llamar a la API de un modelo.",
+  "C0>O5|El lote es otra forma de llamar a la API: sin apuro y más barato.",
+  "C0>E1|Lo que mandas por una API sale de tu equipo: ahí empieza la privacidad.",
+  "C1>C4|RAG busca en una base vectorial los trozos parecidos a tu pregunta.",
+  "C3>C4|Los orquestadores traen RAG armado como receta.",
+  "C4>E0|Una forma de reducir las alucinaciones es darle las fuentes con RAG.",
+  "C4>F5|RAG es una de las técnicas de la ingeniería de contexto.",
+  "C2>F0|Un agente colaborativo es un agente al que le delegas trabajo completo.",
+  "C2>F1|Varios agentes coordinados forman un sistema multiagente.",
+  "C2>F4|Computer use le da al agente la pantalla, el mouse y el teclado.",
+  "C2>N4|El arnés es todo lo que rodea al modelo para que funcione como agente.",
+  "C5>O1|Enrutar entre modelos es la idea de los expertos, pero por fuera del modelo.",
+  // Lógica de programación
+  "D0>D1|Un bucle recorre y modifica variables.",
+  "D0>D2|Una función recibe variables y devuelve un resultado.",
+  "D0>I5|Una variable de entorno es una variable que vive fuera del código.",
+  "D1>C2|Por dentro, un agente es un bucle: pensar, actuar, observar.",
+  "D2>I3|Un paquete es un conjunto de funciones que escribió otra persona.",
+  "D3>D5|El frontend le pide datos al backend con REST y JSON.",
+  "D3>I4|En localhost corres frontend y backend en tu propio equipo.",
+  "D3>K1|El hosting de webs publica el frontend; el backend va en otra parte.",
+  "D3>K4|Un BaaS te presta el backend ya hecho.",
+  "D3>M3|El no-code arma frontend y backend con bloques en vez de código.",
+  "D4>J0|Git guarda la historia como una cadena de commits.",
+  "D4>J2|El repositorio remoto es la copia compartida de ese historial.",
+  "D5>F2|MCP describe las herramientas con mensajes JSON.",
+  // Ética
+  "E0>N2|Las evals miden cuánto alucina un sistema antes de publicarlo.",
+  "E1>I5|Las claves secretas van en variables de entorno, nunca en el código.",
+  "E1>N3|Una inyección de prompts puede hacer que el agente filtre datos.",
+  "E1>O4|Un modelo local resuelve la privacidad de raíz: los datos no salen de tu equipo.",
+  "E2>H1|La música generada abrió las disputas de copyright más grandes.",
+  "E2>H4|La autoría en el arte choca con las reglas de propiedad intelectual.",
+  "E3>H0|La misma técnica que crea un deepfake rejuvenece a un actor en el cine.",
+  "E3>H5|Usar la IA con responsabilidad incluye avisar qué es sintético.",
+  "E5>G0|La corriente «seguridad ante todo» pone el alineamiento primero.",
+  "E5>G5|Controlar una superinteligencia es el problema del alineamiento llevado al límite.",
+  // La frontera
+  "F0>E4|El trabajo delegado a agentes es lo que mueve el debate del empleo.",
+  "F0>M0|Los asistentes de código son el ejemplo más maduro de trabajo delegado.",
+  "F1>N5|Los subagentes son el multiagente en la práctica: uno coordina, otros ejecutan.",
+  "F2>N0|Skills y MCP se complementan: instrucciones por un lado, conexiones por otro.",
+  "F3>O1|El enrutador decide cuándo vale la pena pagar por un modelo que razona.",
+  "F3>G3|El razonamiento mostró otra forma de escalar: más cómputo al responder.",
+  "F4>N3|Un agente que lee pantallas y páginas queda expuesto a instrucciones escondidas.",
+  "F5>N0|Una skill carga sus instrucciones solo cuando hacen falta, para no gastar contexto.",
+  "F5>N1|La memoria es ingeniería de contexto que dura entre sesiones.",
+  "F5>O0|Ordenar bien el contexto es lo que permite que el caché acierte.",
+  "F6>G4|Para algunos, los modelos del mundo son la pieza que falta para la AGI.",
+  // Visiones
+  "G0>G1|El aceleracionismo es la postura opuesta: avanzar sin frenos.",
+  "G3>G4|Si escalar sigue funcionando, los plazos de la AGI se acortan.",
+  "G4>G5|Después de la AGI, la pregunta es qué pasa si nos supera.",
+  // Arte
+  "H2>H3|En el diseño se ve claro: la herramienta propone y la persona elige.",
+  "H3>H4|Si la IA es un instrumento, la autoría sigue siendo de quien decide.",
+  "H4>H5|Firmar una obra obliga a decir cómo se hizo.",
+  // Taller local
+  "I0>I1|El editor trae su propia terminal integrada: se usan juntos.",
+  "I0>I2|El runtime se instala y se ejecuta desde la terminal.",
+  "I2>I3|Las dependencias se instalan para un runtime concreto.",
+  "I3>I4|Con las dependencias instaladas ya puedes levantar el servidor local.",
+  "I0>J0|Git se maneja con comandos desde la terminal.",
+  "I0>M0|Claude Code y otros asistentes trabajan dentro de la terminal.",
+  "I1>M0|Copilot y Cursor viven dentro del editor.",
+  "I3>L0|El build junta tu código con sus dependencias.",
+  "I4>L1|Localhost es el primer entorno: desarrollo.",
+  "I5>L1|Cada entorno tiene sus propias variables: claves de prueba y claves reales.",
+  // Versionar
+  "J0>J1|Push sube tus commits; pull baja los de otros.",
+  "J2>J1|Push y pull hablan con el repositorio remoto.",
+  "J0>J3|Una rama es una fila propia de commits.",
+  "J3>J4|Un pull request propone unir tu rama a la principal.",
+  "J4>J5|Aprobar el pull request termina en un merge.",
+  "J2>K0|GitHub, GitLab y Bitbucket son servicios de repositorio remoto.",
+  "J1>L2|En Vercel, hacer push a la rama principal ya es desplegar.",
+  "J3>L1|Cada rama puede tener su propia vista previa antes de producción.",
+  "J5>L4|CI/CD se dispara solo con cada merge.",
+  // Plataformas
+  "K0>K1|El hosting se conecta a tu repositorio y publica desde ahí.",
+  "K1>K2|Cuando necesitas servidor propio y base de datos, pasas a una plataforma full-stack.",
+  "K2>K3|Las plataformas full-stack corren encima de las grandes nubes.",
+  "K1>K5|Casi todos los hostings tienen un plan gratis con límites.",
+  "K1>L2|Desplegar es publicar tu build en el hosting.",
+  "K1>L3|El dominio apunta al hosting donde vive tu sitio.",
+  "K5>M5|El plan gratis alcanza para validar una idea antes de gastar.",
+  // Desplegar
+  "L0>L2|Se despliega el resultado del build, no el código fuente.",
+  "L1>L2|Desplegar es pasar una versión de un entorno al siguiente.",
+  "L2>L4|CI/CD automatiza el build, las pruebas y el despliegue.",
+  "L2>L5|Después de desplegar hay que mirar: logs, errores y vuelta atrás.",
+  "L2>M5|Un producto existe cuando está desplegado y alguien lo usa.",
+  "L5>N2|Las evals son el monitoreo de un sistema con IA: avisan cuando empeora.",
+  // Construir con IA
+  "M0>M1|El vibe coding lleva al asistente de código al extremo: describes y él construye.",
+  "M1>M2|Las apps instantáneas son vibe coding sin salir del chat.",
+  "M1>M5|Generar la app es un paso; convertirla en producto es el camino completo.",
+  "M3>M5|Para validar una idea a veces basta con no-code.",
+  "M4>M5|Un producto con IA termina llamando a un modelo desde su propio código.",
+  "M4>N4|Cuando la llamada al modelo crece hasta ser un agente, aparece el arnés.",
+  "M4>O1|Con IA en tu app, elegir el modelo por tarea define la cuenta a fin de mes.",
+  // Agentes en producción
+  "N4>N0|Las skills son piezas que el arnés carga cuando la tarea las pide.",
+  "N4>N1|La memoria es otra pieza del arnés.",
+  "N4>N5|El arnés es quien lanza y coordina a los subagentes.",
+  "N2>O1|Sin evals no sabes si el modelo barato responde igual de bien.",
+  // Eficiencia
+  "O2>O4|Cuantizar es lo que permite que un modelo quepa en un notebook o un teléfono.",
+  "O3>O4|Los modelos pequeños suelen nacer destilados de uno grande."
+].map(r=>{ const [ab,why]=r.split("|"), [a,b]=ab.split(">"); return { a:gk(a), b:gk(b), why }; });
+const CMAP = {};
+MODS.forEach(m=>m.conceptos.forEach((c,i)=>{ CMAP[key(m,i)]={ m, c, i, k:key(m,i) }; }));
+const LIN = {}, LOUT = {};
+LINKS.forEach(l=>{ if(!CMAP[l.a]||!CMAP[l.b]) return; (LOUT[l.a]=LOUT[l.a]||[]).push(l); (LIN[l.b]=LIN[l.b]||[]).push(l); });
+const cname = k => tEs(CMAP[k].c.termino);
+const _dep = {};
+function depth(k,seen){
+  if(_dep[k]!=null) return _dep[k];
+  seen=seen||new Set(); if(seen.has(k)) return 0; seen.add(k);
+  return _dep[k]=(LIN[k]||[]).reduce((mx,l)=>Math.max(mx,1+depth(l.a,seen)),0);
+}
+// el camino más largo de requisitos que termina en k: «para llegar aquí»
+function pathTo(k){
+  const out=[k]; let cur=k, g=0;
+  while((LIN[cur]||[]).length && g++<12){ cur=LIN[cur].slice().sort((x,y)=>depth(y.a)-depth(x.a))[0].a; if(out.includes(cur)) break; out.unshift(cur); }
+  return out;
+}
+function linksHTML(k){
+  const ins=LIN[k]||[], outs=LOUT[k]||[];
+  if(!ins.length && !outs.length) return "";
+  const chip=(o,cls,why)=>`<button class="lk ${cls}" data-a="goto" data-k="${o}" title="${esc(why)}">${esc(cname(o))}</button>`;
+  return `<div class="links">
+    ${ins.length?`<div class="lk-row"><em>Antes conviene entender</em>${ins.map(l=>chip(l.a,"in",l.why)).join("")}</div>`:""}
+    ${outs.length?`<div class="lk-row"><em>Te abre la puerta a</em>${outs.map(l=>chip(l.b,"out",l.why)).join("")}</div>`:""}
+    <button class="lk map" data-a="map-at" data-k="${k}">Ver en el mapa</button>
+  </div>`;
+}
+
+/* ============================================================
+   FIGURAS — un dibujo o un ejemplo que se puede tocar por concepto.
+   Clave = letra del módulo + índice (igual que LINKS).
+   ============================================================ */
+const fstep = s=>{ const [t,n,c]=s.split("|"); return `<div class="fb ${c||""}"><span>${esc(t)}</span>${n?`<small>${esc(n)}</small>`:""}</div>`; };
+const figFlow = (steps,o)=>{ o=o||{}; return `<div class="flow">${steps.map(fstep).join(`<i class="fa" aria-hidden="true">${o.arrow||"→"}</i>`)}</div>${o.loop?`<div class="floop">↻ ${esc(o.loop)}</div>`:""}`; };
+const figLevels = levels => levels.map(l=>`<div class="flow">${l.map(fstep).join("")}</div>`).join(`<div class="fdown" aria-hidden="true">↓</div>`);
+const figBars = rows => rows.map(r=>`<div class="pb"><span>${esc(r[0])}</span><div class="pbt"><i class="${r[2]||""}" style="width:${r[1]}%"></i></div><b>${r[3]||Math.round(r[1])+" %"}</b></div>`).join("");
+const figStack = segs => `<div class="cbar">${segs.map((s,i)=>`<span class="${s[2]||""}" style="flex:${s[1]}">${i+1}</span>`).join("")}</div><ol class="cleg">${segs.map(s=>`<li>${esc(s[0])}</li>`).join("")}</ol>`;
+const figCode = t => `<pre class="figcode">${esc(t)}</pre>`;
+
+const figSt = { tok:"Dos empanadas de pino y un café cortado", temp:0.7, gd:{ x:0.05, n:0, tr:[] }, emb:-1 };
+function tokSplit(t){
+  const out=[];
+  (String(t).match(/\s*[^\s.,;:!?¿¡]+|\s*[.,;:!?¿¡]/g)||[]).forEach(w=>{
+    const lead=w.match(/^\s*/)[0], core=w.slice(lead.length);
+    if(core.length<=5) out.push(lead+core);
+    else for(let i=0;i<core.length;i+=4) out.push((i?"":lead)+core.slice(i,i+4));
+  });
+  return out;
+}
+function figTokOut(t){
+  const tk=tokSplit(t), words=(String(t).trim().match(/\S+/g)||[]).length;
+  if(!tk.length) return `<p class="fnote">Escribe algo arriba para verlo partido en tokens.</p>`;
+  return `<div class="toks">${tk.map((x,i)=>`<span class="tk t${i%4}">${esc(x.replace(/^\s+/,"·"))}</span>`).join("")}</div>
+    <p class="fnote"><b>${tk.length} tokens</b> para ${words} palabra${words===1?"":"s"}. El punto (·) marca el espacio que va pegado al token.</p>`;
+}
+function figTempOut(T){
+  const w=["marraqueta","hallulla","dobladita","baguette","bicicleta"], lg=[3.2,2.5,1.6,0.2,-1.5];
+  let p;
+  if(T<0.05) p=lg.map((_,i)=>i===0?1:0);
+  else { const e=lg.map(x=>Math.exp(x/T)), s=e.reduce((a,b)=>a+b,0); p=e.map(x=>x/s); }
+  const nota = T<0.05 ? "Temperatura 0: elige siempre la más probable. Predecible, ideal para datos y cálculos."
+    : T<=0.8 ? "Temperatura media: casi siempre lo esperable, con algo de variación."
+    : "Temperatura alta: las opciones raras ganan terreno. Más creativo y más riesgoso.";
+  return figBars(w.map((x,i)=>[x,p[i]*100,i===0?"hi":"",(p[i]>0&&p[i]<0.01?"<1":Math.round(p[i]*100))+" %"]))+`<p class="fnote">${nota}</p>`;
+}
+function figGDSvg(){
+  const g=figSt.gd, L=x=>Math.pow(x-0.68,2)*2.2, X=x=>24+x*262, Y=l=>130-l*108;
+  let d=""; for(let i=0;i<=40;i++){ const x=i/40; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(L(x)).toFixed(1); }
+  const tr=g.tr.map(x=>`<circle cx="${X(x).toFixed(1)}" cy="${(Y(L(x))-7).toFixed(1)}" r="3" fill="var(--muted)" opacity=".5"/>`).join("");
+  return `<svg class="figsvg" viewBox="0 0 310 168" role="img" aria-label="Curva de error con una bolita que baja paso a paso">
+    <line x1="24" y1="140" x2="292" y2="140" stroke="var(--line)" stroke-width="1.5"/><line x1="24" y1="14" x2="24" y2="140" stroke="var(--line)" stroke-width="1.5"/>
+    <path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.5"/>${tr}
+    <circle cx="${X(g.x).toFixed(1)}" cy="${(Y(L(g.x))-7).toFixed(1)}" r="7" fill="var(--sig)"/>
+    <text x="30" y="22" font-size="11" font-weight="600">error</text><text x="292" y="158" font-size="11" font-weight="600" text-anchor="end">valor del parámetro</text>
+  </svg><p class="fnote"><b>Paso ${g.n}</b> · error ${L(g.x).toFixed(2).replace(".",",")}${g.n>=7?". Ya casi no baja: llegó al mínimo.":""}</p>`;
+}
+const EMB = [["café",62,48],["cortado",104,34],["té",46,84],["marraqueta",214,58],["hallulla",244,90],["empanada",190,98],["boleta",92,150],["factura",138,166],["IVA",62,176]];
+function figEmbSvg(){
+  const s=figSt.emb; let near=[];
+  if(s>=0) near=EMB.map((e,i)=>[i,Math.hypot(e[1]-EMB[s][1],e[2]-EMB[s][2])]).filter(x=>x[0]!==s).sort((a,b)=>a[1]-b[1]).slice(0,2).map(x=>x[0]);
+  const lines=near.map(i=>`<line x1="${EMB[s][1]}" y1="${EMB[s][2]-4}" x2="${EMB[i][1]}" y2="${EMB[i][2]-4}" stroke="var(--sig)" stroke-width="2"/>`).join("");
+  const pts=EMB.map((e,i)=>{ const on=i===s||near.includes(i), dim=s>=0&&!on;
+    return `<g class="tap" data-a="fig-emb" data-i="${i}" opacity="${dim?.35:1}"><rect x="${e[1]-38}" y="${e[2]-18}" width="76" height="28" fill="transparent"/><circle cx="${e[1]}" cy="${e[2]-4}" r="${i===s?6:4.5}" fill="${on?"var(--sig)":"var(--blue)"}"/><text x="${e[1]}" y="${e[2]+12}" font-size="11.5" font-weight="${on?800:600}" text-anchor="middle">${e[0]}</text></g>`; }).join("");
+  return `<svg class="figsvg" viewBox="0 0 310 196" role="img" aria-label="Palabras ubicadas en un plano: las de significado parecido quedan cerca">${lines}${pts}</svg>
+    <p class="fnote">${s<0?"Toca una palabra para ver cuáles son sus vecinas más cercanas.":`Las más cercanas a <b>${EMB[s][0]}</b>: ${near.map(i=>EMB[i][0]).join(" y ")}. Cerca en el plano significa parecido en significado.`}</p>`;
+}
+function figNetSvg(){
+  const L=[[36,80,124],[18,60,102,144],[56,106]], X=[44,155,266]; let ln="", nd="";
+  for(let a=0;a<2;a++) L[a].forEach((y1,i)=>L[a+1].forEach((y2,j)=>{ const w=((i*7+j*13+a*5)%10)/10; ln+=`<line x1="${X[a]}" y1="${y1}" x2="${X[a+1]}" y2="${y2}" stroke="${w>0.6?"var(--sig)":"var(--muted)"}" stroke-width="${(0.6+w*3).toFixed(1)}" opacity="${w>0.6?.95:.5}"/>`; }));
+  L.forEach((col,a)=>col.forEach(y=>{ nd+=`<circle cx="${X[a]}" cy="${y}" r="9" fill="var(--bg)" stroke="var(--blue)" stroke-width="2.5"/>`; }));
+  return `<svg class="figsvg" viewBox="0 0 310 176" role="img" aria-label="Red de tres capas de nodos unidos por líneas de distinto grosor">${ln}${nd}
+    <text x="44" y="170" font-size="11" font-weight="600" text-anchor="middle">entrada</text><text x="155" y="170" font-size="11" font-weight="600" text-anchor="middle">capa interna</text><text x="266" y="170" font-size="11" font-weight="600" text-anchor="middle">salida</text></svg>`;
+}
+function figFitSvg(){
+  const pts=[[10,70],[25,52],[40,45],[55,30],[70,34],[88,14]];
+  const panel=(ox,path,lab,col)=>`<g transform="translate(${ox},8)"><rect x="0" y="0" width="98" height="88" fill="none" stroke="var(--line)"/>${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="var(--muted)"/>`).join("")}<path d="${path}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linejoin="round"/><text x="49" y="106" font-size="11" font-weight="700" text-anchor="middle">${lab}</text></g>`;
+  return `<svg class="figsvg" viewBox="0 0 310 122" role="img" aria-label="Tres ajustes sobre los mismos puntos: muy simple, equilibrado y exagerado">
+    ${panel(2,"M5 46H93","Subajuste","var(--bad)")}${panel(106,"M5 76Q50 34 93 14","Buen ajuste","var(--good)")}${panel(210,"M5 82L10 70L17 38L25 52L32 72L40 45L47 14L55 30L62 58L70 34L79 62L88 14L93 40","Sobreajuste","var(--bad)")}</svg>`;
+}
+function figGitSvg(){
+  const c=(x,y,f)=>`<circle cx="${x}" cy="${y}" r="7" fill="${f||"var(--bg)"}" stroke="var(--blue)" stroke-width="2.5"/>`;
+  return `<svg class="figsvg" viewBox="0 0 310 122" role="img" aria-label="Línea principal de commits con una rama que se separa y vuelve a unirse">
+    <path d="M24 36H290" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
+    <path d="M92 36C112 36 112 86 136 86H196C222 86 222 36 244 36" fill="none" stroke="var(--sig)" stroke-width="2.5"/>
+    ${c(30,36)}${c(92,36)}${c(166,36)}${c(244,36,"var(--sig)")}
+    <circle cx="136" cy="86" r="7" fill="var(--bg)" stroke="var(--sig)" stroke-width="2.5"/><circle cx="196" cy="86" r="7" fill="var(--bg)" stroke="var(--sig)" stroke-width="2.5"/>
+    <text x="24" y="18" font-size="11.5" font-weight="700">main (lo publicado)</text><text x="166" y="112" font-size="11.5" font-weight="700" text-anchor="middle">rama carta-invierno</text><text x="244" y="18" font-size="11.5" font-weight="700" text-anchor="middle">merge</text></svg>`;
+}
+const FIGS = {
+  A0:()=>[figStack([["Instrucciones del sistema",10],["Documentos que le pasaste",42],["La conversación hasta ahora",30],["Espacio reservado para la respuesta",18,"e"]]),"Todo comparte el mismo espacio. Si la conversación crece demasiado, lo más antiguo deja de caber."],
+  A1:()=>[`<input class="search figin" id="figTok" maxlength="90" value="${esc(figSt.tok)}" aria-label="Escribe una frase para partirla en tokens"><div id="figTokOut">${figTokOut(figSt.tok)}</div>`,"Es una aproximación para ver la idea: cada modelo corta distinto, pero siempre salen más tokens que palabras."],
+  A2:()=>[figNetSvg(),"Cada línea es un parámetro: un número que se ajusta al entrenar. Aquí hay 20 conexiones; un modelo grande tiene cientos de miles de millones."],
+  A3:()=>[`<div class="embbox">${figEmbSvg()}</div>`,"Un embedding real tiene cientos o miles de dimensiones; aquí se aplastó a dos para poder dibujarlo."],
+  A4:()=>[`<p class="fq">«El pan favorito de Chile es la…»</p><label class="frange">Temperatura: <b id="figTempV">${String(figSt.temp).replace(".",",")}</b><input type="range" id="figTemp" min="0" max="1.5" step="0.1" value="${figSt.temp}"></label><div id="figTempOut">${figTempOut(figSt.temp)}</div>`,"Mueve la temperatura y mira cómo cambia la probabilidad de cada palabra siguiente."],
+  B0:()=>[figFlow(["Datos|millones de textos","Entrenamiento|ajusta los parámetros: una vez, muy caro","Modelo listo|parámetros fijos|hi","Inferencia|responde tu pregunta: cada vez, barato"]),"Entrenar se hace una vez; inferir, cada vez que alguien pregunta."],
+  B1:()=>[figFlow(["Modelo base|sabe un poco de todo","Tus ejemplos|500 respuestas de tu local","Modelo ajustado|responde con tu estilo|hi"]),"El ajuste fino no parte de cero: afina un modelo que ya sabe."],
+  B2:()=>[figFitSvg(),"Los mismos datos, tres formas de aprenderlos. El sobreajuste pasa por todos los puntos y falla con el siguiente."],
+  B3:()=>[figFlow(["Datos disparejos|casi todos los ejemplos son de un solo tipo","Entrenamiento","Modelo sesgado|repite el patrón|bad","Decisiones injustas"]),"El modelo no inventa el sesgo: lo aprende de los datos."],
+  B4:()=>[`<div class="gdbox">${figGDSvg()}</div><div class="fbtns"><button data-a="fig-gd" data-d="step">Dar un paso</button><button data-a="fig-gd" data-d="reset">Reiniciar</button></div>`,"Cada paso mira la pendiente y avanza hacia abajo. Los pasos se achican al acercarse al mínimo."],
+  B5:()=>[figFlow(["Predicción|«venderás 80 marraquetas»","Realidad|se vendieron 120","Pérdida|el error fue de 40|hi","Ajuste|corrige los parámetros"],{loop:"Se repite hasta que el error deja de bajar"}),"La función de pérdida convierte «qué tan mal lo hice» en un número."],
+  C0:()=>[figFlow(["Tu app|envía la petición","API|la puerta de entrada|hi","Servidor del modelo|procesa","Respuesta|vuelve en JSON"]),"Tu app nunca ve el modelo por dentro: solo conversa con su puerta."],
+  C1:()=>[figFlow(["Tus documentos|carta, recetas, manuales","Trozos","Embeddings|cada trozo, un vector","Base vectorial|guarda y busca por parecido|hi"]),"No busca palabras iguales: busca significados cercanos."],
+  C2:()=>[figFlow(["Objetivo|«cotiza harina con tres proveedores»","Piensa|decide el próximo paso","Actúa|usa una herramienta|hi","Observa|lee el resultado"],{loop:"Repite el ciclo hasta cumplir el objetivo"}),"Un agente es un modelo dentro de un bucle con herramientas."],
+  C3:()=>[figFlow(["Pregunta","Orquestador|decide el orden|hi","Buscar datos","Llamar al modelo","Dar formato","Respuesta"]),"El orquestador es el jefe de cocina: no cocina, coordina."],
+  C4:()=>[figFlow(["Pregunta|«¿el kuchen tiene nueces?»","Buscar|en tus fichas técnicas|hi","Trozos encontrados|se pegan en el contexto","Modelo|responde con eso","Respuesta con fuente||good"]),"Primero recupera, después genera: por eso se llama generación aumentada por recuperación."],
+  C5:()=>[`<div class="flow">${fstep("Enrutador interno|elige según cada token|hi")}</div><div class="fdown" aria-hidden="true">↓</div><div class="moe">${[1,2,3,4,5,6,7,8].map(i=>`<span class="${i===3||i===6?"on":""}">E${i}</span>`).join("")}</div>`,"De ocho expertos trabajan dos: el modelo es enorme, pero cada respuesta usa una fracción."],
+  D0:()=>[figCode(`let mesa = 7;             // número\nlet cliente = "Rosa";     // texto\nlet pagado = false;       // verdadero o falso`),"Una variable es una caja con nombre; el tipo dice qué clase de dato guarda."],
+  D1:()=>[figCode(`let total = 0;\nfor (const pedido of pedidos) {\n  total = total + pedido.precio;\n}`),"El bucle repite la misma instrucción para cada pedido, sean 3 o 3.000."],
+  D2:()=>[figCode(`function conPropina(total) {\n  return total * 1.10;\n}\n\nconPropina(12000)   →   13200`),"Se escribe una vez y se usa cuantas veces haga falta."],
+  D3:()=>[figFlow(["Frontend|lo que ves: la carta en el teléfono","Backend|lo que no ves: reglas y cálculos|hi","Base de datos|pedidos y precios"],{arrow:"⇄"}),"El frontend pregunta, el backend decide y la base de datos recuerda."],
+  D4:()=>[figFlow(["Versión 1|carta de verano","Versión 2|sube el precio del café","Versión 3|carta de invierno|hi"]),"Git guarda cada versión y permite volver a cualquiera."],
+  D5:()=>[figCode(`GET /pedidos/42\n\n{\n  "id": 42,\n  "mesa": 7,\n  "items": ["café cortado", "kuchen de frambuesa"],\n  "total": 6900\n}`),"Arriba, la petición. Abajo, la respuesta en JSON: pares de nombre y valor que cualquier programa entiende."],
+  E0:()=>[`<p class="fq">«La capital de Australia es…»</p>`+figBars([["Canberra",62,"hi"],["Sídney",31],["Melbourne",7]]),"El modelo no consulta un dato: elige la continuación más probable. Aquí acierta; cuando lo más probable es falso, lo dice con la misma seguridad."],
+  E1:()=>[figFlow(["Tu equipo|escribes datos de clientes","Internet","Servidor del proveedor|¿los guarda? ¿entrena con ellos?|bad"]),"Antes de pegar datos sensibles, revisa qué hace el proveedor con ellos."],
+  F0:()=>[figFlow(["Tú|defines el encargo y los límites","Agente|trabaja solo por minutos u horas|hi","Entrega|informe, código o planilla","Tú|revisas y apruebas"]),"Delegar no es soltar: el encargo y la revisión siguen siendo tuyos."],
+  F1:()=>[figLevels([["Orquestador|reparte el trabajo|hi"],["Investigador","Redactor","Revisor"],["Resultado unido"]]),"Cada agente tiene su rol y su propio contexto."],
+  F2:()=>[figLevels([["Modelo o agente"],["MCP|un solo conector estándar|hi"],["Drive","Base de datos","Calendario","Sistema de caja"]]),"Antes, cada herramienta necesitaba su propia integración. Con MCP se conecta una vez y sirve para todos."],
+  F3:()=>[figFlow(["Pregunta difícil","Borrador de razonamiento|piensa paso a paso antes de contestar|hi","Revisión|detecta y corrige errores","Respuesta"]),"Pensar antes de responder cuesta más tokens y más tiempo, y a cambio acierta más."],
+  F4:()=>[figFlow(["Mira|recibe una captura de pantalla","Decide|«hacer clic en Guardar»","Actúa|mueve el mouse y escribe|hi"],{loop:"Repite: mirar, decidir, actuar"}),"Usa los programas igual que una persona, sin que nadie le construya una conexión especial."],
+  F5:()=>[figStack([["Instrucciones",12,"c"],["Herramientas disponibles",14],["Documentos elegidos, no todos",30],["Historial resumido",22],["Espacio para responder",22,"e"]]),"Ingeniería de contexto: decidir qué entra, en qué orden y qué se queda fuera."],
+  F6:()=>[figFlow(["Estado actual|una taza al borde de la mesa","Modelo del mundo|simula qué pasaría|hi","Predicción|la taza cae y se quiebra","Decisión|moverla antes"]),"No predice la próxima palabra: predice el próximo estado del mundo."],
+  I0:()=>[figCode(`$ cd mi-proyecto\n$ git status\n$ npm run dev`),"Tres comandos reales: entrar a la carpeta, ver qué cambió y levantar el proyecto."],
+  I2:()=>[figFlow(["Tu código|app.js o app.py","Runtime|Node.js o Python lo ejecuta|hi","Sistema operativo"]),"Sin runtime, tu código es solo un archivo de texto."],
+  I3:()=>[figLevels([["Tu proyecto|hi"],["Paquete A","Paquete B","Paquete C"],["Los paquetes de los paquetes|llegan solos al instalar"]]),"Con un solo comando se instala el árbol completo."],
+  I4:()=>[figFlow(["Tu navegador|localhost:3000","Servidor local|corre en tu propio equipo|hi"],{arrow:"⇄"}),"Nadie más lo ve: es el ensayo antes de publicar."],
+  I5:()=>[figCode(`# archivo .env  (no se sube a GitHub)\nAPI_KEY=sk-…tu-clave-secreta\nMODO=desarrollo`),"Las claves viven fuera del código; el código solo sabe cómo se llaman."],
+  J0:()=>[figFlow(["Cambios|editas archivos","git add|eliges qué guardar","git commit|una foto con mensaje|hi","Historial|queda para siempre"]),"Un commit es un punto de guardado con explicación."],
+  J1:()=>[figFlow(["Tu computador|commits locales","push sube, pull baja||hi","GitHub|la copia compartida"],{arrow:"⇄"}),"Push publica lo tuyo; pull trae lo de los demás."],
+  J3:()=>[figGitSvg(),"La rama deja probar cambios sin tocar lo publicado."],
+  J4:()=>[figFlow(["Tu rama|carta-invierno","Pull request|«propongo estos cambios»|hi","Revisión|comentarios y pruebas","Merge|entra a la rama principal|good"]),"Es una propuesta que otra persona, o tú mismo, revisa antes de aceptar."],
+  J5:()=>[figGitSvg(),"El merge es el punto donde la rama vuelve a la línea principal. Si dos personas cambiaron la misma línea, Git pide que alguien decida."],
+  K1:()=>[figFlow(["Push a GitHub","Hosting|construye y publica solo|hi","CDN|copias cerca de cada visitante","Tu sitio en línea||good"]),"Así se publica esta misma academia."],
+  K4:()=>[figFlow(["Tu app|el frontend","BaaS|base de datos, usuarios y archivos ya listos|hi"],{arrow:"⇄"}),"Te ahorras escribir y mantener un backend propio."],
+  L0:()=>[figFlow(["Código fuente|muchos archivos legibles","Build|une, comprime y optimiza|hi","Archivos finales|livianos, listos para publicar"]),"El build traduce lo cómodo para ti en lo rápido para el navegador."],
+  L1:()=>[figFlow(["Desarrollo|tu equipo: se puede romper","Staging|ensayo general, igual a producción","Producción|lo que usan los clientes|hi"]),"Cada cambio pasa por los tres antes de llegar a un cliente."],
+  L2:()=>[figFlow(["Build listo","Deploy|sube la versión nueva|hi","Servidores","Los usuarios ven el cambio||good"]),"Desplegar es reemplazar la versión que está en línea."],
+  L3:()=>[figFlow(["Escribes|micafe.cl","DNS|la guía de teléfonos de internet|hi","Dirección IP|76.76.21.21","Servidor|entrega tu sitio"]),"El dominio es el nombre; la IP, el número real al que se llama."],
+  L4:()=>[figFlow(["Push","Pruebas automáticas|si fallan, se detiene","Build","Deploy||hi","Producción||good"]),"Nadie aprieta botones: cada push recorre la cadena completa."],
+  L5:()=>[figFlow(["Deploy","Monitoreo|sube la tasa de errores|bad","Logs|encuentras la causa","Rollback|vuelves a la versión anterior|good"]),"Primero se vuelve atrás y después se investiga con calma."],
+  M0:()=>[figFlow(["Tú|describes el cambio","Asistente|lee el proyecto y propone código|hi","Tú|revisas y aceptas","Pruebas"],{loop:"Si algo falla, se lo dices y lo corrige"}),"El asistente escribe; la responsabilidad de revisar sigue siendo tuya."],
+  M1:()=>[figFlow(["Descripción|«una app para reservar mesas»","Generador|arma frontend, backend y base|hi","App funcionando","Sigues conversando|para corregir y agregar"]),"Rápido para partir; después hay que entender lo que se generó."],
+  M4:()=>[figFlow(["Usuario|escribe en tu app","Tu backend|agrega instrucciones y guarda la clave|hi","API del modelo","Respuesta|vuelve a tu app"]),"La clave de la API nunca va en el frontend: siempre pasa por tu backend."],
+  M5:()=>[figFlow(["Idea","Prototipo|vibe coding o una app instantánea","Prueba con clientes reales||hi","Producto|deploy, dominio y monitoreo|good"]),"El prototipo toma una tarde; el producto, todo lo demás."],
+  N0:()=>[figFlow(["Tarea|«arma el informe semanal»","Revisa su lista de skills","Carga solo la que sirve|instrucciones y archivos|hi","Trabaja con tu método"]),"Las demás skills no ocupan contexto hasta que hacen falta."],
+  N1:()=>[figFlow(["Sesión de hoy|aprende que prefieres tablas","Memoria|lo anota en un archivo|hi","Sesión de mañana|lo lee antes de empezar"]),"El modelo no recuerda nada por sí solo: la memoria es un archivo que alguien lee de nuevo."],
+  N2:()=>[figFlow(["Casos de prueba|50 preguntas con respuesta esperada","Corre el sistema","Califica|¿acertó? ¿inventó?|hi","Compara versiones"],{loop:"Se repite con cada cambio de prompt o de modelo"}),"Sin evals, mejorar un sistema de IA es adivinar."],
+  N3:()=>[figFlow(["Página web|texto oculto: «ignora tus instrucciones»|bad","El agente la lee","¿Dato u orden?||hi","Lo trata como dato|y sigue con tu encargo|good"]),"Lo que el agente lee es información, nunca una instrucción."],
+  N4:()=>[`<div class="harn"><span class="harn-t">Arnés</span>${figFlow(["Instrucciones","Herramientas","Modelo|el motor|hi","Memoria","Permisos"],{arrow:"·",loop:"Bucle de trabajo: pensar, actuar, revisar"})}</div>`,"El modelo es el motor; el arnés es el resto del auto."],
+  N5:()=>[figLevels([["Agente principal|mantiene el plan|hi"],["Subagente|busca","Subagente|lee archivos","Subagente|prueba"],["Vuelve solo el resumen|el contexto principal queda limpio"]]),"Cada subagente gasta su propio contexto y devuelve lo esencial."],
+  O0:()=>[figStack([["Instrucciones y documentos fijos: quedan en caché y se cobran con descuento",70,"c"],["Pregunta nueva: precio normal",30]]),"Lo que se repite idéntico al inicio de cada llamada sale mucho más barato y responde más rápido."],
+  O1:()=>[figLevels([["Enrutador|mira la dificultad|hi"],["Fácil|modelo chico: rápido y barato","Media|modelo intermedio","Difícil|modelo grande: lento y caro"]]),"La mayoría de las preguntas no necesita el modelo más caro."],
+  O2:()=>[`<p class="fq">0,73821946 → 0,74</p>`+figBars([["32 bits",100,"","tamaño 1"],["4 bits",12.5,"hi","⅛"]]),"Cada parámetro se guarda con menos decimales: el modelo pesa una fracción y pierde poca calidad."],
+  O3:()=>[figFlow(["Modelo maestro|grande y caro","Responde miles de ejemplos","Modelo alumno|aprende a imitarlo|hi","Casi tan bueno, mucho más barato||good"]),"El alumno no estudia los datos originales: estudia las respuestas del maestro."],
+  O4:()=>[figFlow(["Tu pregunta","Modelo en tu equipo|sin internet y sin cobro por uso|hi","Respuesta"]),"Los datos nunca salen del computador o del teléfono."],
+  O5:()=>[figFlow(["Juntas 5.000 pedidos","Los envías en un lote","Esperas|hasta un día|hi","Recoges todo|cerca de la mitad de precio|good"]),"Si la respuesta no urge, pagar menos por esperar es buen negocio."]
+};
+function figFor(m,i){
+  const f=FIGS[SIGR[m.id]+i]; if(!f) return "";
+  const r=f(); return `<figure class="fig">${r[0]}<figcaption>${esc(r[1])}</figcaption></figure>`;
+}
+
+/* ============================================================
+   MAPA — la vista del grafo, con desplazamiento y zoom
+   ============================================================ */
+const MAPG = { CW:440, CH:400, R:112 };
+const mapSt = { x:0, y:0, s:1, sel:null, cols:0, pos:null, W:0, H:0, init:false };
+function mapLayout(cols){
+  const pos={ mods:{}, n:{} };
+  MODS.forEach((m,idx)=>{
+    const row=Math.floor(idx/cols); let col=idx%cols; if(row%2) col=cols-1-col;
+    const cx=col*MAPG.CW+MAPG.CW/2, cy=row*MAPG.CH+MAPG.CH/2, n=m.conceptos.length;
+    pos.mods[m.id]={ x:cx, y:cy };
+    m.conceptos.forEach((c,i)=>{ const a=-Math.PI/2+i*2*Math.PI/n; pos.n[key(m,i)]={ x:cx+MAPG.R*Math.cos(a), y:cy+MAPG.R*Math.sin(a), a }; });
+  });
+  mapSt.pos=pos; mapSt.cols=cols; mapSt.W=cols*MAPG.CW; mapSt.H=Math.ceil(MODS.length/cols)*MAPG.CH; mapSt.init=false;
+}
+function wrapWords(t,max){ const out=[]; let cur=""; String(t).split(" ").forEach(w=>{ if(cur && (cur+" "+w).length>max){ out.push(cur); cur=w; } else cur=cur?cur+" "+w:w; }); if(cur) out.push(cur); return out; }
+function vMap(){
+  const cols = window.innerWidth<700 ? 2 : 3;
+  if(mapSt.cols!==cols) mapLayout(cols);
+  const P=mapSt.pos, f=n=>n.toFixed(1);
+  const route=MODS.map((m,i)=>(i?"L":"M")+P.mods[m.id].x+" "+P.mods[m.id].y).join("");
+  const edges=LINKS.filter(l=>P.n[l.a]&&P.n[l.b]).map(l=>{ const a=P.n[l.a], b=P.n[l.b];
+    return `<line class="e${CMAP[l.a].m===CMAP[l.b].m?" same":""}" data-ea="${l.a}" data-eb="${l.b}" x1="${f(a.x)}" y1="${f(a.y)}" x2="${f(b.x)}" y2="${f(b.y)}"/>`; }).join("");
+  const mods=MODS.map((m,idx)=>{ const p=P.mods[m.id], st=modStats(m), ls=[m.icono,...wrapWords(m.titulo,11)];
+    return `<g class="mm" data-m="${m.id}"><circle class="ring${st.ok===st.tot?" full":""}" cx="${p.x}" cy="${p.y}" r="${MAPG.R}"/><circle class="hub" cx="${p.x}" cy="${p.y}" r="70"/>
+      <text class="mt" x="${p.x}" y="${p.y}">${ls.map((t,j)=>`<tspan x="${p.x}" dy="${j?"1.12em":(-(ls.length-1)*0.56+0.1).toFixed(2)+"em"}">${esc(t)}</tspan>`).join("")}</text>
+      <text class="mc" x="${p.x}" y="${p.y+ls.length*9+16}">${idx+1} · ${st.ok}/${st.tot}</text></g>`; }).join("");
+  const nodes=Object.keys(P.n).map(k=>{ const p=P.n[k], o=CMAP[k], cs=Math.cos(p.a), sn=Math.sin(p.a);
+    let lab=cname(k); if(lab.length>19) lab=lab.slice(0,18).trim()+"…";
+    const anc=cs>0.3?"start":cs<-0.3?"end":"middle";
+    return `<g class="n${learned.has(k)?" ok":""}" data-k="${k}" style="--cc:${o.m.colorAcento}" transform="translate(${f(p.x)},${f(p.y)})"><circle class="hit" r="24"/><circle class="halo" r="17"/><circle class="d" r="11"/><text class="nl" x="${f(cs*19)}" y="${f(sn*19+(sn>0.5?11:sn<-0.5?-3:4))}" text-anchor="${anc}">${esc(lab)}</text></g>`; }).join("");
+  return `<div class="view mapview">
+    <h2 class="pagetitle">Mapa</h2>
+    <p class="intro">Cada punto es un concepto y cada línea, una razón por la que uno ayuda a entender otro: ${TOTAL} conceptos y ${LINKS.length} conexiones. <b>Toca un módulo para acercarte y un punto para ver su camino.</b></p>
+    <div class="mapbox" id="mapbox">
+      <svg id="mapsvg" role="img" aria-label="Mapa de conexiones entre los conceptos de la academia"><g id="mapg"><path class="mroute" d="${route}"/>${edges}${mods}${nodes}</g></svg>
+      <div class="maplegend" id="maplegend"><div><i class="k"></i>Ya lo entendiste</div><div><i></i>Por aprender</div><div><i class="b"></i>Conviene saberlo antes</div><div><i class="y"></i>Lo que te abre</div></div>
+      <div class="mapctl"><button data-a="map-zoom" data-d="1" aria-label="Acercar">+</button><button data-a="map-zoom" data-d="-1" aria-label="Alejar">−</button><button class="txt" data-a="map-fit">Ver todo</button></div>
+      <div class="mapsheet" id="mapsheet" hidden></div>
+    </div>
+  </div>`;
+}
+function mapSheet(k){
+  const o=CMAP[k], ins=LIN[k]||[], outs=LOUT[k]||[], path=pathTo(k);
+  const rel=(l,other,cls)=>`<button class="mrel ${cls}" data-a="map-sel" data-k="${other}"><b>${esc(cname(other))}</b><span>${esc(l.why)}</span></button>`;
+  return `<div class="msh-top"><span class="gtag" style="--cc:${o.m.colorAcento}">${o.m.icono} ${esc(o.m.titulo)}</span><button class="msh-x" data-a="map-close" aria-label="Cerrar">✕</button></div>
+    <h3>${esc(cname(k))}${learned.has(k)?" ✅":""}</h3>
+    <p class="msh-def">${esc(o.c.queEs)}</p>
+    ${path.length>1?`<div class="msh-path"><em>Un camino para llegar aquí</em>${path.map((p,i)=>`${i?'<i aria-hidden="true">→</i>':""}<button class="lk${p===k?" cur":""}" data-a="map-sel" data-k="${p}">${esc(cname(p))}</button>`).join("")}</div>`:""}
+    ${ins.length?`<div class="msh-sec"><em>Antes conviene entender</em>${ins.map(l=>rel(l,l.a,"in")).join("")}</div>`:`<p class="msh-none">Es un punto de partida: no necesita otros conceptos antes.</p>`}
+    ${outs.length?`<div class="msh-sec"><em>Te abre la puerta a</em>${outs.map(l=>rel(l,l.b,"out")).join("")}</div>`:""}
+    <button class="nextbtn" data-a="goto" data-k="${k}">Abrir el concepto</button>`;
+}
+function mapApply(anim){
+  const g=$("#mapg"), svg=$("#mapsvg"); if(!g) return;
+  const r=svg.getBoundingClientRect(), mx=r.width*0.6, my=r.height*0.6;
+  mapSt.x=Math.min(mx, Math.max(r.width-mapSt.W*mapSt.s-mx, mapSt.x));
+  mapSt.y=Math.min(my, Math.max(r.height-mapSt.H*mapSt.s-my, mapSt.y));
+  g.style.transition=anim?"transform .35s ease":"none";
+  g.style.transform=`translate(${mapSt.x}px,${mapSt.y}px) scale(${mapSt.s})`;
+  svg.classList.toggle("far", mapSt.s<0.7);
+}
+function mapFit(anim){ const r=$("#mapsvg").getBoundingClientRect(); mapSt.s=Math.max(0.22,Math.min(1.1,r.width/mapSt.W)); mapSt.x=(r.width-mapSt.W*mapSt.s)/2; mapSt.y=6; mapApply(anim); }
+function mapZoomAt(px,py,fac,anim){ const ns=Math.max(0.22,Math.min(2.4,mapSt.s*fac)); mapSt.x=px-(px-mapSt.x)*(ns/mapSt.s); mapSt.y=py-(py-mapSt.y)*(ns/mapSt.s); mapSt.s=ns; mapApply(anim); }
+function mapCenter(wx,wy,s,anim){
+  const r=$("#mapsvg").getBoundingClientRect(), sh=$("#mapsheet"), used=sh&&!sh.hidden?sh.offsetHeight:0;
+  mapSt.s=s; mapSt.x=r.width/2-wx*s; mapSt.y=Math.max(60,(r.height-used)/2)-wy*s; mapApply(anim);
+}
+function mapZoomMod(id){ const p=mapSt.pos.mods[id], r=$("#mapsvg").getBoundingClientRect(); mapCenter(p.x,p.y,Math.max(0.78,Math.min(1.25,r.width/470)),true); }
+function mapSelect(k,noMove){
+  const svg=$("#mapsvg"); if(!svg) return;
+  mapSt.sel=k||null;
+  svg.classList.toggle("has-sel",!!k);
+  svg.querySelectorAll(".n.sel,.n.lit").forEach(n=>n.classList.remove("sel","lit"));
+  svg.querySelectorAll(".e.on-in,.e.on-out").forEach(n=>n.classList.remove("on-in","on-out"));
+  const sh=$("#mapsheet"), lg=$("#maplegend");
+  if(!k){ sh.hidden=true; lg.hidden=false; return; }
+  const nodo=q=>svg.querySelector(`.n[data-k="${q}"]`);
+  nodo(k).classList.add("sel");
+  (LIN[k]||[]).forEach(l=>{ const n=nodo(l.a); if(n) n.classList.add("lit"); });
+  (LOUT[k]||[]).forEach(l=>{ const n=nodo(l.b); if(n) n.classList.add("lit"); });
+  svg.querySelectorAll(`.e[data-eb="${k}"]`).forEach(e=>{ e.classList.add("on-in"); e.parentNode.appendChild(e); });
+  svg.querySelectorAll(`.e[data-ea="${k}"]`).forEach(e=>{ e.classList.add("on-out"); e.parentNode.appendChild(e); });
+  // los nodos van encima de las líneas resaltadas
+  svg.querySelectorAll(".n.sel,.n.lit").forEach(n=>n.parentNode.appendChild(n));
+  sh.innerHTML=mapSheet(k); sh.hidden=false; sh.scrollTop=0; lg.hidden=true;
+  if(!noMove){ const p=mapSt.pos.n[k]; mapCenter(p.x,p.y,Math.max(mapSt.s,0.8),true); }
+}
+function mapInit(){
+  const svg=$("#mapsvg"); if(!svg) return;
+  if(!mapSt.init){ mapFit(false); mapSt.init=true; } else mapApply(false);
+  if(mapSt.sel && CMAP[mapSt.sel]) mapSelect(mapSt.sel);
+  const pts=new Map(); let moved=0, downT=null, pinch=0;
+  svg.addEventListener("pointerdown",e=>{
+    pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pts.size===1){ moved=0; downT=e.target; }
+    if(pts.size===2){ const [a,b]=[...pts.values()]; pinch=Math.hypot(a.x-b.x,a.y-b.y)||1; }
+    try{ svg.setPointerCapture(e.pointerId); }catch(_){}
+  });
+  svg.addEventListener("pointermove",e=>{
+    const p=pts.get(e.pointerId); if(!p) return;
+    const dx=e.clientX-p.x, dy=e.clientY-p.y; p.x=e.clientX; p.y=e.clientY;
+    if(pts.size===1){ moved+=Math.abs(dx)+Math.abs(dy); if(moved>6){ mapSt.x+=dx; mapSt.y+=dy; mapApply(false); } }
+    else if(pts.size===2){ const [a,b]=[...pts.values()], d=Math.hypot(a.x-b.x,a.y-b.y)||1, r=svg.getBoundingClientRect();
+      mapZoomAt((a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,d/pinch,false); pinch=d; moved=99; }
+  });
+  const up=e=>{
+    if(!pts.has(e.pointerId)) return; pts.delete(e.pointerId);
+    if(e.type!=="pointerup" || pts.size || moved>6 || !downT || !downT.closest) return;
+    const n=downT.closest("[data-k]"), mm=downT.closest("[data-m]");
+    if(n){ tick(); mapSelect(n.dataset.k); } else if(mm){ tick(); mapZoomMod(mm.dataset.m); } else if(mapSt.sel) mapSelect(null);
+  };
+  svg.addEventListener("pointerup",up); svg.addEventListener("pointercancel",up);
+  svg.addEventListener("wheel",e=>{ e.preventDefault(); const r=svg.getBoundingClientRect(); mapZoomAt(e.clientX-r.left,e.clientY-r.top,e.deltaY<0?1.15:1/1.15,false); },{passive:false});
+}
+let mapRT=null;
+window.addEventListener("resize",()=>{ if(state.view!=="map") return; clearTimeout(mapRT); mapRT=setTimeout(()=>{ mapSt.init=false; render(); },200); });
+function irAConcepto(k){
+  const o=CMAP[k]; if(!o) return;
+  state.view="mod"; state.mod=o.m.id; state.tab="aprender"; state.fcOrder=[]; state.fcIdx=0; state.fcFlip=false; render();
+  const el=document.getElementById("c-"+k);
+  if(el){ el.scrollIntoView({block:"start"}); el.classList.add("flash"); } else window.scrollTo(0,0);
+}
+
+/* ============================================================
    RENDER
    ============================================================ */
 function render(){
   document.querySelectorAll("#nav button").forEach(b=>{
     b.classList.toggle("on", b.dataset.v===state.view || (["mod","resources","personajes","words","surfaces"].includes(state.view) && b.dataset.v==="home"));
+    if(b.classList.contains("on")) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
   });
   const app=$("#app");
   if(state.view==="home")     app.innerHTML=vHome();
@@ -2317,6 +2922,7 @@ function render(){
   if(state.view==="progress") app.innerHTML=vProgress();
   if(state.view==="resources")app.innerHTML=vResources();
   if(state.view==="personajes")app.innerHTML=vPersonajes();
+  if(state.view==="map"){ app.innerHTML=vMap(); mapInit(); }
 }
 
 /* ---------- portada: hero + ruta (circuito) + biblioteca ---------- */
@@ -2359,11 +2965,12 @@ function vHome(){
     </section>
 
     <div class="sec-h"><h2>La ruta</h2><span>${modsDone().length} de ${MODS.length} módulos</span></div>
-    <p class="sec-p">Avanza en orden: cada módulo se apoya en el anterior. La línea amarilla marca lo que ya dominas.</p>
+    <p class="sec-p">Avanza en orden: cada módulo se apoya en el anterior. La línea amarilla marca lo que ya dominas. Si prefieres ver cómo se conecta todo, abre el <button class="inl" data-a="nav" data-v="map">mapa de conexiones</button>.</p>
     <div class="route">${route}</div>
 
     <div class="sec-h"><h2>Biblioteca</h2></div>
     <div class="shelf">
+      <button class="shelf-row" data-a="nav" data-v="map"><span class="si" aria-hidden="true">🕸️</span><span><h4>Mapa de conexiones</h4><p>Los ${TOTAL} conceptos como una red: qué conviene saber antes y a dónde te lleva cada uno.</p></span><span class="sc">${LINKS.length}</span></button>
       <button class="shelf-row" data-a="nav" data-v="words"><span class="si" aria-hidden="true">⌨️</span><span><h4>Tecnolecto</h4><p>${WTOTAL} palabras del inglés técnico, con audio y explicación.</p></span><span class="sc">${wl}/${WTOTAL}</span></button>
       <button class="shelf-row" data-a="nav" data-v="surfaces"><span class="si" aria-hidden="true">🖥️</span><span><h4>Las vías de Claude</h4><p>La app, Claude Code y Claude en tus herramientas: para qué sirve cada una.</p></span><span class="sc">3</span></button>
       <button class="shelf-row" data-a="personajes"><span class="si" aria-hidden="true">👤</span><span><h4>Personajes de la IA</h4><p>${PERSONAJES.length} figuras que dieron forma a la IA y su postura frente a ella.</p></span><span class="sc">${PERSONAJES.length}</span></button>
@@ -2540,15 +3147,17 @@ function vMod(){
 function vLearn(m){
   return m.conceptos.map((c,i)=>{
     const k=key(m,i), on=learned.has(k);
-    return `<article class="concept">
+    return `<article class="concept" id="c-${k}">
       <header><span class="num">${i+1}</span>
         <div class="thd"><h3>${esc(tEs(c.termino))}</h3>${engChip(c)}</div>
         ${on?'<span class="ok">✅</span>':""}
         <button class="cardread" data-a="read-one" title="Leer esta tarjeta en voz alta" aria-label="Leer esta tarjeta en voz alta">🎧</button></header>
       <div class="block"><b>Qué es</b><p>${esc(c.queEs)}</p></div>
       <div class="block"><b>Cómo funciona por dentro</b><p>${esc(c.comoFunciona)}</p></div>
+      ${figFor(m,i)}
       <div class="block"><b>Un ejemplo real</b><p>${esc(c.ejemplo)}</p></div>
       <div class="block"><b>Por qué te sirve</b><p>${esc(c.paraQueSirve)}</p></div>
+      ${linksHTML(k)}
       ${c.fuente?`<a class="srcbtn" href="${esc(c.fuente.url)}" target="_blank" rel="noopener">Profundizar en ${esc(c.fuente.n)} ↗</a>`:""}
       <button class="learnbtn ${on?"on":""}" data-a="learn" data-k="${k}">${on?"✓ Entendido":"Lo entendí"}</button>
     </article>`;
@@ -2936,6 +3545,17 @@ document.addEventListener("click",e=>{
   if(act==="pori"){ state.pori=el.dataset.id; render(); window.scrollTo(0,0); }
   if(act==="tab"){ state.tab=el.dataset.t; state.fcFlip=false; tick(); render(); }
 
+  if(act==="goto"){ tick(); irAConcepto(el.dataset.k); return; }
+  if(act==="map-at"){ state.view="map"; state.mod=null; mapSt.sel=el.dataset.k; tick(); render(); window.scrollTo(0,0); return; }
+  if(act==="map-sel"){ tick(); mapSelect(el.dataset.k); return; }
+  if(act==="map-close"){ mapSelect(null); return; }
+  if(act==="map-fit"){ mapSelect(null); mapFit(true); return; }
+  if(act==="map-zoom"){ const r=$("#mapsvg").getBoundingClientRect(); mapZoomAt(r.width/2,r.height/2,el.dataset.d==="1"?1.35:1/1.35,true); return; }
+  if(act==="fig-gd"){ const g=figSt.gd;
+    if(el.dataset.d==="reset"){ g.x=0.05; g.n=0; g.tr=[]; } else { g.tr.push(g.x); g.x-=0.35*(g.x-0.68); g.n++; }
+    tick(); el.closest(".fig").querySelector(".gdbox").innerHTML=figGDSvg(); return; }
+  if(act==="fig-emb"){ const i=Number(el.dataset.i); figSt.emb=figSt.emb===i?-1:i; tick(); el.closest(".embbox").innerHTML=figEmbSvg(); return; }
+
   if(act==="learn"||act==="fc-learn"){
     const k=el.dataset.k;
     if(learned.has(k)){ learned.delete(k); tick(); } else { learned.add(k); ding(); }
@@ -2967,7 +3587,7 @@ document.addEventListener("click",e=>{
       wordsLearned.add(k); ding();
       if(wordsLearned.size===WTOTAL && !milestones.has("wAll")){
         milestones.add("wAll");
-        celebrate("¡100 palabras dominadas!","Manejas el inglés técnico de IA, programación interna y despliegue en Git y Vercel. Hablas el idioma de la industria. 💻🚀","💻",true);
+        celebrate("¡"+WTOTAL+" palabras dominadas!","Manejas el inglés técnico de IA, programación interna y despliegue en Git y Vercel. Hablas el idioma de la industria. 💻🚀","💻",true);
       }
     }
     save(); render();
@@ -2994,6 +3614,8 @@ document.addEventListener("input",e=>{
   if(e.target.id==="gsearch"){ state.gq=e.target.value; $("#glist").innerHTML=glossList(); }
   if(e.target.id==="wsearch"){ state.wq=e.target.value; $("#wlist").innerHTML=wordsList(); }
   if(e.target.id==="pjsearch"){ state.pq=e.target.value; $("#pjlist").innerHTML=pjListHTML(); }
+  if(e.target.id==="figTok"){ figSt.tok=e.target.value; $("#figTokOut").innerHTML=figTokOut(figSt.tok); }
+  if(e.target.id==="figTemp"){ figSt.temp=Number(e.target.value); $("#figTempV").textContent=String(figSt.temp).replace(".",","); $("#figTempOut").innerHTML=figTempOut(figSt.temp); }
 });
 
 /* ============================================================
@@ -3041,7 +3663,7 @@ if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch
 
 /* ---------- arranque ---------- */
 motiveIdx=Math.floor(Math.random()*MOTIVES.length);
-$("#splashFeats").textContent=`${MODS.length} módulos, ${TOTAL} conceptos, ${WTOTAL} palabras de inglés técnico con audio y ${PERSONAJES.length} personajes. Funciona sin internet una vez cargada.`;
+$("#splashFeats").textContent=`${MODS.length} módulos, ${TOTAL} conceptos, ${WTOTAL} palabras de inglés técnico con audio, un mapa con ${LINKS.length} conexiones entre conceptos y ${PERSONAJES.length} personajes. Funciona sin internet una vez cargada.`;
 render();
 </script>
 
